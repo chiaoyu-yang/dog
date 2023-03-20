@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1FAEE"
+    android:paddingLeft="30dp"
+    android:paddingTop="40dp"
+    android:paddingRight="30dp"
     tools:context=".MainActivity"
     tools:layout_editor_absoluteX="12dp"
     tools:layout_editor_absoluteY="2dp">
@@ -14,32 +17,32 @@
         android:layout_width="165dp"
         android:layout_height="230dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
         android:background="@drawable/button"
         android:stateListAnimator="@null"
         android:text="Button"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/news" />
+        app:layout_constraintTop_toBottomOf="@+id/news" >
+
+    </Button>
 
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="64dp"
         android:stateListAnimator="@null"
         android:text="@string/userName"
         android:textColor="@color/text_color"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imageButton" />
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginLeft="12dp"
         android:background="@drawable/news"
         android:contentDescription="@string/usericon"
         android:scaleType="center"
@@ -53,7 +56,6 @@
         android:id="@+id/function"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:stateListAnimator="@null"
         android:text="@string/function"
@@ -66,24 +68,23 @@
         android:id="@+id/leaderBoardButton"
         android:layout_width="165dp"
         android:layout_height="65dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button"
         android:stateListAnimator="@null"
         android:text="123"
         android:textColor="@color/white"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/function" />
 
     <TextView
         android:id="@+id/leaderBoardButtonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
         android:text="@string/leaderBoardButton"
         android:textColor="@color/text_color"
+        app:layout_constraintBottom_toBottomOf="@+id/leaderBoardButton"
         app:layout_constraintStart_toEndOf="@+id/leaderBoardImg"
         app:layout_constraintTop_toTopOf="@+id/leaderBoardButton" />
 
@@ -91,15 +92,14 @@
         android:id="@+id/scanButton"
         android:layout_width="165dp"
         android:layout_height="65dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button"
         android:stateListAnimator="@null"
         android:text="123"
         android:textColor="@color/white"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/function" />
 
 
     <TextView
@@ -107,9 +107,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
         android:text="@string/scanButton"
         android:textColor="@color/text_color"
+        app:layout_constraintBottom_toBottomOf="@+id/scanButton"
         app:layout_constraintStart_toEndOf="@+id/scanIcon"
         app:layout_constraintTop_toTopOf="@+id/scanButton" />
 
@@ -118,7 +118,6 @@
         android:id="@+id/achievementButton"
         android:layout_width="165dp"
         android:layout_height="65dp"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button"
         android:stateListAnimator="@null"
@@ -133,9 +132,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
         android:text="@string/achievementButton"
         android:textColor="@color/text_color"
+        app:layout_constraintBottom_toBottomOf="@+id/achievementButton"
         app:layout_constraintStart_toEndOf="@+id/achievementIcon"
         app:layout_constraintTop_toTopOf="@+id/achievementButton" />
 
@@ -144,7 +143,6 @@
         android:layout_width="165dp"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
         android:background="@drawable/button"
         android:stateListAnimator="@null"
         android:text="123"
@@ -158,9 +156,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
         android:text="@string/pictureButton"
         android:textColor="@color/text_color"
+        app:layout_constraintBottom_toBottomOf="@+id/pictureButton"
         app:layout_constraintStart_toEndOf="@+id/pictureIcon"
         app:layout_constraintTop_toTopOf="@+id/pictureButton" />
 
@@ -169,7 +167,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/leaderBoardButton"
         app:layout_constraintStart_toStartOf="@+id/leaderBoardButton"
         app:layout_constraintTop_toTopOf="@+id/leaderBoardButton"
         app:srcCompat="@drawable/group_159" />
@@ -180,7 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scanButton"
         app:layout_constraintStart_toStartOf="@+id/scanButton"
         app:layout_constraintTop_toTopOf="@+id/scanButton"
         app:srcCompat="@drawable/group_160" />
@@ -190,7 +188,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/achievementButton"
         app:layout_constraintStart_toStartOf="@+id/achievementButton"
         app:layout_constraintTop_toTopOf="@+id/achievementButton"
         app:srcCompat="@drawable/group_161" />
@@ -200,7 +198,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pictureButton"
         app:layout_constraintStart_toStartOf="@+id/pictureButton"
         app:layout_constraintTop_toTopOf="@+id/pictureButton"
         app:srcCompat="@drawable/group_162" />
@@ -209,7 +207,6 @@
         android:id="@+id/news"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
         android:text="@string/news"
         android:textColor="@color/text_color"
@@ -220,9 +217,9 @@
         android:id="@+id/userLevel"
         android:layout_width="117dp"
         android:layout_height="47dp"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="-30dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toStartOf="@+id/imageButton"
         app:layout_constraintTop_toBottomOf="@+id/imageButton"
         app:srcCompat="@drawable/group_64" />
 
@@ -230,17 +227,15 @@
         android:id="@+id/settingIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageButton"
         app:srcCompat="@drawable/setting_1" />
 
     <Button
         android:id="@+id/button9"
         android:layout_width="165dp"
         android:layout_height="230dp"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button"
         android:stateListAnimator="@null"
@@ -249,26 +244,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/news" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="30dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="30dp" />
-
     <ImageButton
         android:id="@+id/postButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/button"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -277,40 +257,42 @@
 
     <TextView
         android:id="@+id/newsTitle"
-        android:layout_width="60dp"
+        android:layout_width="165dp"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="140dp"
+        android:paddingLeft="15dp"
         android:text="@string/newsTitle"
         app:layout_constraintStart_toStartOf="@+id/button9"
         app:layout_constraintTop_toTopOf="@+id/button9" />
 
     <TextView
         android:id="@+id/newsDetail"
-        android:layout_width="130dp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:text="@string/newsDetail"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/button9"
         app:layout_constraintTop_toBottomOf="@+id/newsTitle" />
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="wrap_content"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="140dp"
+        android:paddingLeft="15dp"
         android:text="@string/newsTitle"
         app:layout_constraintStart_toStartOf="@+id/button10"
         app:layout_constraintTop_toTopOf="@+id/button10" />
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="130dp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:text="@string/newsDetail"
         app:layout_constraintStart_toStartOf="@+id/button10"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
