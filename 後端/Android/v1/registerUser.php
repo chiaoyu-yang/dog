@@ -8,15 +8,13 @@ $response = array();
 if($_SERVER['REQUEST_METHOD']=='POST'){
 	if(
 		isset($_POST['username']) and 
-			isset($_POST['email']) and 
-				isset($_POST['password']))
+			isset($_POST['email']))
 		{
 		//operate the data further 
 
 		$db = new DbOperations(); 
 
 		$result = $db->createUser( 	$_POST['username'],
-									$_POST['password'],
 									$_POST['email']
 								);
 		if($result == 1){
@@ -40,3 +38,5 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 }
 
 echo json_encode($response);
+
+?>
