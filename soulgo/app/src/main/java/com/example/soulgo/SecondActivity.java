@@ -19,8 +19,7 @@ import com.google.android.gms.tasks.Task;
 public class SecondActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    TextView name,email;
-    Button signOutBtn;
+    TextView userName;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,10 +27,7 @@ public class SecondActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        name = findViewById(R.id.name);
-        email = findViewById(R.id.email);
-        signOutBtn = findViewById(R.id.signout);
-
+        userName = findViewById(R.id.userName);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
@@ -40,25 +36,8 @@ public class SecondActivity extends AppCompatActivity{
         if(acct!=null){
             String personName = acct.getDisplayName();
             String personEmail = acct.getEmail();
-            name.setText(personName);
-            email.setText(personEmail);
+            userName.setText(personName);
         }
-
-        signOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
     }
-
-    void signOut(){
-        gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(Task<Void> task) {
-                finish();
-                startActivity(new Intent(SecondActivity.this,MainActivity.class));
-            }
-        });
-    }
+    
 }
