@@ -27,80 +27,82 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/white_frame"
             android:gravity="center_vertical"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="30dp">
 
-            <TextView
-                android:id="@+id/textView4"
+            <Button
+                android:id="@+id/buttonA"
+                android:layout_height="55dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="A.柯基犬"
-                android:textAlignment="center"
-                android:textSize="14sp" />
+                android:background="@drawable/white_frame"
+                android:text="A.吉娃娃"
+                android:textColor="#767A74"
+                app:backgroundTint="@null"
+                app:iconTint="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/white_frame"
             android:gravity="center_vertical"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="30dp">
 
-            <TextView
-                android:id="@+id/textView5"
+            <Button
+                android:id="@+id/buttonB"
+                android:layout_height="55dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="A.柯基犬"
-                android:textAlignment="center"
-                android:textSize="14sp" />
+                android:background="@drawable/white_frame"
+                android:text="B.柯基犬"
+                android:textColor="#767A74"
+                app:backgroundTint="@null"
+                app:iconTint="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="30dp">
+
+        <Button
+            android:id="@+id/buttonC"
+            android:layout_height="55dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/white_frame"
+            android:text="C.臘腸狗"
+            android:textColor="#767A74"
+            app:backgroundTint="@null"
+            app:iconTint="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/white_frame"
             android:gravity="center_vertical"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="30dp">
 
-            <TextView
-                android:id="@+id/textView7"
+            <Button
+                android:id="@+id/buttonD"
+                android:layout_height="55dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="A.柯基犬"
-                android:textAlignment="center"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/white_frame"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="30dp">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="A.柯基犬"
-                android:textAlignment="center"
-                android:textSize="14sp" />
-
+                android:background="@drawable/white_frame"
+                android:text="D.馬爾濟斯"
+                android:textColor="#767A74"
+                app:backgroundTint="@null"
+                app:iconTint="#FFFFFF" />
         </LinearLayout>
 
     </LinearLayout>
