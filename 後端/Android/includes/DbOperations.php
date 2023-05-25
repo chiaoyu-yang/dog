@@ -42,21 +42,39 @@
 			}
 		}
 
-		public function getRanks(){
-			$stmt = $this->con->prepare("SELECT division, username, integral FROM ranks ORDER BY integral desc");
+		public function getRanks() {
+			$stmt = $this->con->prepare("SELECT division, username, integral FROM ranks ORDER BY integral desc LIMIT 100");
 			$stmt->execute();
 			$result = $stmt->get_result();
-		
-			if($result->num_rows > 0){
+			
+			if ($result->num_rows > 0) {
 				$ranks = array();
-				while($rank = $result->fetch_assoc()){
+				while ($rank = $result->fetch_assoc()) {
 					$ranks[] = $rank;
 				}
 				return $ranks;
-			}else{
+			} else {
 				return null;
 			}
 		}
+
+		public function getMyranks($uid) {
+			$stmt = $this->con->prepare("SELECT division, username, integral FROM ranks WHERE Uid = '$uid'");
+			$stmt->execute();
+			$result = $stmt->get_result();
+			
+			if ($result->num_rows > 0) {
+				$myranks = array();
+				while ($myrank = $result->fetch_assoc()) {
+					$myranks[] = $myrank;
+				}
+				return $myranks;
+			} else {
+				return null;
+			}
+		}
+		// 取得使用者的 Uid
+		$uid = $_SESSION['uid']; // 假設 Uid 儲存在 Session 中
 	}
 
 ?>
