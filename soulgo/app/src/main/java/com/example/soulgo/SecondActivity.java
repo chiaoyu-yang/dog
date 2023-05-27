@@ -21,7 +21,6 @@ public class SecondActivity extends AppCompatActivity{
     GoogleSignInClient gsc;
     TextView userName;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +33,11 @@ public class SecondActivity extends AppCompatActivity{
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if(acct!=null){
-            String personName = acct.getDisplayName();
             String personEmail = acct.getEmail();
-            userName.setText(personName);
+            userName.setText(personEmail);
         }
+
+
     }
     
 }
