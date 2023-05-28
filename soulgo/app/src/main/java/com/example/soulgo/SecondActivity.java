@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -22,6 +21,7 @@ public class SecondActivity extends AppCompatActivity{
     GoogleSignInClient gsc;
     TextView userName;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,20 +34,10 @@ public class SecondActivity extends AppCompatActivity{
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if(acct!=null){
+            String personName = acct.getDisplayName();
             String personEmail = acct.getEmail();
-            userName.setText(personEmail);
+            userName.setText(personName);
         }
-
-        final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
-
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SecondActivity.this,QuizActivity.class);
-                startActivity(intent);
-
-            }
-        });
     }
     
 }
