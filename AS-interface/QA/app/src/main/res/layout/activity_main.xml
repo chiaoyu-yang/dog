@@ -34,8 +34,8 @@
             android:orientation="vertical"
             tools:layout_editor_absoluteX="30dp">
 
-            <Button
-                android:id="@+id/buttonA"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/option1"
                 android:layout_height="55dp"
                 android:layout_width="match_parent"
                 android:background="@drawable/white_frame"
@@ -54,8 +54,8 @@
             android:orientation="vertical"
             tools:layout_editor_absoluteX="30dp">
 
-            <Button
-                android:id="@+id/buttonB"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/option2"
                 android:layout_height="55dp"
                 android:layout_width="match_parent"
                 android:background="@drawable/white_frame"
@@ -74,8 +74,8 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="30dp">
 
-        <Button
-            android:id="@+id/buttonC"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option3"
             android:layout_height="55dp"
             android:layout_width="match_parent"
             android:background="@drawable/white_frame"
@@ -94,8 +94,8 @@
             android:orientation="vertical"
             tools:layout_editor_absoluteX="30dp">
 
-            <Button
-                android:id="@+id/buttonD"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/option4"
                 android:layout_height="55dp"
                 android:layout_width="match_parent"
                 android:background="@drawable/white_frame"
@@ -108,7 +108,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="哪一種狗是「世界上最小的犬種」?"
@@ -119,16 +119,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:background="#F1FAEE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:srcCompat="@drawable/close" />
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -154,13 +145,40 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/timer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="00:05"
             android:textAlignment="center"
             android:textSize="14sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="結束答題"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:layout_marginTop="20dp"
+        app:backgroundTint="@null"
+        android:background="@drawable/close_frame" />
+
+    <TextView
+        android:id="@+id/questions"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="@drawable/white_frame"
+        android:elevation="1dp"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text="1/10"
+        android:textColor="#1F6BB8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
