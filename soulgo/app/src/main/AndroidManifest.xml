@@ -15,12 +15,6 @@
         android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
         <activity
-            android:name=".QuizResults"
-            android:exported="false" />
-        <activity
-            android:name=".QuizActivity"
-            android:exported="false" />
-        <activity
             android:name=".SecondActivity"
             android:exported="false" />
         <activity
