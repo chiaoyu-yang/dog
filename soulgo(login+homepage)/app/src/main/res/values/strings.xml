@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">soulgo</string>
+    <string name="usericon">userIcon</string>
+    <string name="leaderBoardButton">名人堂</string>
+    <string name="scanButton">看我認狗</string>
+    <string name="achievementButton">汪星問</string>
+    <string name="pictureButton">寶典</string>
+    <string name="function">學堂</string>
+    <string name="news">汪汪日報社</string>
+    <string name="newsTitle">黃金獵犬</string>
+    <string name="newsDetail">位於 : 100台北市中正區八德路一段1號</string>
+    <string name="userName">玩家</string>
+</resources>
