@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        ImageView backBtn = findViewById(R.id.backBtn);
+        Button backBtn = findViewById(R.id.backBtn);
         TextView timer = findViewById(R.id.timer);
 
         questions = findViewById(R.id.questions);
@@ -207,7 +208,7 @@ public class QuizActivity extends AppCompatActivity {
                 quizTimer.purge();
                 quizTimer.cancel();
 
-                startActivity(new Intent(QuizActivity.this, MainActivity.class));
+                startActivity(new Intent(QuizActivity.this, QuizResults.class));
                 finish();
             }
         });
@@ -217,7 +218,7 @@ public class QuizActivity extends AppCompatActivity {
         currentQuestionPosition++;
 
         if((currentQuestionPosition+1) == questionsLists.size()){
-            nextBtn.setText("Submit Quiz");
+            nextBtn.setText("結束答題");
         }
 
         if(currentQuestionPosition < questionsLists.size()){
@@ -252,56 +253,48 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private void startTimer(TextView timerTextView){
+    private void startTimer(TextView timerTextView) {
         quizTimer = new Timer();
+        seconds = 60;
 
         quizTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if(seconds == 0){
-                    totalTimeInMins--;
-                    seconds = 59;
-                }
-                else if(seconds==0 && totalTimeInMins==0){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String finalSeconds = String.valueOf(seconds);
 
+                        if (finalSeconds.length() == 1) {
+                            finalSeconds = "0" + finalSeconds;
+                        }
+
+                        timerTextView.setText(finalSeconds);
+                    }
+                });
+
+                if (seconds == 0) {
                     quizTimer.purge();
                     quizTimer.cancel();
 
-                    Toast.makeText(QuizActivity.this, "Time Over", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(QuizActivity.this, "Time Over", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                     Intent intent = new Intent(QuizActivity.this, QuizResults.class);
-                    intent.putExtra("correct",getCorrectAnswers());
+                    intent.putExtra("correct", getCorrectAnswers());
                     intent.putExtra("incorrect", getInCorrectAnswers());
                     startActivity(intent);
 
                     finish();
-
-
-                }
-                else{
+                } else {
                     seconds--;
                 }
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        String finalMinutes = String.valueOf(totalTimeInMins);
-                        String finalSeconds = String.valueOf(seconds);
-
-                        if(finalMinutes.length()==1){
-                            finalMinutes = "0"+finalMinutes;
-                        }
-
-                        if(finalSeconds.length()==1){
-                            finalSeconds = "0"+finalSeconds;
-                        }
-
-                        timerTextView.setText(finalMinutes + ":"+finalSeconds);
-                    }
-                });
             }
-        }, 1000,1000);
+        }, 1000, 1000);
     }
 
     private int getCorrectAnswers(){

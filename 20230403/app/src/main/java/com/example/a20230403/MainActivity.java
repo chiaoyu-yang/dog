@@ -18,17 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final LinearLayout java = findViewById(R.id.javaLayout);
-
         final Button startBtn = findViewById(R.id.startQuizBtn);
-
-        java.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                java.setBackgroundResource(R.drawable.round_back_white_stroke10);
-
-            }
-        });
 
 
         startBtn.setOnClickListener(new View.OnClickListener() {
