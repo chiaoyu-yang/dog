@@ -6,6 +6,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class QuizResults extends AppCompatActivity {
@@ -15,7 +17,7 @@ public class QuizResults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_results);
 
-        final AppCompatButton startNewBtn = findViewById(R.id.startNewQuizBtn);
+        final ImageButton startNewBtn = findViewById(R.id.startNewQuizBtn);
         final TextView correctAnswer = findViewById(R.id.correctAnswers);
         final TextView incorrectAnswers = findViewById(R.id.incorrectAnswer);
 
