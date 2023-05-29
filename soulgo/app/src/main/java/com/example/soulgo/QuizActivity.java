@@ -3,6 +3,8 @@ package com.example.soulgo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,19 +30,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class QuizActivity extends AppCompatActivity {
-
-    private TextView questions;
     private TextView question;
 
     private AppCompatButton option1, option2, option3, option4;
 
     private AppCompatButton nextBtn;
 
-    private Timer quizTimer;
+    private CountDownTimer quizTimer;
 
-    private  int totalTimeInMins = 1;
+    private int totalTimeInSeconds = 11;
+    private int answerDelayInSeconds = 1;
 
-    private int seconds = 0;
 
     private List<QuestionList> questionsLists;
 
@@ -53,10 +53,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        Button backBtn = findViewById(R.id.backBtn);
         TextView timer = findViewById(R.id.timer);
 
-        questions = findViewById(R.id.questions);
         question = findViewById(R.id.question);
 
         option1 = findViewById(R.id.option1);
@@ -66,13 +64,11 @@ public class QuizActivity extends AppCompatActivity {
 
         nextBtn = findViewById(R.id.nextBtn);
 
-
         questionsLists = new ArrayList<>();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-
-// 创建一个StringRequest请求
+        // 创建一个StringRequest请求
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_QUESTION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -89,17 +85,17 @@ public class QuizActivity extends AppCompatActivity {
                         String choice3 = questionObject.getString("choice3");
                         String choice4 = questionObject.getString("choice4");
                         String answer = questionObject.getString("ans");
-                        questionsLists.add( new QuestionList(question, choice1, choice2, choice3, choice4, answer, ""));
+                        questionsLists.add(new QuestionList(question, choice1, choice2, choice3, choice4, answer, ""));
                     }
 
                     // 在此处设置第一个问题和选项
-                    questions.setText((currentQuestionPosition + 1) + "/" + questionsLists.size());
                     question.setText(questionsLists.get(currentQuestionPosition).getQuestion());
                     option1.setText(questionsLists.get(currentQuestionPosition).getOption1());
                     option2.setText(questionsLists.get(currentQuestionPosition).getOption2());
                     option3.setText(questionsLists.get(currentQuestionPosition).getOption3());
                     option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
 
+                    startTimer();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -111,18 +107,13 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-// 发送请求
-
+        // 发送请求
         requestQueue.add(stringRequest);
 
-        startTimer(timer);
-
         option1.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-                if(selectedOptionByUser.isEmpty()){
+                if (selectedOptionByUser.isEmpty()) {
                     selectedOptionByUser = option1.getText().toString();
 
                     option1.setBackgroundResource(R.drawable.round_back_red10);
@@ -131,15 +122,18 @@ public class QuizActivity extends AppCompatActivity {
                     revealAnswer();
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
-                }
 
+                    // 取消计时器，准备进入下一题
+                    quizTimer.cancel();
+                    nextQuestionWithDelay();
+                }
             }
         });
 
         option2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectedOptionByUser.isEmpty()){
+                if (selectedOptionByUser.isEmpty()) {
                     selectedOptionByUser = option2.getText().toString();
 
                     option2.setBackgroundResource(R.drawable.round_back_red10);
@@ -148,6 +142,10 @@ public class QuizActivity extends AppCompatActivity {
                     revealAnswer();
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
+
+                    // 取消计时器，准备进入下一题
+                    quizTimer.cancel();
+                    nextQuestionWithDelay();
                 }
             }
         });
@@ -155,7 +153,7 @@ public class QuizActivity extends AppCompatActivity {
         option3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectedOptionByUser.isEmpty()){
+                if (selectedOptionByUser.isEmpty()) {
                     selectedOptionByUser = option3.getText().toString();
 
                     option3.setBackgroundResource(R.drawable.round_back_red10);
@@ -164,15 +162,18 @@ public class QuizActivity extends AppCompatActivity {
                     revealAnswer();
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
-                }
 
+                    // 取消计时器，准备进入下一题
+                    quizTimer.cancel();
+                    nextQuestionWithDelay();
+                }
             }
         });
 
         option4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectedOptionByUser.isEmpty()){
+                if (selectedOptionByUser.isEmpty()) {
                     selectedOptionByUser = option4.getText().toString();
 
                     option4.setBackgroundResource(R.drawable.round_back_red10);
@@ -181,44 +182,32 @@ public class QuizActivity extends AppCompatActivity {
                     revealAnswer();
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
-                }
 
+                    // 取消计时器，准备进入下一题
+                    quizTimer.cancel();
+                    nextQuestionWithDelay();
+                }
             }
         });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (selectedOptionByUser.isEmpty()){
-                    Toast.makeText(QuizActivity.this, "Please select an option", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    changeNextQuestion();
-                }
-            }
-        });
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quizTimer.purge();
-                quizTimer.cancel();
-
-                startActivity(new Intent(QuizActivity.this, QuizResults.class));
+                Intent intent = new Intent(QuizActivity.this, QuizResults.class);
+                intent.putExtra("correct", getCorrectAnswers());
+                intent.putExtra("incorrect", getInCorrectAnswers());
+                startActivity(intent);
                 finish();
             }
+
         });
+
     }
 
-    private void changeNextQuestion(){
+    private void nextQuestion() {
         currentQuestionPosition++;
 
-        if((currentQuestionPosition+1) == questionsLists.size()){
-            nextBtn.setText("結束答題");
-        }
-
-        if(currentQuestionPosition < questionsLists.size()){
+        if (currentQuestionPosition < questionsLists.size()) {
             selectedOptionByUser = "";
 
             option1.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
@@ -233,65 +222,66 @@ public class QuizActivity extends AppCompatActivity {
             option4.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
             option4.setTextColor(Color.parseColor("#1F6BB8"));
 
-            questions.setText((currentQuestionPosition+1)+"/"+questionsLists.size());
             question.setText(questionsLists.get(currentQuestionPosition).getQuestion());
             option1.setText(questionsLists.get(currentQuestionPosition).getOption1());
             option2.setText(questionsLists.get(currentQuestionPosition).getOption2());
             option3.setText(questionsLists.get(currentQuestionPosition).getOption3());
             option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
-        }
-        else {
+
+            // 开始新的计时器
+            startTimer();
+        } else {
             Intent intent = new Intent(QuizActivity.this, QuizResults.class);
             intent.putExtra("correct", getCorrectAnswers());
             intent.putExtra("incorrect", getInCorrectAnswers());
             startActivity(intent);
-
             finish();
         }
     }
 
-    private void startTimer(TextView timerTextView) {
-        quizTimer = new Timer();
-        seconds = 60;
+    private void nextQuestionWithDelay() {
+    // 延迟5秒后进入下一题
+    new Handler()
+        .postDelayed(
+            new Runnable() {
+              @Override
+              public void run() {
+                nextQuestion();
+              }
+            },
+            5000);
+    }
 
-        quizTimer.scheduleAtFixedRate(new TimerTask() {
+    private void startTimer() {
+        final TextView timerTextView = findViewById(R.id.timer);
+        int millisecondsInFuture = totalTimeInSeconds * 1000;
+        int countDownInterval = 1000;
+
+        quizTimer = new CountDownTimer(millisecondsInFuture, countDownInterval) {
             @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String finalSeconds = String.valueOf(seconds);
+            public void onTick(long millisUntilFinished) {
+                long seconds = millisUntilFinished / 1000;
+                String finalSeconds = String.valueOf(seconds);
 
-                        if (finalSeconds.length() == 1) {
-                            finalSeconds = "0" + finalSeconds;
-                        }
-
-                        timerTextView.setText(finalSeconds);
-                    }
-                });
-
-                if (seconds == 0) {
-                    quizTimer.purge();
-                    quizTimer.cancel();
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(QuizActivity.this, "Time Over", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    Intent intent = new Intent(QuizActivity.this, QuizResults.class);
-                    intent.putExtra("correct", getCorrectAnswers());
-                    intent.putExtra("incorrect", getInCorrectAnswers());
-                    startActivity(intent);
-
-                    finish();
-                } else {
-                    seconds--;
+                if (finalSeconds.length() == 1) {
+                    finalSeconds = "0" + finalSeconds;
                 }
+
+                timerTextView.setText(finalSeconds);
             }
-        }, 1000, 1000);
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(QuizActivity.this, "Time Over", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(QuizActivity.this, QuizResults.class);
+                intent.putExtra("correct", getCorrectAnswers());
+                intent.putExtra("incorrect", getInCorrectAnswers());
+                startActivity(intent);
+                finish();
+            }
+        };
+
+        quizTimer.start();
     }
 
     private int getCorrectAnswers(){
@@ -325,14 +315,15 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
-
-        quizTimer.purge();
-        quizTimer.cancel();
+    public void onBackPressed() {
+        if (quizTimer != null) {
+            quizTimer.cancel();
+        }
 
         startActivity(new Intent(QuizActivity.this, MainActivity.class));
         finish();
     }
+
 
     private void revealAnswer(){
         final String getAnswer = questionsLists.get(currentQuestionPosition).getAnswer();
