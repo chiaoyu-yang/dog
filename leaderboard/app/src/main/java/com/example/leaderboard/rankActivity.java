@@ -1,6 +1,8 @@
 package com.example.leaderboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -24,13 +26,14 @@ public class rankActivity extends AppCompatActivity {
 
     private List<Ranklist> ranklists;
 
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        division = findViewById(R.id.division);
-        username = findViewById(R.id.username);
-        integral = findViewById(R.id.integral);
+        division = findViewById(R.id.txt_division);
+        username = findViewById(R.id.txt_username);
+        integral = findViewById(R.id.txt_integral);
 
         ranklists = new ArrayList<>();
 
