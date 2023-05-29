@@ -41,8 +41,6 @@ public class QuizActivity extends AppCompatActivity {
 
     private Timer quizTimer;
 
-    private  int totalTimeInMins = 1;
-
     private int seconds = 0;
 
     private List<QuestionList> questionsLists;
@@ -208,7 +206,11 @@ public class QuizActivity extends AppCompatActivity {
                 quizTimer.purge();
                 quizTimer.cancel();
 
-                startActivity(new Intent(QuizActivity.this, QuizResults.class));
+                Intent intent = new Intent(QuizActivity.this, QuizResults.class);
+                intent.putExtra("correct", getCorrectAnswers());
+                intent.putExtra("incorrect", getInCorrectAnswers());
+                startActivity(intent);
+
                 finish();
             }
         });
@@ -312,20 +314,21 @@ public class QuizActivity extends AppCompatActivity {
         return correctAnswers;
     }
 
-    private int getInCorrectAnswers(){
-        int correctAnswers = 0;
+    private int getInCorrectAnswers() {
+        int incorrectAnswers = 0;
 
-        for(int i=0; i<questionsLists.size();i++){
-
+        for (int i = 0; i < questionsLists.size(); i++) {
             final String getUserSelectedAnswer = questionsLists.get(i).getUserSelectedAnswer();
             final String getAnswer = questionsLists.get(i).getAnswer();
 
-            if(getUserSelectedAnswer.equals(getAnswer)){
-                correctAnswers++;
+            if (!getUserSelectedAnswer.equals(getAnswer)) {
+                incorrectAnswers++;
             }
         }
-        return correctAnswers;
+
+        return incorrectAnswers;
     }
+
 
     @Override
     public void onBackPressed(){
