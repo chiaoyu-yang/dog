@@ -15,9 +15,22 @@
 
 		/*CRUD -> C -> CREATE */
 
-		public function createUser($username, $email){
-			$stmt = $this->con->prepare("INSERT INTO `test` (`Uid`, `username`, `email`) VALUES (NULL, ?, ?);");
-			$stmt->bind_param("ss",$username,$email);
+		public function createUser($gmail){
+			$stmt = $this->con->prepare("INSERT INTO `user_login` (`Uid`, `gmail`, `isStop`, `create_time`) VALUES (NULL, ?, 'N', curdate());");
+			$stmt->bind_param("s", $gmail);
+
+			if($stmt->execute()){
+				return 1; 
+			}else{
+				return 2; 
+			}
+		}
+
+		public function createProfile($gmail){
+			$stmt = $this->con->prepare("INSERT INTO `user_profile` 
+			SELECT `UID`, concat('玩家',`UID`), 0, curdate() FROM `user_login`
+			WHERE gmail = ?;");
+			$stmt->bind_param("s", $gmail);
 
 			if($stmt->execute()){
 				return 1; 
@@ -31,7 +44,7 @@
 			$stmt->execute();
 			$result = $stmt->get_result();
 		
-			if($result->num_rows > 0){
+			if($result->num_rows > 0){	
 				$questions = array();
 				while($question = $result->fetch_assoc()){
 					$questions[] = $question;
@@ -40,10 +53,10 @@
 			}else{
 				return null;
 			}
-		}
+		}	
 
 		public function getRanks() {
-			$stmt = $this->con->prepare("SELECT division, username, integral FROM ranks ORDER BY integral desc LIMIT 100");
+			$stmt = $this->con->prepare("SELECT division, nickname, points FROM ranks");
 			$stmt->execute();
 			$result = $stmt->get_result();
 			
@@ -58,8 +71,9 @@
 			}
 		}
 
-		public function getMyranks($uid) {
-			$stmt = $this->con->prepare("SELECT division, username, integral FROM ranks WHERE Uid = '$uid'");
+		public function getMyranks($nickname) {
+			$stmt = $this->con->prepare("SELECT division, nickname, points FROM ranks WHERE nickname = ?;");
+			$stmt->bind_param("s", $nickname);
 			$stmt->execute();
 			$result = $stmt->get_result();
 			
@@ -73,10 +87,6 @@
 				return null;
 			}
 		}
-		// 取得使用者的 Uid
-		$uid = $_SESSION['uid']; // 假設 Uid 儲存在 Session 中
 	}
 
 ?>
-
-	
