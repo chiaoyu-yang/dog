@@ -223,15 +223,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imageButton"
         app:srcCompat="@drawable/group_64" />
 
-    <ImageButton
-        android:id="@+id/settingIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/setting_1"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageButton" />
-
     <Button
         android:id="@+id/button9"
         android:layout_width="165dp"
