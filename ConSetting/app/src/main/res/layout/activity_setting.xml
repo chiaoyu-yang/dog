@@ -44,11 +44,20 @@
         android:layout_below="@id/iv_pick_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
         android:drawableBottom="@drawable/line"
         android:gravity="center"
         android:hint="Enter nickname"
-        android:maxEms="10"
-        android:background="@android:color/transparent" />
+        android:maxEms="10" />
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editNickname"
+        android:layout_marginTop="10dp"
+        android:text="update"/>
 
 
 

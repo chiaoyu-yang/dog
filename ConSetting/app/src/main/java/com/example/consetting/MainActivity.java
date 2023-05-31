@@ -11,15 +11,15 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton settingIcon;
+    private ImageButton imageButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        settingIcon = findViewById(R.id.settingIcon);
-        settingIcon.setOnClickListener(new View.OnClickListener() {
+        imageButton = findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openaSetting();

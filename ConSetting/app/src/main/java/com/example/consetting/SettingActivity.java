@@ -10,9 +10,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+//新添加
+import android.os.AsyncTask;
+import android.widget.EditText;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -56,7 +60,26 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        // new
+        EditText editText = findViewById(R.id.editNickname);
+        Button updateButton = findViewById(R.id.updateButton);
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String newNickname = editText.getText().toString().trim();
+                updateNickname(newNickname);
+            }
+        });
     }
+
+    // new
+    private void updateNickname(String newNickname) {
+        UpdateNicknameTask updateNicknameTask = new UpdateNicknameTask();
+        updateNicknameTask.execute(newNickname);
+    }
+
+
+
 
 
 
