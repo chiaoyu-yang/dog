@@ -41,6 +41,8 @@ public class QuizActivity extends AppCompatActivity {
     private int totalTimeInSeconds = 11;
     private int answerDelayInSeconds = 1;
 
+    private int correctAnswers = 0;
+    private int incorrectAnswers = 0;
 
     private List<QuestionList> questionsLists;
 
@@ -126,6 +128,13 @@ public class QuizActivity extends AppCompatActivity {
                     // 取消计时器，准备进入下一题
                     quizTimer.cancel();
                     nextQuestionWithDelay();
+
+                    // 判断答案是否正确并增加计数
+                    if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers++;
+                    }
                 }
             }
         });
@@ -146,6 +155,13 @@ public class QuizActivity extends AppCompatActivity {
                     // 取消计时器，准备进入下一题
                     quizTimer.cancel();
                     nextQuestionWithDelay();
+
+                    // 判断答案是否正确并增加计数
+                    if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers++;
+                    }
                 }
             }
         });
@@ -166,6 +182,13 @@ public class QuizActivity extends AppCompatActivity {
                     // 取消计时器，准备进入下一题
                     quizTimer.cancel();
                     nextQuestionWithDelay();
+
+                    // 判断答案是否正确并增加计数
+                    if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers++;
+                    }
                 }
             }
         });
@@ -186,6 +209,13 @@ public class QuizActivity extends AppCompatActivity {
                     // 取消计时器，准备进入下一题
                     quizTimer.cancel();
                     nextQuestionWithDelay();
+
+                    // 判断答案是否正确并增加计数
+                    if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers++;
+                    }
                 }
             }
         });
@@ -215,37 +245,36 @@ public class QuizActivity extends AppCompatActivity {
     private void nextQuestion() {
         currentQuestionPosition++;
 
-        if (currentQuestionPosition < questionsLists.size()) {
-            selectedOptionByUser = "";
-
-            option1.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option1.setTextColor(Color.parseColor("#1F6BB8"));
-
-            option2.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option2.setTextColor(Color.parseColor("#1F6BB8"));
-
-            option3.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option3.setTextColor(Color.parseColor("#1F6BB8"));
-
-            option4.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option4.setTextColor(Color.parseColor("#1F6BB8"));
-
-            question.setText(questionsLists.get(currentQuestionPosition).getQuestion());
-            option1.setText(questionsLists.get(currentQuestionPosition).getOption1());
-            option2.setText(questionsLists.get(currentQuestionPosition).getOption2());
-            option3.setText(questionsLists.get(currentQuestionPosition).getOption3());
-            option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
-
-            // 开始新的计时器
-            startTimer();
-
-        } else {
-            Intent intent = new Intent(QuizActivity.this, QuizResults.class);
-            intent.putExtra("correct", getCorrectAnswers());
-            intent.putExtra("incorrect", getInCorrectAnswers());
-            startActivity(intent);
-            finish();
+        if (currentQuestionPosition >= questionsLists.size()) {
+            // 当所有题目回答完后，将题目重新添加到列表中，实现无限重复答题
+            for (QuestionList question : questionsLists) {
+                question.setUserSelectedAnswer("");
+            }
+            currentQuestionPosition = 0;
         }
+
+        selectedOptionByUser = "";
+
+        option1.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
+        option1.setTextColor(Color.parseColor("#1F6BB8"));
+
+        option2.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
+        option2.setTextColor(Color.parseColor("#1F6BB8"));
+
+        option3.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
+        option3.setTextColor(Color.parseColor("#1F6BB8"));
+
+        option4.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
+        option4.setTextColor(Color.parseColor("#1F6BB8"));
+
+        question.setText(questionsLists.get(currentQuestionPosition).getQuestion());
+        option1.setText(questionsLists.get(currentQuestionPosition).getOption1());
+        option2.setText(questionsLists.get(currentQuestionPosition).getOption2());
+        option3.setText(questionsLists.get(currentQuestionPosition).getOption3());
+        option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
+
+        // 开始新的计时器
+        startTimer();
     }
 
     private Handler handler = new Handler();
@@ -258,7 +287,7 @@ public class QuizActivity extends AppCompatActivity {
             public void run() {
                 nextQuestion();
             }
-        }, 5000);
+        }, 2000);
     }
 
 
@@ -295,32 +324,10 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private int getCorrectAnswers(){
-        int correctAnswers = 0;
-
-        for(int i=0; i<questionsLists.size();i++){
-
-            final String getUserSelectedAnswer = questionsLists.get(i).getUserSelectedAnswer();
-            final String getAnswer = questionsLists.get(i).getAnswer();
-
-            if(getUserSelectedAnswer.equals(getAnswer)){
-                correctAnswers++;
-            }
-        }
         return correctAnswers;
     }
 
     private int getInCorrectAnswers() {
-        int incorrectAnswers = 0;
-
-        for (int i = 0; i < questionsLists.size(); i++) {
-            final String getUserSelectedAnswer = questionsLists.get(i).getUserSelectedAnswer();
-            final String getAnswer = questionsLists.get(i).getAnswer();
-
-            if (getUserSelectedAnswer != getAnswer) {
-                incorrectAnswers++;
-            }
-        }
-
         return incorrectAnswers;
     }
 

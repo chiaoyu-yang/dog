@@ -1,6 +1,7 @@
 package com.example.soulgo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,10 +23,17 @@ public class QuizResults extends AppCompatActivity {
 
         final int getCorrectAnswers = getIntent().getIntExtra("correct", 0);
         final int getIncorrectAnswers = getIntent().getIntExtra("incorrect", 0);
+        final int getTotleScore = (getCorrectAnswers-getIncorrectAnswers)*10;
+
 
         correctAnswers.setText(String.valueOf(getCorrectAnswers));
-        incorrectAnswers.setText(String.valueOf(getIncorrectAnswers-112));
-        totleScore.setText(String.valueOf((getCorrectAnswers-getIncorrectAnswers+112)*10));
+        incorrectAnswers.setText(String.valueOf(getIncorrectAnswers));
+        totleScore.setText(String.valueOf(getTotleScore));
+        if (getTotleScore < 0) {
+            totleScore.setTextColor(Color.parseColor("#DD2C00"));
+        } else {
+            totleScore.setTextColor(Color.parseColor("#00C853"));
+        }
 
         startNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -106,17 +106,6 @@
                 app:iconTint="#FFFFFF" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/nextBtn"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:text="結束答題"
-            android:textColor="#fff"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:backgroundTint="@null"
-            android:background="@drawable/close_frame" />
-
     </LinearLayout>
 
     <TextView
@@ -125,7 +114,7 @@
         android:layout_height="wrap_content"
         android:text="哪一種狗是「世界上最小的犬種」?"
         android:textAlignment="viewStart"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -164,6 +153,19 @@
             android:textAlignment="center"
             android:textSize="14sp" />
     </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextBtn"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/close_frame"
+        android:text="結束答題"
+        android:textColor="#fff"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
