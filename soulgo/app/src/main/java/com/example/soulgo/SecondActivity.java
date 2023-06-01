@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Task;import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import java.util.HashMap;import java.util.Map;
 
 public class SecondActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
@@ -33,11 +33,51 @@ public class SecondActivity extends AppCompatActivity{
         gsc = GoogleSignIn.getClient(this,gso);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if(acct!=null){
+        if (acct != null) {
             String personEmail = acct.getEmail();
-            userName.setText(personEmail);
+
+            String url = Constants.URL_MYNICKNAME;
+
+            final Map<String, String> params = new HashMap<>();
+            params.put("gmail", personEmail);
+
+            final StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject responseJson = new JSONObject(response);
+
+                        JSONArray myNicknameArray = responseJson.getJSONArray("myNickname");
+
+                        if (myNicknameArray.length() > 0) {
+                            String myNickname = myNicknameArray.getString(0);
+                            userName.setText(myNickname);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return params;
+                }
+            };
+
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(request);
         }
 
+
+
+        final LinearLayout startRank = findViewById(R.id.startRankBtn);
         final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +88,20 @@ public class SecondActivity extends AppCompatActivity{
 
             }
         });
+
+        startRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.userName);
+                String nickname = textViewNickname.getText().toString().trim();
+                Intent intent = new Intent(SecondActivity.this, RankingActivity.class);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
     
 }
