@@ -193,13 +193,21 @@ public class QuizActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 停止计时器
+                if (quizTimer != null) {
+                    quizTimer.cancel();
+                    quizTimer = null;
+                }
+
+                handler.removeCallbacksAndMessages(null); // 取消延迟任务
+
+                // 跳转到结果页面，传回答对和答错题数
                 Intent intent = new Intent(QuizActivity.this, QuizResults.class);
                 intent.putExtra("correct", getCorrectAnswers());
                 intent.putExtra("incorrect", getInCorrectAnswers());
                 startActivity(intent);
-                finish();
+                finish(); // 结束当前的 QuizActivity
             }
-
         });
 
     }
@@ -230,6 +238,7 @@ public class QuizActivity extends AppCompatActivity {
 
             // 开始新的计时器
             startTimer();
+
         } else {
             Intent intent = new Intent(QuizActivity.this, QuizResults.class);
             intent.putExtra("correct", getCorrectAnswers());
@@ -239,18 +248,19 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    private Handler handler = new Handler();
+
     private void nextQuestionWithDelay() {
-    // 延迟5秒后进入下一题
-    new Handler()
-        .postDelayed(
-            new Runnable() {
-              @Override
-              public void run() {
+        handler.removeCallbacksAndMessages(null); // 取消之前的延迟任务
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
                 nextQuestion();
-              }
-            },
-            5000);
+            }
+        }, 5000);
     }
+
 
     private void startTimer() {
         final TextView timerTextView = findViewById(R.id.timer);
@@ -299,26 +309,29 @@ public class QuizActivity extends AppCompatActivity {
         return correctAnswers;
     }
 
-    private int getInCorrectAnswers(){
-        int correctAnswers = 0;
+    private int getInCorrectAnswers() {
+        int incorrectAnswers = 0;
 
-        for(int i=0; i<questionsLists.size();i++){
-
+        for (int i = 0; i < questionsLists.size(); i++) {
             final String getUserSelectedAnswer = questionsLists.get(i).getUserSelectedAnswer();
             final String getAnswer = questionsLists.get(i).getAnswer();
 
-            if(getUserSelectedAnswer.equals(getAnswer)){
-                correctAnswers++;
+            if (getUserSelectedAnswer != getAnswer) {
+                incorrectAnswers++;
             }
         }
-        return correctAnswers;
+
+        return incorrectAnswers;
     }
 
     @Override
     public void onBackPressed() {
         if (quizTimer != null) {
             quizTimer.cancel();
+            quizTimer = null;
         }
+
+        handler.removeCallbacksAndMessages(null); // 取消延迟任务
 
         startActivity(new Intent(QuizActivity.this, MainActivity.class));
         finish();
