@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ConSetting</string>
+    <string name="usericon">userIcon</string>
+    <string name="leaderBoardButton">排行榜</string>
+    <string name="scanButton">掃描</string>
+    <string name="achievementButton">成就</string>
+    <string name="pictureButton">圖鑑</string>
+    <string name="function">功能</string>
+    <string name="news">小道消息</string>
+    <string name="newsTitle">黃金獵犬</string>
+    <string name="newsDetail">位於 : 100台北市中正區八德路一段1號</string>
+    <string name="userName">小吉</string>
+    <string name="setting">設定</string>
+    <string name="nickname">暱稱:</string>
+    <string name="playername">吉娃娃</string>
+    <string name="bgmusic">背景音樂 :</string>
+
+</resources>
