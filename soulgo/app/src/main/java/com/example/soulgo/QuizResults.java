@@ -16,14 +16,16 @@ public class QuizResults extends AppCompatActivity {
         setContentView(R.layout.activity_quiz_results);
 
         final ImageButton startNewBtn = findViewById(R.id.startNewQuizBtn);
-        final TextView correctAnswer = findViewById(R.id.correctAnswers);
-        final TextView incorrectAnswers = findViewById(R.id.incorrectAnswer);
+        final TextView correctAnswers = findViewById(R.id.correctAnswers);
+        final TextView incorrectAnswers = findViewById(R.id.incorrectAnswers);
+        final TextView totleScore = findViewById(R.id.totleScore);
 
         final int getCorrectAnswers = getIntent().getIntExtra("correct", 0);
         final int getIncorrectAnswers = getIntent().getIntExtra("incorrect", 0);
 
-        correctAnswer.setText(String.valueOf(getCorrectAnswers));
-        incorrectAnswers.setText(String.valueOf(getIncorrectAnswers));
+        correctAnswers.setText(String.valueOf(getCorrectAnswers));
+        incorrectAnswers.setText(String.valueOf(getIncorrectAnswers-112));
+        totleScore.setText(String.valueOf((getCorrectAnswers-getIncorrectAnswers+112)*10));
 
         startNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -281,26 +281,23 @@
 
                 </FrameLayout>
 
-
             </LinearLayout>
+
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:background="@color/main_color"
-                android:layout_gravity="bottom|end"
-                app:srcCompat="@drawable/post" />
-
-        </FrameLayout>
-
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@color/main_color"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/post" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
