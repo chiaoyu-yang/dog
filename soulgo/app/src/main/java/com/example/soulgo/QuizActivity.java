@@ -70,7 +70,7 @@ public class QuizActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        // 创建一个StringRequest请求
+        // 創建stringRequest請求
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_QUESTION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -78,7 +78,6 @@ public class QuizActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
 
                     JSONArray jsonArray = jsonObject.getJSONArray("questions");
-                    // 循环遍历JSON数组中的每个对象，并将其添加到列表中
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject questionObject = jsonArray.getJSONObject(i);
                         String question = questionObject.getString("question");
@@ -90,7 +89,7 @@ public class QuizActivity extends AppCompatActivity {
                         questionsLists.add(new QuestionList(question, choice1, choice2, choice3, choice4, answer, ""));
                     }
 
-                    // 在此处设置第一个问题和选项
+                    // 添加第一個問題和選項
                     question.setText(questionsLists.get(currentQuestionPosition).getQuestion());
                     option1.setText(questionsLists.get(currentQuestionPosition).getOption1());
                     option2.setText(questionsLists.get(currentQuestionPosition).getOption2());
@@ -109,7 +108,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        // 发送请求
+        // 發送請求
         requestQueue.add(stringRequest);
 
         option1.setOnClickListener(new View.OnClickListener() {
@@ -125,11 +124,11 @@ public class QuizActivity extends AppCompatActivity {
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
 
-                    // 取消计时器，准备进入下一题
+                    // 取消計時器
                     quizTimer.cancel();
                     nextQuestionWithDelay();
 
-                    // 判断答案是否正确并增加计数
+                    // 判斷答題是否正確並增加計數
                     if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
                         correctAnswers++;
                     } else {
@@ -152,11 +151,11 @@ public class QuizActivity extends AppCompatActivity {
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
 
-                    // 取消计时器，准备进入下一题
+                    // 取消計時器，準備進入下一題
                     quizTimer.cancel();
                     nextQuestionWithDelay();
 
-                    // 判断答案是否正确并增加计数
+                    // 判斷答題是否正確並增加計數
                     if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
                         correctAnswers++;
                     } else {
@@ -179,11 +178,11 @@ public class QuizActivity extends AppCompatActivity {
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
 
-                    // 取消计时器，准备进入下一题
+                    // 取消計時器，準備進入下一題
                     quizTimer.cancel();
                     nextQuestionWithDelay();
 
-                    // 判断答案是否正确并增加计数
+                    // 判斷答題是否正確並增加計數
                     if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
                         correctAnswers++;
                     } else {
@@ -206,11 +205,11 @@ public class QuizActivity extends AppCompatActivity {
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
 
-                    // 取消计时器，准备进入下一题
+                    // 取消計時器，準備進入下一題
                     quizTimer.cancel();
                     nextQuestionWithDelay();
 
-                    // 判断答案是否正确并增加计数
+                    // 判斷答題是否正確並增加計數
                     if (selectedOptionByUser.equals(questionsLists.get(currentQuestionPosition).getAnswer())) {
                         correctAnswers++;
                     } else {
@@ -223,20 +222,20 @@ public class QuizActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 停止计时器
+                // 停止計時器
                 if (quizTimer != null) {
                     quizTimer.cancel();
                     quizTimer = null;
                 }
 
-                handler.removeCallbacksAndMessages(null); // 取消延迟任务
+                handler.removeCallbacksAndMessages(null); // 取消延遲任務
 
-                // 跳转到结果页面，传回答对和答错题数
+                // 跳轉到結果頁面，傳回答對和答錯題數挑轉到結果頁面
                 Intent intent = new Intent(QuizActivity.this, QuizResults.class);
                 intent.putExtra("correct", getCorrectAnswers());
                 intent.putExtra("incorrect", getInCorrectAnswers());
                 startActivity(intent);
-                finish(); // 结束当前的 QuizActivity
+                finish(); // 结束當前的 QuizActivity
             }
         });
 
@@ -246,7 +245,7 @@ public class QuizActivity extends AppCompatActivity {
         currentQuestionPosition++;
 
         if (currentQuestionPosition >= questionsLists.size()) {
-            // 当所有题目回答完后，将题目重新添加到列表中，实现无限重复答题
+            // 當所有題目回答完後，將題目重新添加到列表中 實現無限重複答題
             for (QuestionList question : questionsLists) {
                 question.setUserSelectedAnswer("");
             }
@@ -273,14 +272,14 @@ public class QuizActivity extends AppCompatActivity {
         option3.setText(questionsLists.get(currentQuestionPosition).getOption3());
         option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
 
-        // 开始新的计时器
+        // 開始新的計時器
         startTimer();
     }
 
     private Handler handler = new Handler();
 
     private void nextQuestionWithDelay() {
-        handler.removeCallbacksAndMessages(null); // 取消之前的延迟任务
+        handler.removeCallbacksAndMessages(null); // 取消之前的延遲任務
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -338,7 +337,7 @@ public class QuizActivity extends AppCompatActivity {
             quizTimer = null;
         }
 
-        handler.removeCallbacksAndMessages(null); // 取消延迟任务
+        handler.removeCallbacksAndMessages(null); // 取消之前的延遲任務
 
         startActivity(new Intent(QuizActivity.this, MainActivity.class));
         finish();

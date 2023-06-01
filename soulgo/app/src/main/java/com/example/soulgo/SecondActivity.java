@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -79,6 +80,7 @@ public class SecondActivity extends AppCompatActivity{
 
         final LinearLayout startRank = findViewById(R.id.startRankBtn);
         final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
+        final ImageButton startimageBtn = findViewById(R.id.imageButton);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +98,15 @@ public class SecondActivity extends AppCompatActivity{
                 String nickname = textViewNickname.getText().toString().trim();
                 Intent intent = new Intent(SecondActivity.this, RankingActivity.class);
                 intent.putExtra("nickname", nickname);
+                startActivity(intent);
+
+            }
+        });
+
+        startimageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SecondActivity.this,SettingActivity.class);
                 startActivity(intent);
 
             }
