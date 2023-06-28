@@ -85,7 +85,10 @@ public class SecondActivity extends AppCompatActivity{
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.userName);
+                String nickname = textViewNickname.getText().toString().trim();
                 Intent intent = new Intent(SecondActivity.this,QuizActivity.class);
+                intent.putExtra("nickname", nickname);
                 startActivity(intent);
 
             }
