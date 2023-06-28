@@ -25,12 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
+import java.util.HashMap;import java.util.List;
+import java.util.Map;import java.util.Timer;
 import java.util.TimerTask;
 
 public class QuizActivity extends AppCompatActivity {
-    private TextView question;
+    private TextView question, textViewUsername;
 
     private AppCompatButton option1, option2, option3, option4;
 
@@ -65,6 +65,10 @@ public class QuizActivity extends AppCompatActivity {
         option4 = findViewById(R.id.option4);
 
         nextBtn = findViewById(R.id.nextBtn);
+        textViewUsername = findViewById(R.id.myusername);
+
+        String nickname = getIntent().getStringExtra("nickname");
+        textViewUsername.setText(nickname);
 
         questionsLists = new ArrayList<>();
 
@@ -234,6 +238,7 @@ public class QuizActivity extends AppCompatActivity {
                 Intent intent = new Intent(QuizActivity.this, QuizResults.class);
                 intent.putExtra("correct", getCorrectAnswers());
                 intent.putExtra("incorrect", getInCorrectAnswers());
+                intent.putExtra("nickname", nickname);
                 startActivity(intent);
                 finish(); // 结束當前的 QuizActivity
             }
