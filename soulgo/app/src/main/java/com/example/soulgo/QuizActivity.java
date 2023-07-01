@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;import java.util.List;
-import java.util.Map;import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
     private TextView question, textViewUsername;

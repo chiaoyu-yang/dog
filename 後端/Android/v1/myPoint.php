@@ -6,20 +6,21 @@ $response = array();
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
 	if(
-		isset($_POST['username']) and 
-			isset($_POST['gmail']))
+		isset($_POST['uid']) and 
+			isset($_POST['newPoint']))
 		{
 		//operate the data further 
 
 		$db = new DbOperations(); 
 
-		$result = $db->createUser( 	
-									$_POST['gmail']
+		$result = $db->updateMyPoint( 	
+									$_POST['uid'],
+                                    $_POST['newPoint']
 								);
-		$uidResult = $db->createProfile($_POST['gmail']);
+
 		if($result == 1){
 			$response['error'] = false; 
-			$response['message'] = "User registered successfully";
+			$response['message'] = "User newPoint successfully";
 		}
 
 	}else{
