@@ -10,4 +10,5 @@
     <string name="newsTitle">黃金獵犬</string>
     <string name="newsDetail">位於 : 100台北市中正區八德路一段1號</string>
     <string name="userName">玩家</string>
+    <string name="placeholder_hour_time">00:00</string>
 </resources>

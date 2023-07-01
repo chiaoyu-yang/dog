@@ -53,7 +53,7 @@ public class QuizResults extends AppCompatActivity {
 
         String url = URL_MYPOINT;
         final Map<String, String> params = new HashMap<>();
-        params.put("username", nickname);
+        params.put("uid", nickname);
         params.put("newPoint", String.valueOf(getTotleScore));
 
         // 建立StringRequest物件

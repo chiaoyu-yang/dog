@@ -21,14 +21,16 @@ import com.google.android.gms.tasks.Task;import org.json.JSONArray;import org.js
 public class SecondActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    TextView userName;
+    TextView userName, myusername;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
         userName = findViewById(R.id.userName);
+        myusername = findViewById(R.id.myusername);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
@@ -51,8 +53,12 @@ public class SecondActivity extends AppCompatActivity{
                         JSONArray myNicknameArray = responseJson.getJSONArray("myNickname");
 
                         if (myNicknameArray.length() > 0) {
-                            String myNickname = myNicknameArray.getString(0);
-                            userName.setText(myNickname);
+                            JSONObject nicknameObject = myNicknameArray.getJSONObject(0);
+                            String nickname = nicknameObject.getString("Nickname");
+                            String uid = nicknameObject.getString("Uid");
+
+                            userName.setText(nickname); // 將值設置到userName的TextView
+                            myusername.setText(uid); // 將值設置到myusername的TextView
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -85,7 +91,7 @@ public class SecondActivity extends AppCompatActivity{
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView textViewNickname = findViewById(R.id.userName);
+                TextView textViewNickname = findViewById(R.id.myusername);
                 String nickname = textViewNickname.getText().toString().trim();
                 Intent intent = new Intent(SecondActivity.this,QuizActivity.class);
                 intent.putExtra("nickname", nickname);
