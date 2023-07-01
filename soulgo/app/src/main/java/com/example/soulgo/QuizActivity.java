@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,7 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;import java.util.List;import java.util.Map;
 
 public class QuizActivity extends AppCompatActivity {
     private TextView question, textViewUsername;
@@ -125,6 +126,15 @@ public class QuizActivity extends AppCompatActivity {
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
 
+                    // 當前問題的答題結果
+                    QuestionList currentQuestion = questionsLists.get(currentQuestionPosition);
+                    String question = currentQuestion.getQuestion();
+                    String selectedOption = currentQuestion.getUserSelectedAnswer();
+                    boolean isCorrect = selectedOption.equals(currentQuestion.getAnswer());
+
+                    String nickname = textViewUsername.getText().toString();
+                    sendAnswerToServer(question, selectedOption, isCorrect, nickname);
+
                     // 取消計時器
                     quizTimer.cancel();
                     nextQuestionWithDelay();
@@ -151,6 +161,15 @@ public class QuizActivity extends AppCompatActivity {
                     revealAnswer();
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
+
+                    // 當前問題的答題結果
+                    QuestionList currentQuestion = questionsLists.get(currentQuestionPosition);
+                    String question = currentQuestion.getQuestion();
+                    String selectedOption = currentQuestion.getUserSelectedAnswer();
+                    boolean isCorrect = selectedOption.equals(currentQuestion.getAnswer());
+
+                    String nickname = textViewUsername.getText().toString();
+                    sendAnswerToServer(question, selectedOption, isCorrect, nickname);
 
                     // 取消計時器，準備進入下一題
                     quizTimer.cancel();
@@ -179,6 +198,15 @@ public class QuizActivity extends AppCompatActivity {
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
 
+                    // 當前問題的答題結果
+                    QuestionList currentQuestion = questionsLists.get(currentQuestionPosition);
+                    String question = currentQuestion.getQuestion();
+                    String selectedOption = currentQuestion.getUserSelectedAnswer();
+                    boolean isCorrect = selectedOption.equals(currentQuestion.getAnswer());
+
+                    String nickname = textViewUsername.getText().toString();
+                    sendAnswerToServer(question, selectedOption, isCorrect, nickname);
+
                     // 取消計時器，準備進入下一題
                     quizTimer.cancel();
                     nextQuestionWithDelay();
@@ -205,6 +233,15 @@ public class QuizActivity extends AppCompatActivity {
                     revealAnswer();
 
                     questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
+
+                    // 當前問題的答題結果
+                    QuestionList currentQuestion = questionsLists.get(currentQuestionPosition);
+                    String question = currentQuestion.getQuestion();
+                    String selectedOption = currentQuestion.getUserSelectedAnswer();
+                    boolean isCorrect = selectedOption.equals(currentQuestion.getAnswer());
+
+                    String nickname = textViewUsername.getText().toString();
+                    sendAnswerToServer(question, selectedOption, isCorrect, nickname);
 
                     // 取消計時器，準備進入下一題
                     quizTimer.cancel();
@@ -290,6 +327,40 @@ public class QuizActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
+    private void sendAnswerToServer(String question, String selectedOption, boolean isCorrect, String nickname) {
+        // 創建 RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // 創建 StringRequest
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_MYANSWER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 獲取回傳的響應，可以根據需要進行處理
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                // 請求失敗時的錯誤處理
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                // 將答題結果作為參數傳遞到伺服器
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", nickname);
+                params.put("question", question);
+                params.put("selectedOption", selectedOption);
+                params.put("isCorrect", isCorrect ? "T" : "F");
+                return params;
+            }
+        };
+
+        // 發送請求
+        requestQueue.add(stringRequest);
+    }
+
 
 
     private void startTimer() {

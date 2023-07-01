@@ -58,6 +58,27 @@
 			}
 		}
 
+		public function addAnswerRecord($uid, $question, $selectedOption, $isCorrect) {
+			// 先找到對應的 qid
+			$stmt = $this->con->prepare("SELECT Qid FROM `112-dog`.questions WHERE question = ?");
+			$stmt->bind_param("s", $question);
+			$stmt->execute();
+			$result = $stmt->get_result();
+			
+			if ($result->num_rows > 0) {
+				$qid = $result->fetch_assoc()['Qid'];
+				
+				// 新增資料到 answer_records 資料表中
+				$stmt = $this->con->prepare("INSERT INTO `112-dog`.`answer_records` (`Uid`, `Qid`, `u_answer`, `is_correct`, `create_time`) VALUES (?, ?, ?, ?, now())");
+				$stmt->bind_param("ssss", $uid, $qid, $selectedOption, $isCorrect);
+				$stmt->execute();
+				
+				return true;
+			} else {
+				return false; // 找不到對應的 question，新增失敗
+			}
+		}
+
 		// 更新使用者的點數
 		function updateMyPoint($uid, $newPoint) {
 			// 尋找使用者的目前點數
@@ -124,19 +145,13 @@
 		public function updateNickname($oldNickname, $newNickname){
 			$stmt = $this->con->prepare("UPDATE `user_profile` SET `nickname` = ? WHERE nickname = ?;");
 			$stmt->bind_param("ss", $newNickname, $oldNickname);
-			$stmt->execute();
-			$result = $stmt->get_result();
-		
-			if ($result->num_rows > 0) {
-				$newNicknames = array();
-				while ($row = $result->fetch_assoc()) {
-					$newNicknames[] = $row['nickname'];
-				}
-				return $newNicknames;
+			
+			if ($stmt->execute()) {
+				return true; // 更新成功時返回 true
 			} else {
-				return null;
+				return false; // 更新失敗時返回 false
 			}
-		}
+		}		
 
 		public function getNickname($gmail) {
 			$stmt = $this->con->prepare("SELECT a.Uid, Nickname FROM `112-dog`.user_login AS a
