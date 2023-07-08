@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -229,7 +230,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        final TextView timerTextView = findViewById(R.id.timer);
+        final TextView tvTimer = findViewById(R.id.timer);
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
         int millisecondsInFuture = totalTimeInSeconds * 1000;
         int countDownInterval = 1000;
 
@@ -237,13 +239,16 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
+                int progress = (int) (millisUntilFinished / 1000);
+                progressBar.setProgress(progress);
+
                 String finalSeconds = String.valueOf(seconds);
 
                 if (finalSeconds.length() == 1) {
                     finalSeconds = "0" + finalSeconds;
                 }
 
-                timerTextView.setText(finalSeconds);
+                tvTimer.setText(String.valueOf(finalSeconds));
             }
 
             @Override
