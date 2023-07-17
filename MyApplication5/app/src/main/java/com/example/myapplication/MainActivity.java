@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +27,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         recview=(RecyclerView)findViewById(R.id.recview);
-        recview.setLayoutManager(new LinearLayoutManager(this));
+        recview.setLayoutManager(new GridLayoutManager(this, 3));
+
 
         processdata();
 
