@@ -1,16 +1,16 @@
-package com.example.myapplication;
+package com.example.soulgo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
+import android.content.Intent;import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageButton;import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity {
+public class BookActivity extends AppCompatActivity {
     private static final String url = "http://140.131.114.145/Android/v1/bookList.php";
     private RecyclerView recview;
     private List<BookModel> data;
@@ -34,13 +34,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_book);
 
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new GridLayoutManager(this, 3));
 
+        ImageButton to_home = findViewById(R.id.to_home);
+
+        to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity();
+            }
+        });
+
         processdata();
         setupSearch();
+    }
+
+    public void openactivity() {
+        Intent intent = new Intent(this, SecondActivity.class);
+        startActivity(intent);
     }
 
     private void processdata() {
@@ -51,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = builder.create();
                 data = Arrays.asList(gson.fromJson(response, BookModel[].class));
 
-                BookActivity adapter = new BookActivity(data);
+                BookAdapter adapter = new BookAdapter(data);
                 recview.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
@@ -96,8 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 .collect(Collectors.toList());
 
         // 將符合搜尋結果的項目傳遞給適配器
-        BookActivity adapter = new BookActivity(searchResults);
+        BookAdapter adapter = new BookAdapter(searchResults);
         recview.setAdapter(adapter);
     }
 }
-
