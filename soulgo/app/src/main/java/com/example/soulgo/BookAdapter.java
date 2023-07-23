@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.soulgo;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +14,18 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 
-public class BookActivity extends RecyclerView.Adapter<BookActivity.MyViewHolder> {
+public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
 
     private List<BookModel> data;
 
-    public BookActivity(List<BookModel> data) {
+    public BookAdapter(List<BookModel> data) {
         this.data = data;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.books, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
         return new MyViewHolder(view);
     }
 

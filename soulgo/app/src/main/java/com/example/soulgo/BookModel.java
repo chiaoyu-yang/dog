@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.soulgo;
 
 public class BookModel {
     private String id;
