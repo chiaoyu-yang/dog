@@ -16,4 +16,6 @@ public class Constants {
     public static final String URL_MYNICKNAME = ROOT_URL + "myNickname.php";
 
     public static final String URL_MYANSWER = ROOT_URL + "myAnswer.php";
+
+    public static final String URL_Booklist = ROOT_URL + "booklist.php";
 }

@@ -27,6 +27,9 @@
             android:name=".RankingActivity"
             android:exported="false" />
         <activity
+            android:name=".BookActivity"
+            android:exported="false" />
+        <activity
             android:name=".CropperActivity"
             android:exported="false" />
         <activity

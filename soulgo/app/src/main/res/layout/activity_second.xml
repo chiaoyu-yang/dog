@@ -127,6 +127,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/startBookBtn"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:orientation="horizontal"
