@@ -20,4 +20,6 @@ public class Constants {
     public static final String URL_Booklist = ROOT_URL + "booklist.php";
 
     public static final String URL_setting = ROOT_URL + "updateNickname.php";
+
+    public static final String URL_settingImage = ROOT_URL + "updateImage.php";
 }

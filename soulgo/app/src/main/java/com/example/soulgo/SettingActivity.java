@@ -28,16 +28,9 @@ public class SettingActivity extends AppCompatActivity {
 
     private ImageButton paw;
     private ImageButton paw2;
-    //new 2
-    private static final String PREFS_NAME = "ImagePrefs";
-    private static final String PREF_IMAGE_URI = "ImageUri";
 
-    //new2
-    private ImageView iv_pick_image;
     private ActivityResultLauncher<String> mGetContent;
-    private SharedPreferences sharedPreferences;
-    //new 3
-    private Uri imageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +38,13 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         paw = findViewById(R.id.to_home);
         paw2 = findViewById(R.id.logout);
-        iv_pick_image = findViewById(R.id.iv_pick_image);
-
         Button button2 = findViewById(R.id.button2);
-        // 初始化 SharedPreferences new3
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
         String nickname = getIntent().getStringExtra("nickname");
 
         editNickname = findViewById(R.id.editNickname);
         editNickname.setText(nickname);
 
-
-        // 恢复保存的图像 URI
-        String savedUri = sharedPreferences.getString(PREF_IMAGE_URI, null);
-        if (savedUri != null) {
-            imageUri = Uri.parse(savedUri);
-            iv_pick_image.setImageURI(imageUri);
-        }
 
         paw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,13 +57,6 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openHome2();
-            }
-        });
-
-        iv_pick_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mGetContent.launch("image/*");
             }
         });
 
