@@ -45,8 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:text="使用者名稱"
-                />
+
         </LinearLayout>
 
         <LinearLayout
@@ -127,6 +126,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/startBookBtn"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:orientation="horizontal"

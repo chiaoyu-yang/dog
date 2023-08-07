@@ -48,7 +48,7 @@
         android:drawableBottom="@drawable/line1"
         android:gravity="center"
         android:hint="Enter nickname"
-        android:maxEms="10" />
+
 
     <TextView
         android:id="@+id/bgmusic"
@@ -120,5 +120,6 @@
         android:layout_marginTop="550dp"
         android:layout_marginLeft="250dp"
         />
+
 
 </RelativeLayout>

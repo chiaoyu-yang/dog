@@ -7,24 +7,19 @@ $response = array();
 if($_SERVER['REQUEST_METHOD']=='POST'){
 	if(
 		isset($_POST['username']) and 
-			isset($_POST['email']))
+			isset($_POST['gmail']))
 		{
 		//operate the data further 
 
 		$db = new DbOperations(); 
 
-		$result = $db->createUser( 	$_POST['username'],
-									$_POST['email']
+		$result = $db->createUser( 	
+									$_POST['gmail']
 								);
+		$uidResult = $db->createProfile($_POST['gmail']);
 		if($result == 1){
 			$response['error'] = false; 
 			$response['message'] = "User registered successfully";
-		}elseif($result == 2){
-			$response['error'] = true; 
-			$response['message'] = "Some error occurred please try again";			
-		}elseif($result == 0){
-			$response['error'] = true; 
-			$response['message'] = "It seems you are already registered, please choose a different email and username";						
 		}
 
 	}else{

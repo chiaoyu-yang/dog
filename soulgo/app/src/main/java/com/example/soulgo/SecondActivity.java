@@ -85,6 +85,7 @@ public class SecondActivity extends AppCompatActivity{
 
 
         final LinearLayout startRank = findViewById(R.id.startRankBtn);
+
         final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
         final ImageButton startimageBtn = findViewById(R.id.imageButton);
 
@@ -112,10 +113,11 @@ public class SecondActivity extends AppCompatActivity{
             }
         });
 
+
         startimageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SecondActivity.this,SettingActivity.class);
+
                 startActivity(intent);
 
             }

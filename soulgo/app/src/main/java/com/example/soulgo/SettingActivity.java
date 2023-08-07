@@ -11,11 +11,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
-
-public class SettingActivity extends AppCompatActivity {
 
     private ImageButton paw;
     private ImageButton paw2;
@@ -37,8 +33,6 @@ public class SettingActivity extends AppCompatActivity {
         paw = findViewById(R.id.to_home);
         paw2 = findViewById(R.id.logout);
         iv_pick_image = findViewById(R.id.iv_pick_image);
-        // 初始化 SharedPreferences new3
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
 
         // 恢复保存的图像 URI
@@ -80,7 +74,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-    }
 
 
     //回到主畫面
@@ -94,25 +87,6 @@ public class SettingActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==-1 && requestCode==101 && data!=null) {
-            String result = data.getStringExtra("RESULT");
-            Uri resultUri = null;
-            if(result!=null) {
-                resultUri = Uri.parse(result);
-            }
 
-            iv_pick_image.setImageURI(resultUri);
-            imageUri = resultUri;//new3
-
-            //new3
-            // 保存图像 URI 到 SharedPreferences
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(PREF_IMAGE_URI, result);
-            editor.apply();
-        }
-    }
 
 }
