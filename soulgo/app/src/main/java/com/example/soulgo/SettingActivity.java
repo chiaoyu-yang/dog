@@ -11,20 +11,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;import android.widget.TextView;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import java.util.HashMap;
-import java.util.Map;
 
-public class SettingActivity extends AppCompatActivity {
-    private EditText editNickname;
 
     private ImageButton paw;
     private ImageButton paw2;
@@ -46,15 +33,6 @@ public class SettingActivity extends AppCompatActivity {
         paw = findViewById(R.id.to_home);
         paw2 = findViewById(R.id.logout);
         iv_pick_image = findViewById(R.id.iv_pick_image);
-
-        Button button2 = findViewById(R.id.button2);
-        // 初始化 SharedPreferences new3
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-
-        String nickname = getIntent().getStringExtra("nickname");
-
-        editNickname = findViewById(R.id.editNickname);
-        editNickname.setText(nickname);
 
 
         // 恢复保存的图像 URI
@@ -96,51 +74,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String newNickname = editNickname.getText().toString();
-                String oldNickname = getIntent().getStringExtra("nickname");
-
-                postNicknameToBackend(oldNickname, newNickname);
-            }
-        });
-
-    }
-
-    private void postNicknameToBackend(String oldNickname, String newNickname) {
-        StringRequest stringRequest =
-                new StringRequest(
-                        Request.Method.POST,
-                        Constants.URL_setting,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                // 请求成功的处理逻辑
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // 请求失败的处理逻辑
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("oldNickname", oldNickname); // 参数名与后端接口定义一致
-                        params.put("newNickname", newNickname); // 参数名与后端接口定义一致
-
-                        // 可以添加其他参数
-
-                        return params;
-                    }
-                };
-
-        // 将请求添加到请求队列
-        Volley.newRequestQueue(this).add(stringRequest);
-    }
-
 
 
     //回到主畫面
@@ -153,6 +86,7 @@ public class SettingActivity extends AppCompatActivity {
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
+
 
 
 }

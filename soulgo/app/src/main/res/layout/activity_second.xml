@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:text="使用者名稱" />
+
         </LinearLayout>
 
         <LinearLayout
