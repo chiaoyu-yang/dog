@@ -7,12 +7,14 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,75 +27,112 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashMap;import java.util.List;import java.util.Map;
 
 public class QuizActivity extends AppCompatActivity {
-    private TextView question;
+    private TextView questionText, textViewUsername;
 
     private AppCompatButton option1, option2, option3, option4;
 
-    private AppCompatButton nextBtn;
+    private AppCompatButton finishBtn;
 
     private CountDownTimer quizTimer;
 
     private int totalTimeInSeconds = 11;
-    private int answerDelayInSeconds = 1;
 
-
-    private List<QuestionList> questionsLists;
-
-    private int currentQuestionPosition = 0;
+    private int correctAnswers = 0;
+    private int incorrectAnswers = 0;
 
     private String selectedOptionByUser = "";
+
+    private Handler handler = new Handler();
+
+    private String question = "";
+    private String choice1 = "";
+    private String choice2 = "";
+    private String choice3 = "";
+    private String choice4 = "";
+    private String answer = "";
+
+    private String nickName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        TextView timer = findViewById(R.id.timer);
-
-        question = findViewById(R.id.question);
-
+        questionText = findViewById(R.id.question);
         option1 = findViewById(R.id.option1);
         option2 = findViewById(R.id.option2);
         option3 = findViewById(R.id.option3);
         option4 = findViewById(R.id.option4);
+        finishBtn = findViewById(R.id.nextBtn);
+        textViewUsername = findViewById(R.id.myusername);
 
-        nextBtn = findViewById(R.id.nextBtn);
+        String nickname = getIntent().getStringExtra("nickname");
+        textViewUsername.setText(nickname);
 
-        questionsLists = new ArrayList<>();
+        sendRequest();
 
+        View.OnClickListener optionClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedOptionByUser.isEmpty()) {
+                    Button selectedOptionButton = (Button) v;
+                    selectedOptionByUser = selectedOptionButton.getText().toString();
+
+                    selectedOptionButton.setBackgroundResource(R.drawable.round_back_red10);
+                    selectedOptionButton.setTextColor(Color.WHITE);
+
+                    revealAnswer();
+
+                    boolean isCorrect = selectedOptionByUser.equals(answer);
+                    nickName = textViewUsername.getText().toString();
+                    sendAnswerToServer(question, selectedOptionByUser, isCorrect, nickName);
+
+                    quizTimer.cancel();
+                    nextQuestion();
+
+                    if (selectedOptionByUser.equals(answer)) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers++;
+                    }
+                }
+            }
+        };
+
+        option1.setOnClickListener(optionClickListener);
+        option2.setOnClickListener(optionClickListener);
+        option3.setOnClickListener(optionClickListener);
+        option4.setOnClickListener(optionClickListener);
+
+        finishBtn();
+    }
+
+    private void sendRequest() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        // 创建一个StringRequest请求
+        // 創建stringRequest請求
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_QUESTION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-
                     JSONArray jsonArray = jsonObject.getJSONArray("questions");
-                    // 循环遍历JSON数组中的每个对象，并将其添加到列表中
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject questionObject = jsonArray.getJSONObject(i);
-                        String question = questionObject.getString("question");
-                        String choice1 = questionObject.getString("choice1");
-                        String choice2 = questionObject.getString("choice2");
-                        String choice3 = questionObject.getString("choice3");
-                        String choice4 = questionObject.getString("choice4");
-                        String answer = questionObject.getString("ans");
-                        questionsLists.add(new QuestionList(question, choice1, choice2, choice3, choice4, answer, ""));
-                    }
+                    JSONObject questionObject = jsonArray.getJSONObject(0);
+                    question = questionObject.getString("question");
+                    choice1 = questionObject.getString("choice1");
+                    choice2 = questionObject.getString("choice2");
+                    choice3 = questionObject.getString("choice3");
+                    choice4 = questionObject.getString("choice4");
+                    answer = questionObject.getString("ans");
 
-                    // 在此处设置第一个问题和选项
-                    question.setText(questionsLists.get(currentQuestionPosition).getQuestion());
-                    option1.setText(questionsLists.get(currentQuestionPosition).getOption1());
-                    option2.setText(questionsLists.get(currentQuestionPosition).getOption2());
-                    option3.setText(questionsLists.get(currentQuestionPosition).getOption3());
-                    option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
+                    // 添加第一個問題和選項
+                    questionText.setText(question);
+                    option1.setText(choice1);
+                    option2.setText(choice2);
+                    option3.setText(choice3);
+                    option4.setText(choice4);
 
                     startTimer();
                 } catch (JSONException e) {
@@ -107,153 +146,92 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        // 发送请求
+        // 發送請求
         requestQueue.add(stringRequest);
+    }
 
-        option1.setOnClickListener(new View.OnClickListener() {
+    private void finishBtn() {
+        finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedOptionByUser.isEmpty()) {
-                    selectedOptionByUser = option1.getText().toString();
+                // 停止計時器
+                quizTimer();
 
-                    option1.setBackgroundResource(R.drawable.round_back_red10);
-                    option1.setTextColor(Color.WHITE);
+                handler.removeCallbacksAndMessages(null); // 取消延遲任務
 
-                    revealAnswer();
-
-                    questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
-
-                    // 取消计时器，准备进入下一题
-                    quizTimer.cancel();
-                    nextQuestionWithDelay();
-                }
-            }
-        });
-
-        option2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedOptionByUser.isEmpty()) {
-                    selectedOptionByUser = option2.getText().toString();
-
-                    option2.setBackgroundResource(R.drawable.round_back_red10);
-                    option2.setTextColor(Color.WHITE);
-
-                    revealAnswer();
-
-                    questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
-
-                    // 取消计时器，准备进入下一题
-                    quizTimer.cancel();
-                    nextQuestionWithDelay();
-                }
-            }
-        });
-
-        option3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedOptionByUser.isEmpty()) {
-                    selectedOptionByUser = option3.getText().toString();
-
-                    option3.setBackgroundResource(R.drawable.round_back_red10);
-                    option3.setTextColor(Color.WHITE);
-
-                    revealAnswer();
-
-                    questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
-
-                    // 取消计时器，准备进入下一题
-                    quizTimer.cancel();
-                    nextQuestionWithDelay();
-                }
-            }
-        });
-
-        option4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedOptionByUser.isEmpty()) {
-                    selectedOptionByUser = option4.getText().toString();
-
-                    option4.setBackgroundResource(R.drawable.round_back_red10);
-                    option4.setTextColor(Color.WHITE);
-
-                    revealAnswer();
-
-                    questionsLists.get(currentQuestionPosition).setUserSelectedAnswer(selectedOptionByUser);
-
-                    // 取消计时器，准备进入下一题
-                    quizTimer.cancel();
-                    nextQuestionWithDelay();
-                }
-            }
-        });
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                // 跳轉到結果頁面，傳回答對和答錯題數挑轉到結果頁面
                 Intent intent = new Intent(QuizActivity.this, QuizResults.class);
                 intent.putExtra("correct", getCorrectAnswers());
                 intent.putExtra("incorrect", getInCorrectAnswers());
+                intent.putExtra("nickname", nickName);
                 startActivity(intent);
-                finish();
+                finish(); // 结束當前的 QuizActivity
             }
-
         });
-
     }
 
-    private void nextQuestion() {
-        currentQuestionPosition++;
-
-        if (currentQuestionPosition < questionsLists.size()) {
-            selectedOptionByUser = "";
-
-            option1.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option1.setTextColor(Color.parseColor("#1F6BB8"));
-
-            option2.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option2.setTextColor(Color.parseColor("#1F6BB8"));
-
-            option3.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option3.setTextColor(Color.parseColor("#1F6BB8"));
-
-            option4.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
-            option4.setTextColor(Color.parseColor("#1F6BB8"));
-
-            question.setText(questionsLists.get(currentQuestionPosition).getQuestion());
-            option1.setText(questionsLists.get(currentQuestionPosition).getOption1());
-            option2.setText(questionsLists.get(currentQuestionPosition).getOption2());
-            option3.setText(questionsLists.get(currentQuestionPosition).getOption3());
-            option4.setText(questionsLists.get(currentQuestionPosition).getOption4());
-
-            // 开始新的计时器
-            startTimer();
-        } else {
-            Intent intent = new Intent(QuizActivity.this, QuizResults.class);
-            intent.putExtra("correct", getCorrectAnswers());
-            intent.putExtra("incorrect", getInCorrectAnswers());
-            startActivity(intent);
-            finish();
+    public void quizTimer() {
+        if (quizTimer != null) {
+            quizTimer.cancel();
+            quizTimer = null;
         }
     }
 
-    private void nextQuestionWithDelay() {
-    // 延迟5秒后进入下一题
-    new Handler()
-        .postDelayed(
-            new Runnable() {
-              @Override
-              public void run() {
-                nextQuestion();
-              }
-            },
-            5000);
+    private void nextQuestion() {
+        handler.removeCallbacksAndMessages(null); // 取消之前的延遲任務
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sendRequest();
+
+                selectedOptionByUser = "";
+                TextView[] options = {option1, option2, option3, option4};
+
+                for (TextView option : options) {
+                    option.setBackgroundResource(R.drawable.round_back_white_stroke2_10);
+                    option.setTextColor(Color.parseColor("#1F6BB8"));
+                }
+            }
+        }, 2000);
+    }
+
+    private void sendAnswerToServer(String question, String selectedOptionByUser, boolean isCorrect, String nickName) {
+        // 創建 RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // 創建 StringRequest
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_MYANSWER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 獲取回傳的響應，可以根據需要進行處理
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                // 請求失敗時的錯誤處理
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                // 將答題結果作為參數傳遞到伺服器
+                Map<String, String> params = new HashMap<>();
+                params.put("uid", nickName);
+                params.put("question", question);
+                params.put("selectedOption", selectedOptionByUser);
+                params.put("isCorrect", isCorrect ? "T" : "F");
+                return params;
+            }
+        };
+
+        // 發送請求
+        requestQueue.add(stringRequest);
     }
 
     private void startTimer() {
-        final TextView timerTextView = findViewById(R.id.timer);
+        final TextView tvTimer = findViewById(R.id.timer);
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
         int millisecondsInFuture = totalTimeInSeconds * 1000;
         int countDownInterval = 1000;
 
@@ -261,13 +239,16 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
+                int progress = (int) (millisUntilFinished / 1000);
+                progressBar.setProgress(progress);
+
                 String finalSeconds = String.valueOf(seconds);
 
                 if (finalSeconds.length() == 1) {
                     finalSeconds = "0" + finalSeconds;
                 }
 
-                timerTextView.setText(finalSeconds);
+                tvTimer.setText(String.valueOf(finalSeconds));
             }
 
             @Override
@@ -285,64 +266,22 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private int getCorrectAnswers(){
-        int correctAnswers = 0;
-
-        for(int i=0; i<questionsLists.size();i++){
-
-            final String getUserSelectedAnswer = questionsLists.get(i).getUserSelectedAnswer();
-            final String getAnswer = questionsLists.get(i).getAnswer();
-
-            if(getUserSelectedAnswer.equals(getAnswer)){
-                correctAnswers++;
-            }
-        }
         return correctAnswers;
     }
 
-    private int getInCorrectAnswers(){
-        int correctAnswers = 0;
-
-        for(int i=0; i<questionsLists.size();i++){
-
-            final String getUserSelectedAnswer = questionsLists.get(i).getUserSelectedAnswer();
-            final String getAnswer = questionsLists.get(i).getAnswer();
-
-            if(getUserSelectedAnswer.equals(getAnswer)){
-                correctAnswers++;
-            }
-        }
-        return correctAnswers;
+    private int getInCorrectAnswers() {
+        return incorrectAnswers;
     }
-
-    @Override
-    public void onBackPressed() {
-        if (quizTimer != null) {
-            quizTimer.cancel();
-        }
-
-        startActivity(new Intent(QuizActivity.this, MainActivity.class));
-        finish();
-    }
-
 
     private void revealAnswer(){
-        final String getAnswer = questionsLists.get(currentQuestionPosition).getAnswer();
+        TextView[] options = {option1, option2, option3, option4};
 
-        if(option1.getText().toString().equals(getAnswer)){
-            option1.setBackgroundResource(R.drawable.round_back_green10);
-            option1.setTextColor(Color.WHITE);
-        }
-        else if(option2.getText().toString().equals(getAnswer)){
-            option2.setBackgroundResource(R.drawable.round_back_green10);
-            option2.setTextColor(Color.WHITE);
-        }
-        else if(option3.getText().toString().equals(getAnswer)){
-            option3.setBackgroundResource(R.drawable.round_back_green10);
-            option3.setTextColor(Color.WHITE);
-        }
-        else if(option4.getText().toString().equals(getAnswer)){
-            option4.setBackgroundResource(R.drawable.round_back_green10);
-            option4.setTextColor(Color.WHITE);
+        for (TextView option : options) {
+            if (option.getText().toString().equals(answer)) {
+                option.setBackgroundResource(R.drawable.round_back_green10);
+                option.setTextColor(Color.WHITE);
+                break;
+            }
         }
     }
 }

@@ -10,6 +10,14 @@
     android:paddingRight="30dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id='@+id/myusername'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="玩家"
+        android:textSize="0dp"
+        tools:ignore="MissingConstraints" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,13 +47,6 @@
                 android:layout_weight="1"
                 android:text="使用者名稱"
                 />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/main_color"
-                app:srcCompat="@drawable/setting" />
         </LinearLayout>
 
         <LinearLayout
@@ -151,6 +152,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/startRankBtn"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:orientation="horizontal"
@@ -281,26 +283,23 @@
 
                 </FrameLayout>
 
-
             </LinearLayout>
+
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:background="@color/main_color"
-                android:layout_gravity="bottom|end"
-                app:srcCompat="@drawable/post" />
-
-        </FrameLayout>
-
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@color/main_color"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/post" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
