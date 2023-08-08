@@ -17,4 +17,7 @@ public class Constants {
 
     public static final String URL_MYANSWER = ROOT_URL + "myAnswer.php";
 
+    public static final String URL_Booklist = ROOT_URL + "booklist.php";
+
+    public static final String URL_setting = ROOT_URL + "updateNickname.php";
 }
