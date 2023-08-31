@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookActivity extends AppCompatActivity {
-    private static final String url = "http://140.131.114.145/Android/v1/bookList.php";
     private RecyclerView recview;
     private List<BookModel> data;
 
@@ -58,7 +57,7 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void processdata() {
-        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Constants.URL_Booklist, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 GsonBuilder builder = new GsonBuilder();

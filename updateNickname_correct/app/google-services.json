@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "383386019596",
+    "project_id": "updatenickname-abdf0",
+    "storage_bucket": "updatenickname-abdf0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383386019596:android:5a59f9f16aa44d0a890b29",
+        "android_client_info": {
+          "package_name": "com.example.updatenickname"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383386019596-dl2h39h6g1mohfip0vdocnfr300tdf0f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIfbWnOd1H9wUwQKTg-UweBNC6A0JfzbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383386019596-dl2h39h6g1mohfip0vdocnfr300tdf0f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
