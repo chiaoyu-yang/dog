@@ -11,4 +11,7 @@
     <string name="newsDetail">位於 : 100台北市中正區八德路一段1號</string>
     <string name="userName">玩家</string>
     <string name="placeholder_hour_time">00:00</string>
+    <string name="publish_1">
+        \u00E4\u00B8\u008A\u00E5\u0082\u00B3\u00E5\u009C\u0096\u00E7\u0089\u0087
+    </string>
 </resources>
