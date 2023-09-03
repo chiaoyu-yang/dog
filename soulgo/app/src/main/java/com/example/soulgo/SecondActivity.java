@@ -88,6 +88,7 @@ public class SecondActivity extends AppCompatActivity{
         final LinearLayout startBook = findViewById(R.id.startBookBtn);
         final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
         final ImageButton startimageBtn = findViewById(R.id.imageButton);
+        final ImageButton startpublish = findViewById(R.id.imageButton4);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +129,18 @@ public class SecondActivity extends AppCompatActivity{
                 TextView textViewNickname = findViewById(R.id.userName);
                 String nickname = textViewNickname.getText().toString().trim();
                 Intent intent = new Intent(SecondActivity.this,SettingActivity.class);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+
+            }
+        });
+
+        startpublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.myusername);
+                String nickname = textViewNickname.getText().toString().trim();
+                Intent intent = new Intent(SecondActivity.this,PublishActivity.class);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
 
