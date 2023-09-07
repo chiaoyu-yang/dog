@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".News"
+    android:background="@color/main_color">
+
+    <TextView
+        android:id="@+id/news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="汪汪日報社"
+        android:textSize="15sp"
+        android:textColor="@color/text_color"/>
+
+    <ImageButton
+        android:id="@+id/to_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/back"
+        android:src="@drawable/back"
+        tools:ignore="MissingConstraints"/>
+
+    <ImageButton
+        android:id="@+id/news_image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/news_image1"
+        android:layout_below="@+id/news"
+        />
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/image1"
+        android:layout_below="@+id/news"
+        />
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="養狗初體驗"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/news"
+        android:textColor="@color/text_color"
+        tools:ignore="MissingConstraints"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="175dp"/>
+
+    <TextView
+        android:id="@+id/news_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="剛帶回家一隻可愛的小狗狗"
+        android:textSize="9dp"
+        android:textStyle="normal"
+        android:layout_below="@+id/news_title"
+        android:textColor="@color/text_color"
+        tools:ignore="MissingConstraints"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="5dp"/>
+
+</RelativeLayout>
