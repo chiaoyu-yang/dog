@@ -30,6 +30,7 @@
         tools:layout_editor_absoluteX="3dp" />
 
     <LinearLayout
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -43,7 +44,7 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             app:srcCompat="@drawable/dog1_5" />
 
         <ScrollView
@@ -77,6 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/edit_1"
+                        android:padding="20dp"
                         android:background="#fff" />
                 </LinearLayout>
 
@@ -93,27 +95,27 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="嗅覺敏銳因此又有「聞血獵犬」的稱號"
+                    android:text=""
                     android:textSize="12dp"
                     android:layout_margin="5dp"/>
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="原產國: 歐洲"
-                    android:textSize="12dp"
-                    android:layout_marginTop="15dp"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/textView2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="原產國: 歐洲"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:layout_marginTop="15dp"/>-->
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="平均壽命: 12 - 15"
-                    android:textSize="12dp"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/textView3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="平均壽命: 12 - 15"-->
+<!--                    android:textSize="12dp"/>-->
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout"
+                    android:id="@+id/nullLayout"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:orientation="vertical"
@@ -139,7 +141,24 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout2"
+                    android:id="@+id/detailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp"
+                    android:padding="20dp"
+                    android:background="@drawable/detail_border_content">
+
+                    <TextView
+                        android:id="@+id/detailContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="none" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/editLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -148,31 +167,43 @@
                     android:background="@drawable/detail_border_content">
 
                     <EditText
-                        android:id="@+id/editTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="輸入主旨"
-                        android:inputType="text"
-                        android:text="" />
-
-                    <EditText
                         android:id="@+id/editDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="輸入內文"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
+                        android:scrollbars="vertical"
+                        android:textSize="16sp"
                         android:text="" />
 
-                    <Button
-                        android:id="@+id/submit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="送出"
-                        android:textColor="#FFFFFF"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="20dp"
-                        app:backgroundTint="@null"
-                        android:background="@drawable/submit_button" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="end"
+                        android:layout_marginTop="40dp">
+
+                        <Button
+                            android:id="@+id/cancel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="取消"
+                            android:textColor="#FFFFFF"
+                            android:layout_gravity="end"
+                            android:layout_marginRight="5dp"
+                            app:backgroundTint="@null"
+                            android:background="@drawable/cancel_button" />
+
+                        <Button
+                            android:id="@+id/submit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="送出"
+                            android:textColor="#FFFFFF"
+                            android:layout_gravity="end"
+                            app:backgroundTint="@null"
+                            android:background="@drawable/submit_button" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
