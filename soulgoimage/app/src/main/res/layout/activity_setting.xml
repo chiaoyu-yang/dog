@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1FAEE"
+    tools:context=".SettingActivity">
+
+    <TextView
+        android:id="@+id/setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="設定"
+        android:textSize="20sp"
+        android:textColor="@color/text_color"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_pick_image"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/setting"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/_1" />
+
+    <ImageButton
+        android:id="@+id/to_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/back"
+        android:src="@drawable/back" />
+
+
+    <EditText
+        android:id="@+id/editNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_pick_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/transparent"
+        android:drawableBottom="@drawable/line1"
+        android:gravity="center"
+        android:hint="Enter nickname"
+        android:maxEms="10"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/bgmusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editNickname"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="100dp"
+        android:text="背景音樂"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
+
+    <SeekBar
+        android:id="@+id/bg_seekbar"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editNickname"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="90dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:progress="30"
+        android:progressDrawable="@drawable/bg_custom_seekbar"
+        android:splitTrack="false"
+        android:thumb="@drawable/pawbar" />
+
+    <SeekBar
+        android:id="@+id/game_seekbar"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editNickname"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="140dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:progress="30"
+        android:progressDrawable="@drawable/bg_custom_seekbar"
+        android:splitTrack="false"
+        android:thumb="@drawable/pawbar" />
+
+
+
+    <TextView
+        android:id="@+id/gamemusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editNickname"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="25dp"
+        android:text="遊戲音樂"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"/>
+
+
+
+    <ImageButton
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logout"
+        android:background="@android:color/transparent"
+        android:layout_below="@id/to_home"
+        android:layout_marginTop="550dp"
+        android:layout_marginLeft="250dp"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/editNickname"
+    android:gravity="center_horizontal"
+    >
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Update" />
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="10dp"/>
+
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerInParent="true"
+        android:text="Upload" />
+</LinearLayout>
+
+</RelativeLayout>
