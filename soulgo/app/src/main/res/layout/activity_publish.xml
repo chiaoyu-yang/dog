@@ -41,16 +41,19 @@
             android:background="@drawable/back"
             android:src="@drawable/back" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/clickToUploadImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="278dp"
             android:layout_below="@+id/setting"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:src="@drawable/publish_1"
+            android:background="@color/white"
             android:scaleX="0.85"
-            android:scaleY="0.85" />
+            android:scaleY="0.85"
+            app:shapeAppearanceOverlay="@style/RoundedCornerImageView"
+            />
+
 
         <FrameLayout
             android:id="@+id/ic_outline_add_container"

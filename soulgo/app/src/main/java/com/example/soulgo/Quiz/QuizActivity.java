@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class QuizActivity extends AppCompatActivity {
     private TextView questionText, textViewUsername;
@@ -60,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
+        Objects.requireNonNull(getSupportActionBar()).hide();
         questionText = findViewById(R.id.question);
         option1 = findViewById(R.id.option1);
         option2 = findViewById(R.id.option2);

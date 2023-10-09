@@ -30,12 +30,6 @@
             android:name=".Book.BookActivity"
             android:exported="false" />
         <activity
-            android:name=".CropperActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SettingActivity"
-            android:exported="false" />
-        <activity
             android:name=".PublishActivity"
             android:exported="false" />
         <activity

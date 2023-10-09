@@ -28,6 +28,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class BookActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class BookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new GridLayoutManager(this, 3));
 
