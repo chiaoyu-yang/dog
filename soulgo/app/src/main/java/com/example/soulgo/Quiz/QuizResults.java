@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.SecondActivity;
 import java.util.HashMap;import java.util.Map;
+import java.util.Objects;
 
 public class QuizResults extends AppCompatActivity {
     private TextView textViewUsername;
@@ -24,7 +25,7 @@ public class QuizResults extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_results);
-
+        Objects.requireNonNull(getSupportActionBar()).hide();
         final ImageButton startNewBtn = findViewById(R.id.startNewQuizBtn);
         final TextView correctAnswers = findViewById(R.id.correctAnswers);
         final TextView incorrectAnswers = findViewById(R.id.incorrectAnswers);

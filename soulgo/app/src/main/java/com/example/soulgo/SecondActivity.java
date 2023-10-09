@@ -17,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import java.util.HashMap;import java.util.Map;
+import java.util.Objects;
 
 public class SecondActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
@@ -28,6 +29,7 @@ public class SecondActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         userName = findViewById(R.id.userName);
         myusername = findViewById(R.id.myusername);
@@ -122,7 +124,7 @@ public class SecondActivity extends AppCompatActivity{
             }
         });
 
-
+        /*
         startimageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +135,7 @@ public class SecondActivity extends AppCompatActivity{
                 startActivity(intent);
 
             }
-        });
+        });*/
 
         startpublish.setOnClickListener(new View.OnClickListener() {
             @Override
