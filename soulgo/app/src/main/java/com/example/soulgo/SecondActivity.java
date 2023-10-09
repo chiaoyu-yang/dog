@@ -2,21 +2,21 @@ package com.example.soulgo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.example.soulgo.Book.BookActivity;
+import com.example.soulgo.Quiz.QuizActivity;
+import com.example.soulgo.Rank.RankingActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import java.util.HashMap;import java.util.Map;
+import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import java.util.HashMap;import java.util.Map;
 
 public class SecondActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
@@ -90,28 +90,28 @@ public class SecondActivity extends AppCompatActivity{
         final ImageButton startimageBtn = findViewById(R.id.imageButton);
         final ImageButton startpublish = findViewById(R.id.imageButton4);
 
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textViewNickname = findViewById(R.id.myusername);
-                String nickname = textViewNickname.getText().toString().trim();
-                Intent intent = new Intent(SecondActivity.this,QuizActivity.class);
-                intent.putExtra("nickname", nickname);
-                startActivity(intent);
-
-            }
+    startBtn.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            TextView textViewNickname = findViewById(R.id.myusername);
+            String nickname = textViewNickname.getText().toString().trim();
+            Intent intent = new Intent(SecondActivity.this, QuizActivity.class);
+            intent.putExtra("nickname", nickname);
+            startActivity(intent);
+          }
         });
 
-        startRank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textViewNickname = findViewById(R.id.userName);
-                String nickname = textViewNickname.getText().toString().trim();
-                Intent intent = new Intent(SecondActivity.this, RankingActivity.class);
-                intent.putExtra("nickname", nickname);
-                startActivity(intent);
-
-            }
+    startRank.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            TextView textViewNickname = findViewById(R.id.userName);
+            String nickname = textViewNickname.getText().toString().trim();
+            Intent intent = new Intent(SecondActivity.this, RankingActivity.class);
+            intent.putExtra("nickname", nickname);
+            startActivity(intent);
+          }
         });
         startBook.setOnClickListener(new View.OnClickListener() {
             @Override
