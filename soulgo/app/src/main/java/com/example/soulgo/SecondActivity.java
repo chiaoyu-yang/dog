@@ -124,7 +124,7 @@ public class SecondActivity extends AppCompatActivity{
             }
         });
 
-        /*
+
         startimageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +135,7 @@ public class SecondActivity extends AppCompatActivity{
                 startActivity(intent);
 
             }
-        });*/
+        });
 
         startpublish.setOnClickListener(new View.OnClickListener() {
             @Override
