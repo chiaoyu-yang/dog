@@ -5,11 +5,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;import android.widget.TextView;import android.widget.Toast;
 import androidx.annotation.Nullable;import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.github.dhaval2404.imagepicker.ImagePicker;import java.io.ByteArrayOutputStream;import java.io.IOException;import java.util.HashMap;import java.util.Map;import java.util.Objects;
+import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.bumptech.glide.Glide;import com.github.dhaval2404.imagepicker.ImagePicker;import java.io.ByteArrayOutputStream;import java.io.IOException;import java.util.HashMap;import java.util.Map;import java.util.Objects;
 
 public class SettingActivity extends AppCompatActivity{
     ImageView imageView;
-    String base64EncodedImage, nickname;
+    String base64EncodedImage, nickname, imageUrl;
 
     EditText editNickname;
 
@@ -25,7 +25,13 @@ public class SettingActivity extends AppCompatActivity{
 
         editNickname = findViewById(R.id.editNickname);
         nickname = getIntent().getStringExtra("nickname");
+        imageUrl = getIntent().getStringExtra("imageUrl");
         editNickname.setText(nickname);
+
+        Glide.with(SettingActivity.this) // 使用當前活動的上下文
+                .load("http://140.131.114.145/Android/112_dog/setting/" + imageUrl) // 加載圖片的 URL
+                .error(R.drawable.error_image) // 加載失敗時顯示的圖片（可選）
+                .into(imageView); // 加載圖片到 ImageView 中
 
         base64EncodedImage = "0";
 
@@ -82,13 +88,13 @@ public class SettingActivity extends AppCompatActivity{
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(SettingActivity.this, "成功更新", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(SettingActivity.this, "成功更新", Toast.LENGTH_SHORT).show();
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(SettingActivity.this, "更新失敗", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(SettingActivity.this, "更新失敗", Toast.LENGTH_SHORT).show();
                         }
                     }) {
                 @Override
