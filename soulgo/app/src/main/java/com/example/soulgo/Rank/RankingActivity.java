@@ -1,4 +1,4 @@
-package com.example.soulgo;
+package com.example.soulgo.Rank;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.soulgo.Constants;import com.example.soulgo.R;
+import com.example.soulgo.SecondActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
