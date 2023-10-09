@@ -66,6 +66,13 @@ public class PublishActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnUpload).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadData();
+            }
+        });
+
         uploadTitleEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -154,7 +161,7 @@ public class PublishActivity extends AppCompatActivity {
         }
     }
 
-    public void uploadData(View view) {
+    private void uploadData() {
         ImageButton icOutlineAdd = findViewById(R.id.ic_outline_add);
         TextView uploadText = findViewById(R.id.upload);
         String title = uploadTitleEditText.getText().toString().trim();
