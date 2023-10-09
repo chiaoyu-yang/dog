@@ -1,4 +1,4 @@
-package com.example.soulgo;
+package com.example.soulgo.Rank;
 
 public class RankItem {
     private int division;

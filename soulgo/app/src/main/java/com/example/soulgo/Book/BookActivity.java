@@ -1,8 +1,7 @@
-package com.example.soulgo;
+package com.example.soulgo.Book;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;import android.os.Bundle;
@@ -10,7 +9,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageButton;import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -18,10 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.example.soulgo.Constants;
+import com.example.soulgo.R;
+import com.example.soulgo.SecondActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,26 +61,59 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void processdata() {
-        StringRequest request = new StringRequest(Constants.URL_Booklist, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+    StringRequest request =
+        new StringRequest(
+            Constants.URL_Booklist,
+            new Response.Listener<String>() {
+              @Override
+              public void onResponse(String response) {
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.create();
                 data = Arrays.asList(gson.fromJson(response, BookModel[].class));
 
+                // 检查是否有足够的数据
+                if (data.size() >= 3) {
+                  // 设置top1_text、top1_button的文本和图像
+                  ((TextView) findViewById(R.id.top1_text)).setText(data.get(0).getName());
+                  Glide.with(BookActivity.this)
+                      .load(
+                          "http://140.131.114.145/Android/112_dog/books/" + data.get(0).getImage())
+                      .error(R.drawable.error_image)
+                      .into((ImageView) findViewById(R.id.top1_button));
+
+                  // 设置top2_text、top2_button的文本和图像
+                  ((TextView) findViewById(R.id.top2_text)).setText(data.get(1).getName());
+                  Glide.with(BookActivity.this)
+                      .load(
+                          "http://140.131.114.145/Android/112_dog/books/" + data.get(1).getImage())
+                      .error(R.drawable.error_image)
+                      .into((ImageView) findViewById(R.id.top2_button));
+
+                  // 设置top3_text、top3_button的文本和图像
+                  ((TextView) findViewById(R.id.top3_text)).setText(data.get(2).getName());
+                  Glide.with(BookActivity.this)
+                      .load(
+                          "http://140.131.114.145/Android/112_dog/books/" + data.get(2).getImage())
+                      .error(R.drawable.error_image)
+                      .into((ImageView) findViewById(R.id.top3_button));
+                }
+
+                // 设置RecyclerView的Adapter
                 BookAdapter adapter = new BookAdapter(data);
                 recview.setAdapter(adapter);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+              }
+            },
+            new Response.ErrorListener() {
+              @Override
+              public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-            }
-        });
+              }
+            });
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);
     }
+
 
     private void setupSearch() {
         EditText searchbar = findViewById(R.id.searchbar);
@@ -105,11 +142,15 @@ public class BookActivity extends AppCompatActivity {
     private void performSearch(String query) {
         // 使用 Java 8 Stream API 尋找符合搜尋關鍵字的項目
         List<BookModel> searchResults = data.stream()
-                .filter(book -> book.getName().contains(query))
+                .filter(book -> book.getName().contains(query) ||
+                        book.getName().contains(((TextView) findViewById(R.id.top1_text)).getText()) ||
+                        book.getName().contains(((TextView) findViewById(R.id.top2_text)).getText()) ||
+                        book.getName().contains(((TextView) findViewById(R.id.top3_text)).getText()))
                 .collect(Collectors.toList());
 
         // 將符合搜尋結果的項目傳遞給適配器
         BookAdapter adapter = new BookAdapter(searchResults);
         recview.setAdapter(adapter);
     }
+
 }
