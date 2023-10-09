@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.example.soulgo.Book.BookActivity;
+import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.bumptech.glide.Glide;import com.example.soulgo.Book.BookActivity;
 import com.example.soulgo.Quiz.QuizActivity;
 import com.example.soulgo.Rank.RankingActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,6 +24,11 @@ public class SecondActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     TextView userName, myusername;
+    ImageButton image;
+    ImageView imageview;
+
+    String imageUrl;
+
 
     @Override
 
@@ -33,6 +39,8 @@ public class SecondActivity extends AppCompatActivity{
 
         userName = findViewById(R.id.userName);
         myusername = findViewById(R.id.myusername);
+        image = findViewById(R.id.imageButton);
+        imageview = findViewById(R.id.imageView);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
@@ -58,9 +66,15 @@ public class SecondActivity extends AppCompatActivity{
                             JSONObject nicknameObject = myNicknameArray.getJSONObject(0);
                             String nickname = nicknameObject.getString("Nickname");
                             String uid = nicknameObject.getString("Uid");
+                            imageUrl = nicknameObject.getString("userimage");
 
                             userName.setText(nickname); // 將值設置到userName的TextView
                             myusername.setText(uid); // 將值設置到myusername的TextView
+
+                            Glide.with(SecondActivity.this) // 使用當前活動的上下文
+                                    .load("http://140.131.114.145/Android/112_dog/setting/" + imageUrl) // 加載圖片的 URL
+                                    .error(R.drawable.error_image) // 加載失敗時顯示的圖片（可選）
+                                    .into(imageview); // 加載圖片到 ImageView 中
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -132,6 +146,7 @@ public class SecondActivity extends AppCompatActivity{
                 String nickname = textViewNickname.getText().toString().trim();
                 Intent intent = new Intent(SecondActivity.this,SettingActivity.class);
                 intent.putExtra("nickname", nickname);
+                intent.putExtra("imageUrl", imageUrl);
                 startActivity(intent);
 
             }

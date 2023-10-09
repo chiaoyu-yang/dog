@@ -11,4 +11,10 @@
     <style name="circular">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="RoundedCornerImageView2">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item> <!-- 这里的值可以根据需要调整 -->
+    </style>
+
 </resources>

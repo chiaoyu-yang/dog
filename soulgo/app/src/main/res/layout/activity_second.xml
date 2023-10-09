@@ -32,12 +32,29 @@
             android:layout_marginBottom="30dp"
             tools:visibility="visible">
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/button"
-                app:srcCompat="@drawable/usericon" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@color/main_color"
+                    android:scaleType="fitCenter" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@color/white"
+                    android:src="@drawable/_1"
+                    app:shapeAppearanceOverlay="@style/RoundedCornerImageView2"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="0.5dp" />
+
+            </FrameLayout>
+
 
             <TextView
                 android:id="@+id/userName"
