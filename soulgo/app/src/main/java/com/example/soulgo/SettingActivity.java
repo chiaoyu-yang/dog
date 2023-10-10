@@ -5,7 +5,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;import android.widget.TextView;import android.widget.Toast;
 import androidx.annotation.Nullable;import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.bumptech.glide.Glide;import com.github.dhaval2404.imagepicker.ImagePicker;import java.io.ByteArrayOutputStream;import java.io.IOException;import java.util.HashMap;import java.util.Map;import java.util.Objects;
+import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.bumptech.glide.Glide;import com.github.dhaval2404.imagepicker.ImagePicker;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;import java.io.IOException;import java.util.HashMap;import java.util.Map;import java.util.Objects;
 
 public class SettingActivity extends AppCompatActivity{
     ImageView imageView;
@@ -80,33 +85,53 @@ public class SettingActivity extends AppCompatActivity{
     private void uploadData() {
         String newNickname = editNickname.getText().toString();
 
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-            StringRequest stringRequest = new StringRequest(
-                    Request.Method.POST,
-                    Constants.URL_setting,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            // Toast.makeText(SettingActivity.this, "成功更新", Toast.LENGTH_SHORT).show();
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_setting,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // 服务器响应成功
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean error = jsonResponse.getBoolean("error");
+                            String message = jsonResponse.getString("message");
+
+                            if (!error) {
+                                // 操作成功
+                                Toast.makeText(SettingActivity.this, message, Toast.LENGTH_SHORT).show();
+                            } else {
+                                // 操作失败，显示错误消息
+                                Toast.makeText(SettingActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            // JSON解析错误，显示默认错误消息
+                            Toast.makeText(SettingActivity.this, "出現重複暱稱，请重试", Toast.LENGTH_SHORT).show();
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // Toast.makeText(SettingActivity.this, "更新失敗", Toast.LENGTH_SHORT).show();
-                        }
-                    }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("oldNickname", nickname); // 参数名与后端接口定义一致
-                    params.put("newNickname", newNickname); // 参数名与后端接口定义一致
-                    params.put("img", base64EncodedImage);
-                    return params;
-                }
-            };
-            requestQueue.add(stringRequest);
-        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 网络请求错误，显示错误消息
+                        Toast.makeText(SettingActivity.this, "网络请求失败，请检查网络连接", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("oldNickname", nickname); // 参数名与后端接口定义一致
+                params.put("newNickname", newNickname); // 参数名与后端接口定义一致
+                params.put("img", base64EncodedImage);
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
 
 }
