@@ -2,6 +2,7 @@ package com.example.beauty;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -17,9 +18,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.util.Arrays;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class VoteActivity extends AppCompatActivity {
@@ -36,7 +40,7 @@ public class VoteActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.voteRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        back = (ImageButton) findViewById(R.id.back);
+        back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,15 +57,34 @@ public class VoteActivity extends AppCompatActivity {
     }
 
     private void fetchAllBeauty() {
-        StringRequest request = new StringRequest(constants.URL_BEAUTY, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, constants.URL_BEAUTY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-                beautyList = Arrays.asList(gson.fromJson(response, BeautyItem[].class));
+                try {
+                    JSONObject responseJson = new JSONObject(response);
+                    JSONArray voteJsonArray = responseJson.getJSONArray("beautys");
+                    int count = voteJsonArray.length();
 
-                VoteAdapter adapter = new VoteAdapter(beautyList);
-                recyclerView.setAdapter(adapter);
+                    List<BeautyItem> beautyList = new ArrayList<>();
+
+                    for (int i = 0; i < count; i++) {
+                        JSONObject voteJson = voteJsonArray.getJSONObject(i);
+                        String name = voteJson.getString("name");
+                        int like = voteJson.getInt("like");
+                        String image = voteJson.getString("image");
+
+                        beautyList.add(new BeautyItem(name, like, image));
+                    }
+
+                    RecyclerView recyclerView = findViewById(R.id.voteRecyclerView);
+                    recyclerView.setLayoutManager(new GridLayoutManager(VoteActivity.this, 2));
+
+                    VoteAdapter voteAdapter = new VoteAdapter(beautyList);
+                    recyclerView.setAdapter(voteAdapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -70,7 +93,7 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
 
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
 }
