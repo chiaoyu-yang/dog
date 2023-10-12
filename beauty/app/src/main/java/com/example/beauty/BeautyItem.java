@@ -1,28 +1,39 @@
 package com.example.beauty;
 
 public class BeautyItem {
-
     private String name;
-
-    private String image;
-
     private int like;
+    private String image;
+    private boolean liked;
 
-    public BeautyItem(String name, String image, int like) {
+    public BeautyItem(String name, int like, String image) {
         this.name = name;
-        this.image = image;
         this.like = like;
+        this.image = image;
+        this.liked = false; // 初始化為未按讚
     }
 
     public String getName() {
         return name;
     }
 
+    public int getLike() {
+        return like;
+    }
+
     public String getImage() {
         return image;
     }
 
-    public int getLike() {
-        return like;
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
     }
 }

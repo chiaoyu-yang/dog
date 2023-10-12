@@ -148,17 +148,16 @@ public class MainActivity extends AppCompatActivity {
     // 這是原始的 updateUI 方法，不需要再更改
     private void updateUI(int imageResourceId, int nameResourceId, int likeResourceId, TopBeauty topBeauty) {
         String imageUrl = topBeauty.getImage();
-        if (imageUrl.endsWith(".png")) {
-            imageUrl = imageUrl.substring(0, imageUrl.length() - 4);
-        }
 
         String name = topBeauty.getName();
         int like = topBeauty.getLike();
 
         ImageView imageView = findViewById(imageResourceId);
+        String fullImageUrl = "http://140.131.114.145/Android/112_dog/beauty/" + imageUrl; // 修改圖片 URL
         Glide.with(MainActivity.this)
-                .load("http://140.131.114.145/Android/112_dog/beauty_top_season_history/" + imageUrl)
-                .fitCenter() // 自适应大小
+                .load(fullImageUrl)
+                .fitCenter() // 自適應大小
+                .error(R.drawable.error_image)
                 .into(imageView);
 
         TextView nameTextView = findViewById(nameResourceId);
