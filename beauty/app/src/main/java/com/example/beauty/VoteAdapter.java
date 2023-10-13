@@ -1,5 +1,7 @@
 package com.example.beauty;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
-    private List<BeautyItem> beautyList;
+    private final List<BeautyItem> beautyList;
 
-    private LikeClickListener likeClickListener;
+    private final LikeClickListener likeClickListener;
 
-    public VoteAdapter(List<BeautyItem> beautyList) {
+    private final Context context;
+
+    public VoteAdapter(List<BeautyItem> beautyList, LikeClickListener likeClickListener, Context context) {
         this.beautyList = beautyList;
         this.likeClickListener = likeClickListener;
+        this.context = context;
     }
 
 
@@ -40,7 +49,9 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
         holder.dognickname.setText(beautyItem.getName());
         holder.likes.setText(String.valueOf(beautyItem.getLike()));
 
-        if (beautyItem.isLiked()) {
+        boolean isLiked = isLiked(beautyItem.getBeautyId());
+
+        if (isLiked) {
             holder.likeImageView.setImageResource(R.drawable.keji); // 設定為已按讚的圖示
         } else {
             holder.likeImageView.setImageResource(R.drawable.keji_none); // 設定為未按讚的圖示
@@ -54,26 +65,36 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
                 .into(holder.dogimg);
 
         // 設置點擊事件監聽器
-        holder.likeImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 更新資料
-                beautyItem.setLiked(!beautyItem.isLiked());
-                if (beautyItem.isLiked()) {
-                    beautyItem.setLike(beautyItem.getLike() + 1);
-                } else {
-                    beautyItem.setLike(beautyItem.getLike() - 1);
-                }
+        holder.likeImageView.setOnClickListener(v -> {
+            boolean isAlreadyLiked = isLiked(beautyItem.getBeautyId());
 
-                // 更新 UI
-                notifyDataSetChanged(); // 通知 RecyclerView 更新
+            if (isLiked) {
+                // 取消按讚
+                beautyItem.setLiked(false);
+                beautyItem.setLike(beautyItem.getLike() - 1);
+                clearLikeStatus(beautyItem.getBeautyId());
+            } else {
+                // 按讚
+                beautyItem.setLiked(true);
+                beautyItem.setLike(beautyItem.getLike() + 1);
+                saveLikeStatus(beautyItem.getBeautyId());
+            }
 
-                // 通知 VoteActivity
-                if (likeClickListener != null) {
-                    likeClickListener.onLikeClick(beautyItem);
-                }
+            notifyDataSetChanged(); // 更新 UI
+            if (likeClickListener != null) {
+                likeClickListener.onLikeClick(beautyItem);
             }
         });
+    }
+
+    public void clearLikeStatus(int beautyId) {
+        SharedPreferences preferences = context.getSharedPreferences("LikeStatus", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        String key = "like_" + beautyId;
+        editor.putBoolean(key, false);
+
+        editor.apply();
     }
 
     @Override
@@ -94,5 +115,34 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
             dogimg = itemView.findViewById(R.id.dogimg);
             likeImageView = itemView.findViewById(R.id.likeImageView);
         }
+    }
+
+    public void saveLikeStatus(int beautyId) {
+        SharedPreferences preferences = context.getSharedPreferences("LikeStatus", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        String key = "like_" + beautyId;
+        editor.putBoolean(key, true);
+
+        String dateKey = "date_" + beautyId;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        editor.putString(dateKey, currentDate);
+
+        editor.apply();
+    }
+
+    public boolean isLiked(int beautyId) {
+        SharedPreferences preferences = context.getSharedPreferences("LikeStatus", Context.MODE_PRIVATE);
+        String key = "like_" + beautyId;
+        return preferences.getBoolean(key, false);
+    }
+
+    public boolean isSameDate(int beautyId) {
+        SharedPreferences preferences = context.getSharedPreferences("LikeStatus", Context.MODE_PRIVATE);
+        String key = "date_" + beautyId;
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        String savedDate = preferences.getString(key, null);
+        return currentDate.equals(savedDate);
     }
 }
