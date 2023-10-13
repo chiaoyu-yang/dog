@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /> <!-- 填充颜色为白色 -->
+    <corners android:radius="20dp" /> <!-- 设置圆角半径为 20dp -->
+    <stroke
+        android:width="2dp"
+        android:color="#CECECE" /> <!-- 设置边框宽度为 2dp，颜色为灰色 -->
+</shape>
