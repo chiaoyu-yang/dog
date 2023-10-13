@@ -1,4 +1,4 @@
-package com.example.soulgo;
+package com.example.soulgo.Quiz;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,14 +20,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.Volley;import com.example.soulgo.Constants;import com.example.soulgo.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;import java.util.List;import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class QuizActivity extends AppCompatActivity {
     private TextView questionText, textViewUsername;
@@ -60,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
+        Objects.requireNonNull(getSupportActionBar()).hide();
         questionText = findViewById(R.id.question);
         option1 = findViewById(R.id.option1);
         option2 = findViewById(R.id.option2);

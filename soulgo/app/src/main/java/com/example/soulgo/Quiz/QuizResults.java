@@ -1,4 +1,4 @@
-package com.example.soulgo;
+package com.example.soulgo.Quiz;
 
 import static com.example.soulgo.Constants.URL_MYPOINT;
 import android.content.Intent;
@@ -7,19 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;import java.util.HashMap;import java.util.Map;
+import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.SecondActivity;
+import java.util.HashMap;import java.util.Map;
+import java.util.Objects;
 
 public class QuizResults extends AppCompatActivity {
     private TextView textViewUsername;
@@ -29,7 +25,7 @@ public class QuizResults extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_results);
-
+        Objects.requireNonNull(getSupportActionBar()).hide();
         final ImageButton startNewBtn = findViewById(R.id.startNewQuizBtn);
         final TextView correctAnswers = findViewById(R.id.correctAnswers);
         final TextView incorrectAnswers = findViewById(R.id.incorrectAnswers);

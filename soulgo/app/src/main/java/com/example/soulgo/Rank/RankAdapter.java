@@ -1,4 +1,4 @@
-package com.example.soulgo;
+package com.example.soulgo.Rank;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.soulgo.R;
 import java.util.List;
 
 public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
-    private List<RankItem> rankList;
+  private List<RankItem> rankList;
 
     public RankAdapter(List<RankItem> rankList) {
         this.rankList = rankList;
@@ -20,7 +21,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rank, parent, false);
+    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rank, parent, false);
         return new ViewHolder(view);
     }
 

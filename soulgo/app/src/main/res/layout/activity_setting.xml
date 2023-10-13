@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,15 +18,17 @@
         android:textSize="20sp"
         android:textColor="@color/text_color"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_pick_image"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@id/setting"
+
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/_1" />
+        android:background="@color/white"
+        android:src="@drawable/_1"
+        app:shapeAppearanceOverlay="@style/circular" />
 
     <ImageButton
         android:id="@+id/to_home"
@@ -39,7 +42,7 @@
 
     <EditText
         android:id="@+id/editNickname"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_pick_image"
         android:layout_centerHorizontal="true"
@@ -47,10 +50,21 @@
         android:background="@android:color/transparent"
         android:drawableBottom="@drawable/line1"
         android:gravity="center"
-        android:hint="Enter nickname"
+        android:hint="nickname"
         android:maxEms="10"
         android:maxLines="1"/>
 
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/iv_pick_image"
+        android:layout_marginStart="-30dp"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@id/editNickname"
+        android:background="#F1FAEE"
+        android:src="@drawable/edit"
+        tools:visibility="invisible" />
     <TextView
         android:id="@+id/bgmusic"
         android:layout_width="wrap_content"
@@ -122,11 +136,8 @@
         android:layout_marginLeft="250dp"
         />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_marginTop="220dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+
+
+
 
 </RelativeLayout>
