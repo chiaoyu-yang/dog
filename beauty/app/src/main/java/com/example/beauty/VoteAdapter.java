@@ -15,8 +15,16 @@ import java.util.List;
 public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
     private List<BeautyItem> beautyList;
 
+    private LikeClickListener likeClickListener;
+
     public VoteAdapter(List<BeautyItem> beautyList) {
         this.beautyList = beautyList;
+        this.likeClickListener = likeClickListener;
+    }
+
+
+    public interface LikeClickListener {
+        void onLikeClick(BeautyItem beautyItem);
     }
 
     @NonNull
@@ -59,6 +67,11 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
 
                 // 更新 UI
                 notifyDataSetChanged(); // 通知 RecyclerView 更新
+
+                // 通知 VoteActivity
+                if (likeClickListener != null) {
+                    likeClickListener.onLikeClick(beautyItem);
+                }
             }
         });
     }
