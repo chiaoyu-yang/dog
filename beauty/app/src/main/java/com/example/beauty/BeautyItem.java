@@ -25,7 +25,6 @@ public class BeautyItem {
         return image;
     }
 
-
     public int getBeautyId() { return beauty_id; }
 
     public boolean isLiked() {
