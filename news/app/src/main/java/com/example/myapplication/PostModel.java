@@ -6,38 +6,35 @@ public class PostModel {
     private String nickname;
     private String message_like;
 
-    public PostModel(String Nid, String message, String nickname, String message_like) {
-        this.Nid = Nid;
-        this.message = message;
-        this.nickname = nickname;
-        this.message_like = message_like;
-    }
-
-    public String getId() {
+    public String getNid() {
         return Nid;
     }
-    public void setId(String Nid) {
+
+    public void setNid(String Nid) {
         this.Nid = Nid;
     }
 
     public String getMessage() {
         return message;
     }
-    public void getMessage(String title) {
-        this.message = title;
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getNickname() {
         return nickname;
     }
-    public void getNickname(String nickname) {
+
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
     public String getMessageLike() {
         return message_like;
     }
-    public void getMessageLike(String message_like) {
+
+    public void setMessageLike(String message_like) {
         this.message_like = message_like;
     }
 }

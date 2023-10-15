@@ -71,8 +71,6 @@ public class NewsActivity extends AppCompatActivity {
                         adapter.setItemClickListener(new NewsAdapter.ItemClickListener() {
                             @Override
                             public void onItemClick(String newsId) {
-        //                        Toast.makeText(getApplicationContext(), "NewsId " + newsId, Toast.LENGTH_SHORT).show();
-
                                 Intent intent = new Intent(getApplicationContext(), PostActivity.class);
                                 intent.putExtra(PostActivity.NEWS_ID_KEY, newsId);
                                 startActivity(intent);
