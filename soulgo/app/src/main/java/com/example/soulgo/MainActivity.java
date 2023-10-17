@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
     void navigateToSecondActivity() {
         finish();
-        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
         startActivity(intent);
     }
 }

@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;import com.example.soulgo.R;
-import com.example.soulgo.SecondActivity;
+import com.example.soulgo.HomeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +57,7 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     public void openactivity() {
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 

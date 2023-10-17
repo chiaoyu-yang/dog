@@ -13,7 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.SecondActivity;
+import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.HomeActivity;
 import java.util.HashMap;import java.util.Map;
 import java.util.Objects;
 
@@ -80,7 +80,7 @@ public class QuizResults extends AppCompatActivity {
         startNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuizResults.this, SecondActivity.class));
+                startActivity(new Intent(QuizResults.this, HomeActivity.class));
                 finish();
             }
         });
