@@ -10,4 +10,5 @@ public class Constants {
     public static final String URL_Post = ROOT_URL + "postDesc.php";
     public static final String URL_UpdatePostLike = ROOT_URL + "updatePostLike.php";
     public static final String URL_SendMessage = ROOT_URL + "insertMessage.php";
+    public static final String URL_UpdateMessageLike = ROOT_URL + "updateMessageLike.php";
 }

@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +40,6 @@ public class PostActivity extends AppCompatActivity {
 
     public static final String NEWS_ID_KEY = "news_id";
     private RecyclerView postRecview;
-    private List<PostModel> data;
     private ImageButton backBtn, postLikeBtn, sendButton;
     private String newsId;
     private TextView postTitle, postContent, postLike;
@@ -70,6 +70,12 @@ public class PostActivity extends AppCompatActivity {
         backBtnProcess();
         sendMessageBtn();
         processdata();
+        isLiked = getLikeStatus(newsId);
+        if (isLiked) {
+            postLikeBtn.setImageResource(R.drawable.active_like);
+        } else {
+            postLikeBtn.setImageResource(R.drawable.like_button);
+        }
     }
 
     private void processdata() {
@@ -93,20 +99,18 @@ public class PostActivity extends AppCompatActivity {
                         Log.e("soulgo", data.getMessage());
                         Toast.makeText(getApplicationContext(), "Error: " + data.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
-                        if (messageData != null) {
-                            PostAdapter adapter = new PostAdapter(messageData);
-                            postRecview.setAdapter(adapter);
-                        }
+                        PostAdapter adapter = new PostAdapter(PostActivity.this, messageData);
+                        postRecview.setAdapter(adapter);
                     }
 
                 } else {
-                    // 處理錯誤
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<PostResponseModel> call, Throwable t) {
-                // 處理網絡錯誤
+                Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -152,7 +156,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void backBtnProcess() {
-        backBtn = findViewById(R.id.backBtn); // 获取按钮的引用
+        backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,6 +171,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isLiked = !isLiked;
+                saveLikeStatus(newsId, isLiked);
 
                 if (isLiked) {
                     postLikeBtn.setImageResource(R.drawable.active_like);
@@ -179,6 +184,18 @@ public class PostActivity extends AppCompatActivity {
                 updatePostLike();
             }
         });
+    }
+
+    private void saveLikeStatus(String newsId, boolean isLiked) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(newsId, isLiked);
+        editor.apply();
+    }
+
+    private boolean getLikeStatus(String newsId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        return sharedPreferences.getBoolean(newsId, false);
     }
 
     private void updatePostLike() {
@@ -195,7 +212,8 @@ public class PostActivity extends AppCompatActivity {
                             postLike.setText(like);
 
                             if (!error) {
-                                Toast.makeText(PostActivity.this, "Dislike: " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, "Success: " + message, Toast.LENGTH_SHORT).show();
+                                messageInput.setText("");
                             } else {
                                 Toast.makeText(PostActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                             }
@@ -227,7 +245,6 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
-//                processdata();
             }
         });
     }
@@ -247,9 +264,10 @@ public class PostActivity extends AppCompatActivity {
                             if (!error) {
                                 Log.e("soulgo", message);
                                 Toast.makeText(PostActivity.this, "留言: " + message, Toast.LENGTH_SHORT).show();
+                                processdata();
                             } else {
                                 Log.e("soulgo", message);
-                                Toast.makeText(PostActivity.this, "Error1: " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

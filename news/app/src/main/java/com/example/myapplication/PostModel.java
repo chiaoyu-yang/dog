@@ -5,6 +5,8 @@ public class PostModel {
     private String message;
     private String nickname;
     private String message_like;
+    private String message_id;
+    private boolean isLiked;
 
     public String getNid() {
         return Nid;
@@ -36,5 +38,21 @@ public class PostModel {
 
     public void setMessageLike(String message_like) {
         this.message_like = message_like;
+    }
+
+    public String getMessageId() {
+        return message_id;
+    }
+
+    public void getMessageId(String message_id) {
+        this.message_id = message_id;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 }
