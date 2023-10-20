@@ -1,4 +1,4 @@
-package com.example.soulgo.News;
+package com.example.soulgo.Beauty;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,27 +29,24 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
-import com.example.soulgo.HomeActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
-public class PublishActivity extends AppCompatActivity {
+public class VotePublish extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_PICKER = 1;
-    private TextView textViewUsername, textViewCount, textViewOverlay;
-    private EditText uploadTitleEditText, uploadContentEditText;
+    private TextView textViewUsername, textViewCount;
+    private EditText uploadTitleEditText;
     private String base64EncodedImage, nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publish);
+        setContentView(R.layout.activity_beauty_publish);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         textViewUsername = findViewById(R.id.myusername);
         uploadTitleEditText = findViewById(R.id.upload_title);
-        uploadContentEditText = findViewById(R.id.upload_content_rec);
         textViewCount = findViewById(R.id.textViewCount);
-        textViewOverlay = findViewById(R.id.textViewOverlay);
 
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
@@ -82,12 +79,6 @@ public class PublishActivity extends AppCompatActivity {
             }
         });
 
-        uploadContentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                scrollToView(view);
-            }
-        });
 
         uploadTitleEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -102,23 +93,11 @@ public class PublishActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {}
         });
 
-        uploadContentEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                updateTextCount(charSequence, uploadContentEditText, 50, textViewOverlay);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
     }
 
     private void pickImage() {
         ImagePicker.with(this)
-                .crop(380, 295)
+                .crop(315, 370)
                 .compress(1024)
                 .maxResultSize(1080, 1080)
                 .start(REQUEST_IMAGE_PICKER);
@@ -167,27 +146,21 @@ public class PublishActivity extends AppCompatActivity {
         ImageButton icOutlineAdd = findViewById(R.id.ic_outline_add);
         TextView uploadText = findViewById(R.id.upload);
         String title = uploadTitleEditText.getText().toString().trim();
-        String content = uploadContentEditText.getText().toString().trim();
 
         if (icOutlineAdd.getVisibility() == View.VISIBLE && uploadText.getVisibility() == View.VISIBLE) {
             Toast.makeText(this, "请选取一张图片", Toast.LENGTH_SHORT).show();
-        } else if (title.isEmpty() && content.isEmpty()) {
-            Toast.makeText(this, "請填寫標題和內容", Toast.LENGTH_SHORT).show();
-        } else if (title.isEmpty()) {
+        }  else if (title.isEmpty()) {
             Toast.makeText(this, "請填寫標題", Toast.LENGTH_SHORT).show();
-        } else if (content.isEmpty()) {
-            Toast.makeText(this, "請填寫內容", Toast.LENGTH_SHORT).show();
-        } else {
+        }  else {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
-                    Constants.URL_publish,
+                    Constants.URL_BEAUTY_PUBLISH,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(PublishActivity.this, "成功上傳", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "成功上傳", Toast.LENGTH_SHORT).show();
                             uploadTitleEditText.setText("");
-                            uploadContentEditText.setText("");
                             ImageView clickToUploadImg = findViewById(R.id.clickToUploadImg);
                             clickToUploadImg.setImageResource(R.drawable.publish_1);
                             findViewById(R.id.ic_outline_add_container).setVisibility(View.VISIBLE);
@@ -201,7 +174,7 @@ public class PublishActivity extends AppCompatActivity {
                             if (error.networkResponse != null) {
                                 message = "Error code: " + error.networkResponse.statusCode;
                             }
-                            Toast.makeText(PublishActivity.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
                         }
                     }
             ) {
@@ -211,7 +184,6 @@ public class PublishActivity extends AppCompatActivity {
                     params.put("uid", nickname);
                     params.put("img", base64EncodedImage);
                     params.put("title", title);
-                    params.put("content", content);
                     return params;
                 }
             };
@@ -220,7 +192,8 @@ public class PublishActivity extends AppCompatActivity {
     }
 
     private void openHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, BeautyActivity.class);
         startActivity(intent);
     }
 }
+
