@@ -3,6 +3,7 @@ package com.example.soulgo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.soulgo.News.NewsActivity;
 import com.example.soulgo.News.PublishActivity;
 import com.example.soulgo.Quiz.QuizActivity;
 import com.example.soulgo.Rank.RankingActivity;
+import com.example.soulgo.Setting.SettingActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,6 +39,7 @@ public class HomeActivity extends AppCompatActivity{
 
     private String uid, nickname;
 
+    MediaPlayer mediaPlayer;
 
     @Override
 
@@ -44,6 +47,8 @@ public class HomeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         userName = findViewById(R.id.userName);
         myusername = findViewById(R.id.myusername);
@@ -108,8 +113,10 @@ public class HomeActivity extends AppCompatActivity{
             queue.add(request);
         }
 
+        setupButtonListeners();
+    }
 
-
+    private void setupButtonListeners() {
         final LinearLayout startRank = findViewById(R.id.startRankBtn);
         final LinearLayout startBook = findViewById(R.id.startBookBtn);
         final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
@@ -118,35 +125,39 @@ public class HomeActivity extends AppCompatActivity{
         final ImageButton startNewsBtn = findViewById(R.id.imageButton3);
         final Button startBeauty = findViewById(R.id.beautybutton);
 
+
         startBtn.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            TextView textViewNickname = findViewById(R.id.myusername);
-            String nickname = textViewNickname.getText().toString().trim();
-            Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
-            intent.putExtra("nickname", nickname);
-            startActivity(intent);
-          }
-        });
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView textViewNickname = findViewById(R.id.myusername);
+                        String nickname = textViewNickname.getText().toString().trim();
+                        Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+                        intent.putExtra("nickname", nickname);
+                        startActivity(intent);
+                        playButtonClickSound();
+                    }
+                });
 
         startRank.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            TextView textViewNickname = findViewById(R.id.userName);
-            String nickname = textViewNickname.getText().toString().trim();
-            Intent intent = new Intent(HomeActivity.this, RankingActivity.class);
-            intent.putExtra("nickname", nickname);
-            startActivity(intent);
-          }
-        });
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView textViewNickname = findViewById(R.id.userName);
+                        String nickname = textViewNickname.getText().toString().trim();
+                        Intent intent = new Intent(HomeActivity.this, RankingActivity.class);
+                        intent.putExtra("nickname", nickname);
+                        startActivity(intent);
+                        playButtonClickSound();
+                    }
+                });
 
         startBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, BookActivity.class);
                 startActivity(intent);
+                playButtonClickSound();
             }
         });
 
@@ -156,10 +167,11 @@ public class HomeActivity extends AppCompatActivity{
             public void onClick(View v) {
                 TextView textViewNickname = findViewById(R.id.userName);
                 String nickname = textViewNickname.getText().toString().trim();
-                Intent intent = new Intent(HomeActivity.this,SettingActivity.class);
+                Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
                 intent.putExtra("nickname", nickname);
                 intent.putExtra("imageUrl", imageUrl);
                 startActivity(intent);
+                playButtonClickSound();
             }
         });
 
@@ -171,6 +183,7 @@ public class HomeActivity extends AppCompatActivity{
                 Intent intent = new Intent(HomeActivity.this, PublishActivity.class);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
+                playButtonClickSound();
             }
         });
 
@@ -181,6 +194,7 @@ public class HomeActivity extends AppCompatActivity{
                 intent.putExtra("uid", uid);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
+                playButtonClickSound();
             }
         });
 
@@ -192,9 +206,11 @@ public class HomeActivity extends AppCompatActivity{
                 Intent intent = new Intent(HomeActivity.this, BeautyActivity.class);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
+                playButtonClickSound();
 
             }
         });
+
     }
 
     private void getPost() {
@@ -216,5 +232,10 @@ public class HomeActivity extends AppCompatActivity{
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
     }
-    
+
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
 }

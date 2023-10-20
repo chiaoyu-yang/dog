@@ -3,6 +3,7 @@ package com.example.soulgo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.soulgo.Setting.BackgroundMusicService;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -33,31 +35,50 @@ public class MainActivity extends AppCompatActivity {
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        Button googleBtn = findViewById(R.id.button);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
+
+
+        // 初始化MediaPlayer
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+        setupButtonListeners();
+
+    }
+
+    private void setupButtonListeners() {
+        Button googleBtn = findViewById(R.id.button);
 
         // 按下googleBtn啟動登入畫面
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // 启动服务播放音乐
+                Intent serviceIntent = new Intent(MainActivity.this, BackgroundMusicService.class);
+                startService(serviceIntent);
                 signIn();
+                playButtonClickSound();
             }
         });
     }
 
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
+
     void signIn() {
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-        startActivity(intent);
-//        Intent signInIntent = gsc.getSignInIntent();
-//        startActivityForResult(signInIntent, 1000);
+        Intent signInIntent = gsc.getSignInIntent();
+        startActivityForResult(signInIntent, 1000);
     }
 
     @Override
@@ -111,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
+
 
     void navigateToSecondActivity() {
         finish();

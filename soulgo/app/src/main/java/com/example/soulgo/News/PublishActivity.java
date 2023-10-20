@@ -2,6 +2,7 @@ package com.example.soulgo.News;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,12 +39,15 @@ public class PublishActivity extends AppCompatActivity {
     private TextView textViewUsername, textViewCount, textViewOverlay;
     private EditText uploadTitleEditText, uploadContentEditText;
     private String base64EncodedImage, nickname;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         textViewUsername = findViewById(R.id.myusername);
         uploadTitleEditText = findViewById(R.id.upload_title);
@@ -54,10 +58,15 @@ public class PublishActivity extends AppCompatActivity {
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
 
+        setupButtonListeners();
+    }
+
+    private void setupButtonListeners() {
         findViewById(R.id.to_home).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openHome();
+                playButtonClickSound();
             }
         });
 
@@ -72,6 +81,7 @@ public class PublishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadData();
+                playButtonClickSound();
             }
         });
 
@@ -101,6 +111,7 @@ public class PublishActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
 
         uploadContentEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -222,5 +233,11 @@ public class PublishActivity extends AppCompatActivity {
     private void openHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+    }
+
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
     }
 }

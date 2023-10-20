@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;import android.os.Bundle;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -34,27 +36,22 @@ import java.util.stream.Collectors;
 public class BookActivity extends AppCompatActivity {
     private RecyclerView recview;
     private List<BookModel> data;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
-
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new GridLayoutManager(this, 3));
 
-        ImageButton to_home = findViewById(R.id.to_home);
-
-        to_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openactivity();
-            }
-        });
-
         processdata();
-        setupSearch();
+        //setupSearch();
+        setupButtonListeners();
     }
 
     public void openactivity() {
@@ -117,7 +114,18 @@ public class BookActivity extends AppCompatActivity {
     }
 
 
-    private void setupSearch() {
+    private void setupButtonListeners() {
+
+        ImageButton to_home = findViewById(R.id.to_home);
+
+        to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity();
+                playButtonClickSound();
+            }
+        });
+
         EditText searchbar = findViewById(R.id.searchbar);
         searchbar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -130,16 +138,17 @@ public class BookActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         View searchButton = findViewById(R.id.searchbutton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String query = searchbar.getText().toString();
                 performSearch(query);
+                playButtonClickSound();
             }
         });
     }
+
 
     private void performSearch(String query) {
         // 使用 Java 8 Stream API 尋找符合搜尋關鍵字的項目
@@ -155,4 +164,9 @@ public class BookActivity extends AppCompatActivity {
         recview.setAdapter(adapter);
     }
 
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
 }

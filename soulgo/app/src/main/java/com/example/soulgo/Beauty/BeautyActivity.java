@@ -1,6 +1,7 @@
 package com.example.soulgo.Beauty;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -33,11 +34,14 @@ public class BeautyActivity extends AppCompatActivity {
 
     private String nickname;
     private TextView textViewUsername;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty);
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+
         Window window = BeautyActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -56,22 +60,45 @@ public class BeautyActivity extends AppCompatActivity {
         for (int i = 0; i < myImageButtons.length; i++) {
             setButtonClickHandler(myImageButtons[i]);
         }
+        setupButtonListeners();
 
-        back = findViewById(R.id.back);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openHome();
-            }
-        });
     }
 
     private void openHome() {
     Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
+    private void setupButtonListeners() {
+        back = findViewById(R.id.back);
+        vote = findViewById(R.id.vote);
+        image = findViewById(R.id.image);
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openHome();
+                playButtonClickSound();
+            }
+        });
+
+        // 初始化vote按鈕
+        vote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openVoteActivity();
+                playButtonClickSound();
+            }
+        });
+
+        // 初始化image按鈕
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openVotePublish();
+                playButtonClickSound();
+            }
+        });
+    }
     private void setButtonClickHandler(final ImageButton button) {
         button.setOnClickListener(new View.OnClickListener() {
             boolean isImage1 = true; // 初始圖片為 image1
@@ -90,23 +117,7 @@ public class BeautyActivity extends AppCompatActivity {
             }
         });
 
-        // 初始化vote按鈕
-        vote = findViewById(R.id.vote);
-        vote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openVoteActivity();
-            }
-        });
 
-        // 初始化image按鈕
-        image = findViewById(R.id.image);
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openVotePublish();
-            }
-        });
 
         fetchTopBeautyData();
     }
@@ -208,6 +219,10 @@ public class BeautyActivity extends AppCompatActivity {
         nameTextView.setText(name);
         likeTextView.setText(String.valueOf(like));
     }
-
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
 
 }
