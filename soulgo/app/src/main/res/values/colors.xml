@@ -11,4 +11,7 @@
     <color name="main_color">#FFF1FAEE</color>
     <color name="background_color">#F1FAEE</color>
     <color name="lightgrey">#CDCDCD</color>
+    <color name="amber_400">#616161</color>
+    <color name="purple_600">#30303070</color>
+    <color name="orange_deep_600">#00000010</color>
 </resources>

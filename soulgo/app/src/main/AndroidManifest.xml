@@ -42,6 +42,15 @@
             android:name=".Book.DetailActivity"
             android:exported="false" />
         <activity
+            android:name=".Beauty.VoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Beauty.BeautyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Beauty.VotePublish"
+            android:exported="false" />
+        <activity
             android:name=".SettingActivity"
             android:exported="false" />
         <activity

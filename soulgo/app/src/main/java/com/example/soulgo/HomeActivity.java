@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,8 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.bumptech.glide.Glide;import com.example.soulgo.Book.BookActivity;
-import com.example.soulgo.Book.DetailActivity;
+import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.bumptech.glide.Glide;import com.example.soulgo.Beauty.BeautyActivity;import com.example.soulgo.Book.BookActivity;
 import com.example.soulgo.News.NewsActivity;
 import com.example.soulgo.News.PublishActivity;
 import com.example.soulgo.Quiz.QuizActivity;
@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     TextView userName, myusername;
-    ImageButton image, startNewsBtn;
+    ImageButton image;
     ImageView imageview;
 
     String imageUrl;
@@ -116,6 +116,7 @@ public class HomeActivity extends AppCompatActivity{
         final ImageButton startimageBtn = findViewById(R.id.imageButton);
         final ImageButton startpublish = findViewById(R.id.imageButton4);
         final ImageButton startNewsBtn = findViewById(R.id.imageButton3);
+        final Button startBeauty = findViewById(R.id.beautybutton);
 
         startBtn.setOnClickListener(
         new View.OnClickListener() {
@@ -180,6 +181,18 @@ public class HomeActivity extends AppCompatActivity{
                 intent.putExtra("uid", uid);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
+            }
+        });
+
+        startBeauty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.myusername);
+                String nickname = textViewNickname.getText().toString().trim();
+                Intent intent = new Intent(HomeActivity.this, BeautyActivity.class);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+
             }
         });
     }
