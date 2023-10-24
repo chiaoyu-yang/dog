@@ -34,7 +34,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         void onItemClick(String newsId);
     }
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,10 +47,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         holder.newsTitle.setText(news.getTitle());
         holder.newsContent.setText(news.getContent());
 
-        // 使用 Glide 載入圖片，並提供佔位圖和錯誤圖片
         Glide.with(holder.img.getContext())
                 .load("http://140.131.114.145/Android/112_dog/news/" + news.getImage())
-                .error(R.drawable.error_image) // 載入錯誤時顯示的圖片
+                .error(R.drawable.error_image)
                 .into(holder.img);
     }
 

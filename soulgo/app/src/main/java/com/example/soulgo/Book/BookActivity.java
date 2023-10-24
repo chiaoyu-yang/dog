@@ -23,6 +23,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
+import com.example.soulgo.News.NewsAdapter;
+import com.example.soulgo.News.PostActivity;
 import com.example.soulgo.R;
 import com.example.soulgo.HomeActivity;
 import com.google.gson.Gson;
@@ -37,6 +39,7 @@ public class BookActivity extends AppCompatActivity {
     private RecyclerView recview;
     private List<BookModel> data;
     private MediaPlayer mediaPlayer;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class BookActivity extends AppCompatActivity {
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new GridLayoutManager(this, 3));
 
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
+
         processdata();
         //setupSearch();
         setupButtonListeners();
@@ -60,54 +66,64 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void processdata() {
-    StringRequest request =
-        new StringRequest(
-            Constants.URL_Booklist,
-            new Response.Listener<String>() {
-              @Override
-              public void onResponse(String response) {
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-                data = Arrays.asList(gson.fromJson(response, BookModel[].class));
+        StringRequest request =
+                new StringRequest(
+                        Constants.URL_Booklist,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                GsonBuilder builder = new GsonBuilder();
+                                Gson gson = builder.create();
+                                data = Arrays.asList(gson.fromJson(response, BookModel[].class));
 
-                // 检查是否有足够的数据
-                if (data.size() >= 3) {
-                  // 设置top1_text、top1_button的文本和图像
-                  ((TextView) findViewById(R.id.top1_text)).setText(data.get(0).getName());
-                  Glide.with(BookActivity.this)
-                      .load(
-                          "http://140.131.114.145/Android/112_dog/books/" + data.get(0).getImage())
-                      .error(R.drawable.error_image)
-                      .into((ImageView) findViewById(R.id.top1_button));
+                                // 检查是否有足够的数据
+                                if (data.size() >= 3) {
+                                    // 设置top1_text、top1_button的文本和图像
+                                    ((TextView) findViewById(R.id.top1_text)).setText(data.get(0).getName());
+                                    Glide.with(BookActivity.this)
+                                            .load(
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(0).getImage())
+                                            .error(R.drawable.error_image)
+                                            .into((ImageView) findViewById(R.id.top1_button));
 
-                  // 设置top2_text、top2_button的文本和图像
-                  ((TextView) findViewById(R.id.top2_text)).setText(data.get(1).getName());
-                  Glide.with(BookActivity.this)
-                      .load(
-                          "http://140.131.114.145/Android/112_dog/books/" + data.get(1).getImage())
-                      .error(R.drawable.error_image)
-                      .into((ImageView) findViewById(R.id.top2_button));
+                                    // 设置top2_text、top2_button的文本和图像
+                                    ((TextView) findViewById(R.id.top2_text)).setText(data.get(1).getName());
+                                    Glide.with(BookActivity.this)
+                                            .load(
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(1).getImage())
+                                            .error(R.drawable.error_image)
+                                            .into((ImageView) findViewById(R.id.top2_button));
 
-                  // 设置top3_text、top3_button的文本和图像
-                  ((TextView) findViewById(R.id.top3_text)).setText(data.get(2).getName());
-                  Glide.with(BookActivity.this)
-                      .load(
-                          "http://140.131.114.145/Android/112_dog/books/" + data.get(2).getImage())
-                      .error(R.drawable.error_image)
-                      .into((ImageView) findViewById(R.id.top3_button));
-                }
+                                    // 设置top3_text、top3_button的文本和图像
+                                    ((TextView) findViewById(R.id.top3_text)).setText(data.get(2).getName());
+                                    Glide.with(BookActivity.this)
+                                            .load(
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(2).getImage())
+                                            .error(R.drawable.error_image)
+                                            .into((ImageView) findViewById(R.id.top3_button));
+                                }
 
-                // 设置RecyclerView的Adapter
-                BookAdapter adapter = new BookAdapter(data);
-                recview.setAdapter(adapter);
-              }
-            },
-            new Response.ErrorListener() {
-              @Override
-              public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-              }
-            });
+                                // 设置RecyclerView的Adapter
+                                BookAdapter adapter = new BookAdapter(data);
+                                recview.setAdapter(adapter);
+
+                                adapter.setItemClickListener(new BookAdapter.ItemClickListener() {
+                                    @Override
+                                    public void onItemClick(String bookId) {
+                                        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                                        intent.putExtra("bookId", bookId);
+                                        intent.putExtra("uid", uid);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);

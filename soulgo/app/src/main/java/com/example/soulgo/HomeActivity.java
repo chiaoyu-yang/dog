@@ -11,12 +11,22 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.Request;import com.android.volley.RequestQueue;import com.android.volley.Response;import com.android.volley.VolleyError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;import com.android.volley.toolbox.Volley;import com.bumptech.glide.Glide;import com.example.soulgo.Beauty.BeautyActivity;import com.example.soulgo.Book.BookActivity;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.example.soulgo.Beauty.BeautyActivity;
+import com.example.soulgo.Book.BookActivity;
 import com.example.soulgo.News.NewsActivity;
+import com.example.soulgo.News.PostActivity;
 import com.example.soulgo.News.PublishActivity;
 import com.example.soulgo.Quiz.QuizActivity;
 import com.example.soulgo.Rank.RankingActivity;
@@ -25,10 +35,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import java.util.HashMap;import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity{
+public class HomeActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     TextView userName, myusername;
@@ -40,6 +56,8 @@ public class HomeActivity extends AppCompatActivity{
     private String uid, nickname;
 
     MediaPlayer mediaPlayer;
+
+    private String nid1, nid2;
 
     @Override
 
@@ -56,9 +74,10 @@ public class HomeActivity extends AppCompatActivity{
         imageview = findViewById(R.id.imageView);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(this,gso);
+        gsc = GoogleSignIn.getClient(this, gso);
 
         getPost();
+        newsClick();
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
@@ -156,6 +175,7 @@ public class HomeActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, BookActivity.class);
+                intent.putExtra("uid", uid);
                 startActivity(intent);
                 playButtonClickSound();
             }
@@ -215,11 +235,40 @@ public class HomeActivity extends AppCompatActivity{
 
     private void getPost() {
         String url = Constants.URL_HomePost;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, (String) null,
-                new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("c888888", "response" + response);
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+
+                            for (int i = 0; i < Math.min(jsonArray.length(), 2); i++) {
+                                JSONObject newsItem = jsonArray.getJSONObject(i);
+                                String title = newsItem.getString("title");
+                                String content = newsItem.getString("content");
+                                String imageUrl = newsItem.getString("newsimage");
+                                String nid = newsItem.getString("nid");
+
+                                TextView titleTextView = findViewById(i == 0 ? R.id.newsTitle_left : R.id.newsTitle_right);
+                                TextView contentTextView = findViewById(i == 0 ? R.id.newsContent_left : R.id.newsContent_right);
+                                ImageView imageView = findViewById(i == 0 ? R.id.booklist_image_button_left : R.id.booklist_image_button_right);
+                                if (i == 0) {
+                                    nid1 = nid;
+                                } else {
+                                    nid2 = nid;
+                                }
+
+                                titleTextView.setText(title);
+                                contentTextView.setText(content);
+
+                                Glide.with(getApplicationContext())
+                                        .load("http://140.131.114.145/Android/112_dog/news/" + imageUrl)
+                                        .error(R.drawable.error_image)
+                                        .into(imageView);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -230,7 +279,30 @@ public class HomeActivity extends AppCompatActivity{
                 });
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(stringRequest);
+    }
+
+    private void newsClick() {
+        findViewById(R.id.items_news_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startPost(nid1);
+            }
+        });
+        findViewById(R.id.items_news_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startPost(nid2);
+            }
+        });
+    }
+
+    private void startPost(String nid) {
+        Intent intent = new Intent(getApplicationContext(), PostActivity.class);
+        intent.putExtra("newsId", nid);
+        intent.putExtra("uid", uid);
+        intent.putExtra("nickname", nickname);
+        startActivity(intent);
     }
 
     private void playButtonClickSound() {

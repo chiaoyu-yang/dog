@@ -74,7 +74,7 @@ public class PostActivity extends AppCompatActivity {
         postLikeBtn();
         backBtnProcess();
         sendMessageBtn();
-        processdata();
+        getMessage();
         isLiked = getLikeStatus(newsId);
         if (isLiked) {
             postLikeBtn.setImageResource(R.drawable.active_like);
@@ -83,7 +83,7 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-    private void processdata() {
+    private void getMessage() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://140.131.114.145/Android/v1/messageList.php/") // 請替換為實際的 API 基本 URL
                 .addConverterFactory(GsonConverterFactory.create())
@@ -270,7 +270,7 @@ public class PostActivity extends AppCompatActivity {
                                 Log.e("soulgo", message);
                                 Toast.makeText(PostActivity.this, "留言: " + message, Toast.LENGTH_SHORT).show();
                                 messageInput.setText("");
-                                processdata();
+                                getMessage();
                             } else {
                                 Log.e("soulgo", message);
                                 Toast.makeText(PostActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
