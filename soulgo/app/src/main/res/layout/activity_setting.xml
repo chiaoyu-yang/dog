@@ -5,23 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1FAEE">
+    android:background="@color/background_color">
+
+    <ImageView
+        android:id="@+id/item_background"
+        android:layout_width="6000dp"
+        android:layout_height="6000dp"
+        app:srcCompat="@drawable/item_background" />
 
     <TextView
-        android:id="@+id/setting"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="設定"
-        android:textSize="20sp"
-        android:textColor="@color/text_color"/>
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/title_size" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_pick_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_below="@id/setting"
+        android:layout_below="@id/title"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
         android:background="@color/white"
@@ -29,13 +36,12 @@
         app:shapeAppearanceOverlay="@style/circular" />
 
     <ImageButton
-        android:id="@+id/to_home"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/back_start"
         android:layout_marginTop="30dp"
-        android:background="@drawable/back"
-        android:src="@drawable/back" />
+        android:background="@drawable/back"/>
 
 
     <EditText
@@ -121,7 +127,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/logout"
         android:background="@android:color/transparent"
-        android:layout_below="@id/to_home"
+        android:layout_below="@id/back"
         android:layout_marginTop="550dp"
         android:layout_marginLeft="250dp"
         />

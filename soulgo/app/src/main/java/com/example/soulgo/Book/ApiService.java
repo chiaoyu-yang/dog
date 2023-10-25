@@ -1,7 +1,5 @@
 package com.example.soulgo.Book;
 
-import com.example.soulgo.Book.DetailActivity;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

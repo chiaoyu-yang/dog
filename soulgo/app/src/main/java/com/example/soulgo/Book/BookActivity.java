@@ -1,9 +1,5 @@
 package com.example.soulgo.Book;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -15,7 +11,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,13 +21,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
-import com.example.soulgo.News.NewsAdapter;
-import com.example.soulgo.News.PostActivity;
-import com.example.soulgo.R;
 import com.example.soulgo.HomeActivity;
+import com.example.soulgo.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -132,7 +127,7 @@ public class BookActivity extends AppCompatActivity {
 
     private void setupButtonListeners() {
 
-        ImageButton to_home = findViewById(R.id.to_home);
+        ImageButton to_home = findViewById(R.id.back);
 
         to_home.setOnClickListener(new View.OnClickListener() {
             @Override

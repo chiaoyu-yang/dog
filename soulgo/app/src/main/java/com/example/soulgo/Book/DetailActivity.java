@@ -3,19 +3,15 @@ package com.example.soulgo.Book;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,13 +20,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
-import com.example.soulgo.News.PostActivity;
 import com.example.soulgo.R;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -71,7 +64,7 @@ public class DetailActivity extends AppCompatActivity {
         editDetail = findViewById(R.id.editDetail);
         detailContent = findViewById(R.id.detailContent);
         dog_image = findViewById(R.id.imageView2);
-        backBtn = findViewById(R.id.imageButton);
+        backBtn = findViewById(R.id.back);
 
         Intent intent = getIntent();
         Bid = intent.getStringExtra("bookId");
@@ -235,7 +228,7 @@ public class DetailActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BookAdapter.class);
+                Intent intent = new Intent(getApplicationContext(), BookActivity.class);
                 startActivity(intent);
             }
         });

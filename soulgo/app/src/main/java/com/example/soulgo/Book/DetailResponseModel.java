@@ -1,7 +1,5 @@
 package com.example.soulgo.Book;
 
-import com.example.soulgo.Book.DetailModel;
-
 import java.util.List;
 
 public class DetailResponseModel {

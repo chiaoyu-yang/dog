@@ -11,25 +11,27 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="@dimen/back_start"
         android:layout_marginTop="30dp"
-        android:background="@color/background_color"
-        android:src="@drawable/back" />
+        android:background="@drawable/back"/>
+
 
     <TextView
-        android:id="@+id/votenum"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="汪美大對決"
-        android:textSize="20dp" />
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/title_size" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/voteRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/votenum"
+        android:layout_below="@+id/title"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginTop="20dp" />

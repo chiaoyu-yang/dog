@@ -23,29 +23,29 @@
             tools:layout_editor_absoluteY="30dp" />
 
         <TextView
-            android:id="@+id/setting"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="發布"
-            android:textSize="15sp"
-            android:textColor="@color/text_color" />
+            android:text="上傳照片"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/title_size" />
 
         <ImageButton
-            android:id="@+id/to_home"
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="@dimen/back_start"
             android:layout_marginTop="30dp"
-            android:background="@drawable/back"
-            android:src="@drawable/back" />
+            android:background="@drawable/back" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/clickToUploadImg"
             android:layout_width="310dp"
             android:layout_height="365dp"
-            android:layout_below="@+id/setting"
+            android:layout_below="@+id/title"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="@color/white"
@@ -59,7 +59,7 @@
             android:id="@+id/ic_outline_add_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/setting"
+            android:layout_below="@id/title"
             android:layout_centerHorizontal="true">
 
             <ImageButton

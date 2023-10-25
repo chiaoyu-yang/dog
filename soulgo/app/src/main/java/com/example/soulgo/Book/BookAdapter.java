@@ -5,15 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.soulgo.R;
-
 import java.util.List;
-
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
 
@@ -25,7 +21,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         this.data = data;
     }
 
-    public void setItemClickListener(BookAdapter.ItemClickListener listener) {
+    public void setItemClickListener(ItemClickListener listener) {
         this.itemClickListener = listener;
     }
 

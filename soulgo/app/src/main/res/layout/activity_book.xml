@@ -8,28 +8,29 @@
     android:background="@color/main_color">
 
     <TextView
-        android:id="@+id/setting"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="@string/寶典"
         android:textColor="@color/text_color"
-        android:textSize="15sp" />
+        android:textSize="@dimen/title_size" />
 
     <ImageButton
-        android:id="@+id/to_home"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/back_start"
         android:layout_marginTop="30dp"
-        android:background="@drawable/back"
-        android:src="@drawable/back" />
+        android:background="@drawable/back"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="78dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal"
         android:id="@+id/bar">
 

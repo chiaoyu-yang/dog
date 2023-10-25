@@ -6,15 +6,20 @@
     android:layout_height="match_parent"
     android:background="#F1FAEE">
 
-    <ImageButton
+
+    <RelativeLayout
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/back"
-        android:background="#F1FAEE"
-        android:paddingTop="25dp"
-        android:paddingLeft="25dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/back_start"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/back" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView"

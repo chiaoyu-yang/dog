@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class NewsActivity extends AppCompatActivity {
     private RecyclerView newsRecview;
@@ -35,6 +36,7 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
@@ -49,9 +51,9 @@ public class NewsActivity extends AppCompatActivity {
         setupButtonListeners();
     }
     private void setupButtonListeners() {
-        ImageButton to_home = findViewById(R.id.to_home);
+        ImageButton back = findViewById(R.id.back);
 
-        to_home.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openactivity();
