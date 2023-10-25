@@ -5,22 +5,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.soulgo.R;
-
 import java.util.List;
-
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
 
-  private List<BookModel> data;
+    private List<BookModel> data;
+
+    private ItemClickListener itemClickListener;
 
     public BookAdapter(List<BookModel> data) {
         this.data = data;
+    }
+
+    public void setItemClickListener(ItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(String bookId);
     }
 
     @NonNull
@@ -69,6 +75,19 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
             super(itemView);
             img = itemView.findViewById(R.id.booklist_image_button);
             t1 = itemView.findViewById(R.id.booklist_text);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (itemClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            BookModel book = data.get(position + 3);
+                            itemClickListener.onItemClick(book.getId());
+                        }
+                    }
+                }
+            });
         }
     }
 }

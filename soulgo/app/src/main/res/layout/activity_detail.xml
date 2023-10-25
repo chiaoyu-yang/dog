@@ -103,21 +103,6 @@
                     android:textSize="12dp"
                     android:layout_margin="5dp"/>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textView2"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="原產國: 歐洲"-->
-<!--                    android:textSize="12dp"-->
-<!--                    android:layout_marginTop="15dp"/>-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/textView3"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="平均壽命: 12 - 15"-->
-<!--                    android:textSize="12dp"/>-->
-
                 <LinearLayout
                     android:id="@+id/nullLayout"
                     android:layout_width="match_parent"

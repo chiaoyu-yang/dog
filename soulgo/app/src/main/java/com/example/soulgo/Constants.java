@@ -23,7 +23,6 @@ public class Constants {
 
     public static final String URL_publish = ROOT_URL + "publish.php";
 
-    public static final String URL_DETAIL = ROOT_URL + "detail.php";
     public static final String URL_UPDATE_DETAIL = ROOT_URL + "updateDetail.php";
 
     public static final String URL_News = ROOT_URL + "newsList.php";
@@ -32,7 +31,7 @@ public class Constants {
     public static final String URL_SendMessage = ROOT_URL + "insertMessage.php";
     public static final String URL_UpdateMessageLike = ROOT_URL + "updateMessageLike.php";
 
-    public static final String URL_HomePost = ROOT_URL + "HomePost.php";
+    public static final String URL_HomePost = ROOT_URL + "homePost.php";
 
     public static final String URL_BEAUTY = ROOT_URL + "beautyList.php";
     public static final String URL_TOPBEAUTY = ROOT_URL + "topBeauty.php";

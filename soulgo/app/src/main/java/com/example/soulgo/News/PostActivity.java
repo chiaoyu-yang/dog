@@ -10,11 +10,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,15 +22,11 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -51,7 +45,6 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        Objects.requireNonNull(getSupportActionBar()).hide();
 
         postRecview = findViewById(R.id.postRecview);
         postRecview.setLayoutManager(new GridLayoutManager(this, 1));
@@ -76,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
         postLikeBtn();
         backBtnProcess();
         sendMessageBtn();
-        processdata();
+        getMessage();
         isLiked = getLikeStatus(newsId);
         if (isLiked) {
             postLikeBtn.setImageResource(R.drawable.active_like);
@@ -85,7 +78,7 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-    private void processdata() {
+    private void getMessage() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://140.131.114.145/Android/v1/messageList.php/") // 請替換為實際的 API 基本 URL
                 .addConverterFactory(GsonConverterFactory.create())
@@ -272,7 +265,7 @@ public class PostActivity extends AppCompatActivity {
                                 Log.e("soulgo", message);
                                 Toast.makeText(PostActivity.this, "留言: " + message, Toast.LENGTH_SHORT).show();
                                 messageInput.setText("");
-                                processdata();
+                                getMessage();
                             } else {
                                 Log.e("soulgo", message);
                                 Toast.makeText(PostActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
