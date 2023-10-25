@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,6 +51,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         postRecview = findViewById(R.id.postRecview);
         postRecview.setLayoutManager(new GridLayoutManager(this, 1));
@@ -161,7 +163,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void backBtnProcess() {
-        backBtn = findViewById(R.id.backBtn);
+        backBtn = findViewById(R.id.back);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

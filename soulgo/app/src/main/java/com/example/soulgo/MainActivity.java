@@ -2,11 +2,12 @@ package com.example.soulgo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.animation.AnimatorSet;import android.animation.ObjectAnimator;import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.DecelerateInterpolator;import android.view.animation.LinearInterpolator;import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,12 +37,16 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     MediaPlayer mediaPlayer;
+    private ImageView soulS, soulO, soulU, soulL, goG, goO;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
@@ -51,10 +56,44 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.beep);
         setupButtonListeners();
 
+        // 初始化ImageView
+        soulS = findViewById(R.id.soul_s);
+        soulO = findViewById(R.id.soul_o);
+        soulU = findViewById(R.id.soul_u);
+        soulL = findViewById(R.id.soul_l);
+        goG = findViewById(R.id.go_g);
+        goO = findViewById(R.id.go_o);
+
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(soulS, "scaleX", 0.3f, 1f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(soulS, "scaleY", 0.3f, 1f);
+
+        ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(soulO, "rotation", 0f, 360f);
+
+        ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(soulU, "translationX", -200f, 0f);
+        ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(soulU, "translationY", -200f, 0f);
+
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(soulL, "alpha", 0f, 1f);
+
+        ObjectAnimator scaleXAnimatorGo = ObjectAnimator.ofFloat(goG, "scaleX", 0.2f, 1f);
+        ObjectAnimator scaleYAnimatorGo = ObjectAnimator.ofFloat(goG, "scaleY", 0.2f, 1f);
+
+        ObjectAnimator translationXAnimatorGo = ObjectAnimator.ofFloat(goO, "translationX", -200f, 0f);
+        ObjectAnimator translationYAnimatorGo = ObjectAnimator.ofFloat(goO, "translationY", -200f, 0f);
+
+
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator, rotationAnimator, translationXAnimator, translationYAnimator, alphaAnimator, scaleXAnimatorGo, scaleYAnimatorGo, translationXAnimatorGo, translationYAnimatorGo);
+        animatorSet.setDuration(2000);
+        animatorSet.start();
+
+        // 执行动画
+        animateImageView(soulO, 1500, 0);
+        animateImageView(goO, 1500, 0);
     }
 
     private void setupButtonListeners() {
-        Button googleBtn = findViewById(R.id.button);
+        ImageView googleBtn = findViewById(R.id.button);
 
         // 按下googleBtn啟動登入畫面
         googleBtn.setOnClickListener(new View.OnClickListener() {
@@ -141,5 +180,25 @@ public class MainActivity extends AppCompatActivity {
         finish();
         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
         startActivity(intent);
+    }
+
+    private void animateImageView(ImageView imageView, long duration, long delay) {
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(imageView, "scaleX", 0.9f, 1f);
+        scaleX.setDuration(duration);
+        scaleX.setInterpolator(new DecelerateInterpolator());
+        scaleX.setStartDelay(delay);
+        scaleX.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleX.setRepeatCount(ObjectAnimator.INFINITE);
+
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(imageView, "scaleY", 0.9f, 1f);
+        scaleY.setDuration(duration);
+        scaleY.setInterpolator(new DecelerateInterpolator());
+        scaleY.setStartDelay(delay);
+        scaleY.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleY.setRepeatCount(ObjectAnimator.INFINITE);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleX, scaleY);
+        animatorSet.start();
     }
 }

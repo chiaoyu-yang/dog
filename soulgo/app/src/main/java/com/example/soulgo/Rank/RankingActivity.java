@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class RankingActivity extends AppCompatActivity {
 
@@ -38,6 +39,7 @@ public class RankingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rank);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
@@ -54,7 +56,7 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     private void setupButtonListeners() {
-        ImageButton button = findViewById(R.id.button);
+        ImageButton button = findViewById(R.id.back);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

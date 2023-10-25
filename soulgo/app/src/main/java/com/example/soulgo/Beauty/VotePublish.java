@@ -61,7 +61,7 @@ public class VotePublish extends AppCompatActivity {
 
     private void setupButtonListeners() {
 
-        findViewById(R.id.to_home).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             openHome();

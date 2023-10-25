@@ -150,7 +150,7 @@ public class SettingActivity extends AppCompatActivity{
     }
 
     private void setupButtonListeners() {
-        ImageButton to_home = findViewById(R.id.to_home);
+        ImageButton to_home = findViewById(R.id.back);
         ImageButton logout = findViewById(R.id.logout);
 
         to_home.setOnClickListener(new View.OnClickListener() {

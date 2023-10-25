@@ -83,7 +83,7 @@ public class QuizResults extends AppCompatActivity {
         setupButtonListeners();
     }
     private void setupButtonListeners() {
-        final ImageButton startNewBtn = findViewById(R.id.startNewQuizBtn);
+        final ImageButton startNewBtn = findViewById(R.id.back);
 
         startNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override

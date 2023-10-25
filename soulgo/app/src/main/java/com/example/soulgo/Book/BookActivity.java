@@ -116,9 +116,9 @@ public class BookActivity extends AppCompatActivity {
 
     private void setupButtonListeners() {
 
-        ImageButton to_home = findViewById(R.id.to_home);
+        ImageButton back = findViewById(R.id.back);
 
-        to_home.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openactivity();

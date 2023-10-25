@@ -24,6 +24,7 @@ import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +41,7 @@ public class BeautyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         Window window = BeautyActivity.this.getWindow();

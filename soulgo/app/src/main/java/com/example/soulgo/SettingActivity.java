@@ -27,7 +27,7 @@ public class SettingActivity extends AppCompatActivity{
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         imageView = findViewById(R.id.iv_pick_image);
-        ImageButton to_home = findViewById(R.id.to_home);
+        ImageButton to_home = findViewById(R.id.back);
 
         editNickname = findViewById(R.id.editNickname);
         nickname = getIntent().getStringExtra("nickname");
