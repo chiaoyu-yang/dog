@@ -116,8 +116,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void signIn() {
-        Intent signInIntent = gsc.getSignInIntent();
-        startActivityForResult(signInIntent, 1000);
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
+//        Intent signInIntent = gsc.getSignInIntent();
+//        startActivityForResult(signInIntent, 1000);
     }
 
     @Override
