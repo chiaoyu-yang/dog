@@ -177,7 +177,7 @@ public class BeautyActivity extends AppCompatActivity {
             new Response.ErrorListener() {
               @Override
               public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Error loading image", Toast.LENGTH_LONG)
+                Toast.makeText(getApplicationContext(), "圖片無法載入", Toast.LENGTH_LONG)
                     .show();
               }
             });

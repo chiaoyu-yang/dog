@@ -181,7 +181,7 @@ public class VotePublish extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             String message = error.getMessage();
                             if (error.networkResponse != null) {
-                                message = "Error code: " + error.networkResponse.statusCode;
+                                message = "錯誤代碼: " + error.networkResponse.statusCode;
                             }
                             Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
                         }

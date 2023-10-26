@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
         // 执行动画
         animateImageView(soulO, 1500, 0);
         animateImageView(goO, 1500, 0);
+
+        Intent serviceIntent = new Intent(MainActivity.this, BackgroundMusicService.class);
+        startService(serviceIntent);
     }
 
     private void setupButtonListeners() {
@@ -101,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 // 启动服务播放音乐
-                Intent serviceIntent = new Intent(MainActivity.this, BackgroundMusicService.class);
-                startService(serviceIntent);
                 signIn();
                 playButtonClickSound();
             }
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     void signIn() {
         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
         startActivity(intent);
-//        Intent signInIntent = gsc.getSignInIntent();
+//      Intent signInIntent = gsc.getSignInIntent();
 //        startActivityForResult(signInIntent, 1000);
     }
 
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onResponse(String response) {
                                     try {
                                         JSONObject jsonObject = new JSONObject(response);
-                                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), jsonObject.getString("訊息"), Toast.LENGTH_LONG).show();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -169,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                 navigateToSecondActivity();
             } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "發生錯誤", Toast.LENGTH_SHORT).show();
             }
         }
     }

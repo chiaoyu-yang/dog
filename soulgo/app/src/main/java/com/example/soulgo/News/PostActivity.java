@@ -104,13 +104,13 @@ public class PostActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "錯誤", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<PostResponseModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "連線失敗", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -212,10 +212,10 @@ public class PostActivity extends AppCompatActivity {
                             postLike.setText(like);
 
                             if (!error) {
-                                Toast.makeText(PostActivity.this, "Success: " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, "成功: " + message, Toast.LENGTH_SHORT).show();
                                 messageInput.setText("");
                             } else {
-                                Toast.makeText(PostActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, "錯誤: " + message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -225,7 +225,7 @@ public class PostActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "請求失敗: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -268,7 +268,7 @@ public class PostActivity extends AppCompatActivity {
                                 getMessage();
                             } else {
                                 Log.e("soulgo", message);
-                                Toast.makeText(PostActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PostActivity.this, "錯誤: " + message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -278,7 +278,7 @@ public class PostActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "請求失敗: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

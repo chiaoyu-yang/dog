@@ -181,7 +181,7 @@ public class PublishActivity extends AppCompatActivity {
         String content = uploadContentEditText.getText().toString().trim();
 
         if (icOutlineAdd.getVisibility() == View.VISIBLE && uploadText.getVisibility() == View.VISIBLE) {
-            Toast.makeText(this, "请选取一张图片", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "請選取一張圖片", Toast.LENGTH_SHORT).show();
         } else if (title.isEmpty() && content.isEmpty()) {
             Toast.makeText(this, "請填寫標題和內容", Toast.LENGTH_SHORT).show();
         } else if (title.isEmpty()) {
@@ -196,7 +196,7 @@ public class PublishActivity extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(PublishActivity.this, "成功上傳", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PublishActivity.this, "上傳成功", Toast.LENGTH_SHORT).show();
                             uploadTitleEditText.setText("");
                             uploadContentEditText.setText("");
                             ImageView clickToUploadImg = findViewById(R.id.clickToUploadImg);
@@ -210,7 +210,7 @@ public class PublishActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             String message = error.getMessage();
                             if (error.networkResponse != null) {
-                                message = "Error code: " + error.networkResponse.statusCode;
+                                message = "錯誤代碼: " + error.networkResponse.statusCode;
                             }
                             Toast.makeText(PublishActivity.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
                         }

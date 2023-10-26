@@ -53,8 +53,6 @@ public class SettingActivity extends AppCompatActivity{
         setContentView(R.layout.activity_setting);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
-
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
 
@@ -240,7 +238,7 @@ public class SettingActivity extends AppCompatActivity{
                         } catch (JSONException e) {
                             e.printStackTrace();
                             // JSON解析错误，显示默认错误消息
-                            Toast.makeText(SettingActivity.this, "暱稱重複，请重试", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingActivity.this, "暱稱重複", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -248,7 +246,7 @@ public class SettingActivity extends AppCompatActivity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // 网络请求错误，显示错误消息
-                        Toast.makeText(SettingActivity.this, "网络请求失败，请检查网络连接", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SettingActivity.this, "網路請求失敗", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
