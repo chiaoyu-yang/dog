@@ -1,5 +1,7 @@
 package com.example.soulgo.Setting;
 
+import static com.example.soulgo.Constants.URL_setting_nickname;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -42,12 +44,11 @@ public class SettingActivity extends AppCompatActivity{
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     ImageView imageView;
-    String base64EncodedImage, nickname, imageUrl;
+    String base64EncodedImage, nickname, imageUrl, Uid;
     EditText editNickname;
     MediaPlayer mediaPlayer;
     AudioManager audioManager;
-    SeekBar volumeSeekBar;
-    SeekBar gameSeekBar;
+    SeekBar volumeSeekBar,gameSeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class SettingActivity extends AppCompatActivity{
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
         nickname = sharedPreferences.getString("nickname", "");
         imageUrl = sharedPreferences.getString("imageUrl", "");
+        Uid = sharedPreferences.getString("uid", "");
         editNickname.setText(nickname);
 
         Glide.with(SettingActivity.this) // 使用當前活動的上下文
@@ -82,7 +84,9 @@ public class SettingActivity extends AppCompatActivity{
                         .compress(1024)			//Final image size will be less than 1 MB(Optional)
                         .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                         .start();
+
             }
+
         });
         setupButtonListeners();
 
@@ -122,6 +126,8 @@ public class SettingActivity extends AppCompatActivity{
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
             }
+
+
         });
 
         gameSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -148,6 +154,24 @@ public class SettingActivity extends AppCompatActivity{
             }
         });
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        Uri uri = data.getData();
+        imageView.setImageURI(uri);
+
+        try {
+            Bitmap selectedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            base64EncodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+            uploadImage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     private void setupButtonListeners() {
         ImageButton to_home = findViewById(R.id.back);
@@ -156,8 +180,8 @@ public class SettingActivity extends AppCompatActivity{
         to_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                uploadNickname();
                 openactivity();
-                uploadData();
                 playButtonClickSound();
             }
         });
@@ -190,37 +214,21 @@ public class SettingActivity extends AppCompatActivity{
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        Uri uri = data.getData();
-        imageView.setImageURI(uri);
 
-        try {
-            Bitmap selectedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            byte[] imageBytes = byteArrayOutputStream.toByteArray();
-            base64EncodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     public void openactivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
-    private void uploadData() {
-        String newNickname = editNickname.getText().toString();
+    private void uploadImage() {
+        //String newNickname = editNickname.getText().toString();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_setting,
+                Constants.URL_setting_image,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -230,17 +238,24 @@ public class SettingActivity extends AppCompatActivity{
                             boolean error = jsonResponse.getBoolean("error");
                             String message = jsonResponse.getString("message");
 
+
                             if (!error) {
                                 // 操作成功
-                                Toast.makeText(SettingActivity.this, message, Toast.LENGTH_SHORT).show();
+                                String imagea = jsonResponse.getString("userimage");
+                                // Toast.makeText(SettingActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("imageUrl", imagea);
+                                editor.apply(); // 使用apply()方法保存更改，提高性能
                             } else {
                                 // 操作失败，显示错误消息
                                 Toast.makeText(SettingActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            // JSON解析错误，显示默认错误消息
                             Toast.makeText(SettingActivity.this, "暱稱重複，请重试", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 },
@@ -254,8 +269,7 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("oldNickname", nickname); // 参数名与后端接口定义一致
-                params.put("newNickname", newNickname); // 参数名与后端接口定义一致
+                params.put("Uid", Uid); // 参数名与后端接口定义一致
                 params.put("img", base64EncodedImage);
                 return params;
             }
@@ -264,9 +278,65 @@ public class SettingActivity extends AppCompatActivity{
         requestQueue.add(stringRequest);
     }
 
+    private void uploadNickname() {
+        String newNickname = editNickname.getText().toString();
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nickname", newNickname);
+        editor.apply();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_setting_nickname,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean error = jsonObject.getBoolean("error");
+                            String message = jsonObject.getString("message");
+
+                            Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
+
+                            // 在這裡處理回調邏輯
+                            // 例如，更新 UI 或顯示訊息給使用者
+                        } catch (JSONException e) {
+                            // JSON 解析錯誤
+                            e.printStackTrace();
+                            Toast.makeText(SettingActivity.this, "暱稱重覆", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // 請求失敗
+                        error.printStackTrace();
+                        // 在這裡處理錯誤，例如顯示錯誤訊息給使用者
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                // 注意：Uid 的值應該在這裡被設定
+                params.put("Uid", Uid);
+                params.put("newNickname", newNickname);
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+
+
+
     private void playButtonClickSound() {
         if (mediaPlayer != null) {
             mediaPlayer.start();
         }
     }
+
+
 }

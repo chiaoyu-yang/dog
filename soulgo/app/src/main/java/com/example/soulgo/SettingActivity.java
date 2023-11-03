@@ -90,7 +90,7 @@ public class SettingActivity extends AppCompatActivity{
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_setting,
+                Constants.URL_setting_image,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
