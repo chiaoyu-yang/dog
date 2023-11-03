@@ -7,30 +7,6 @@
     android:background="@color/background_color"
     tools:context=".Beauty.BeautyActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:text="汪美大對決"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/title_size" />
-
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/back_start"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/back" />
-    </RelativeLayout>
-
     <TextView
         android:id="@+id/myusername"
         android:layout_width="100dp"
@@ -41,8 +17,33 @@
         tools:layout_editor_absoluteX="30dp"
         tools:layout_editor_absoluteY="30dp" />
 
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color"
+        android:src="@drawable/back"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="汪美大對決"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055" />
+
     <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
+        android:layout_width="320dp"
         android:layout_height="200dp"
         tools:layout_editor_absoluteX="31dp"
         tools:layout_editor_absoluteY="130dp"
@@ -51,7 +52,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_bias="0.23"
         android:layout_centerHorizontal="true"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp">
@@ -84,34 +85,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:gravity = "center_vertical"
                     android:textColor="@color/white"
                     android:text="阿金" />
-
-                <LinearLayout
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginRight="10dp">
-                    <TextView
-                        android:id="@+id/likeone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginRight="10dp"
-                        android:gravity = "right"
-                        android:textColor="@color/white"
-                        android:text="582" />
-
-                    <ImageButton
-                        android:id="@+id/myImageButton1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/keji_none" />
-                </LinearLayout>
             </LinearLayout>
-
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -136,7 +114,7 @@
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.78"
+        app:layout_constraintVertical_bias="0.68"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp">
 
@@ -153,7 +131,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:background="@drawable/gradient"
                 android:elevation="1dp"
                 android:layout_alignParentBottom="true"
@@ -168,33 +146,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:textColor="@color/white"
                     android:text="阿金" />
-
-                <LinearLayout
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginRight="10dp">
-                    <TextView
-                        android:id="@+id/liketwo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/white"
-                        android:text="582" />
-
-                    <ImageButton
-                        android:id="@+id/myImageButton2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/keji_none" />
-                </LinearLayout>
             </LinearLayout>
-
         </RelativeLayout>
-
     </androidx.cardview.widget.CardView>
 
     <ImageView
@@ -205,7 +161,7 @@
         app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.523"
+        app:layout_constraintVertical_bias="0.48"
         app:srcCompat="@drawable/top2" />
 
     <androidx.cardview.widget.CardView
@@ -219,7 +175,7 @@
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.78"
+        app:layout_constraintVertical_bias="0.68"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp">
 
@@ -236,7 +192,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:background="@drawable/gradient"
                 android:elevation="1dp"
                 android:layout_alignParentBottom="true"
@@ -251,33 +207,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:textColor="@color/white"
                     android:text="阿金" />
-
-                <LinearLayout
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginRight="10dp">
-                    <TextView
-                        android:id="@+id/likethree"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/white"
-                        android:text="582" />
-
-                    <ImageButton
-                        android:id="@+id/myImageButton3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/keji_none" />
-                </LinearLayout>
             </LinearLayout>
-
         </RelativeLayout>
-
     </androidx.cardview.widget.CardView>
 
     <ImageView
@@ -288,7 +222,7 @@
         app:layout_constraintHorizontal_bias="0.777"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.523"
+        app:layout_constraintVertical_bias="0.48"
         app:srcCompat="@drawable/top3" />
 
     <ImageView
@@ -299,7 +233,7 @@
         app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.911"
+        app:layout_constraintVertical_bias="0.85"
         app:srcCompat="@drawable/vote" />
 
     <FrameLayout
@@ -310,7 +244,7 @@
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98">
+        app:layout_constraintVertical_bias="0.91">
         <ImageButton
             android:id="@+id/vote"
             android:layout_width="fill_parent"
@@ -337,7 +271,7 @@
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98">
+        app:layout_constraintVertical_bias="0.91">
         <ImageButton
             android:id="@+id/image"
             android:layout_width="fill_parent"
@@ -364,7 +298,7 @@
         app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.921"
+        app:layout_constraintVertical_bias="0.85"
         app:srcCompat="@drawable/image_p" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

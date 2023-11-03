@@ -16,7 +16,6 @@ public class BeautyItem {
     public String getName() {
         return name;
     }
-
     public int getLike() {
         return like;
     }
@@ -26,10 +25,6 @@ public class BeautyItem {
     }
 
     public int getBeautyId() { return beauty_id; }
-
-    public boolean isLiked() {
-        return liked;
-    }
 
     public void setLiked(boolean liked) {
         this.liked = liked;

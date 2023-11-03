@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +30,7 @@ public class VoteActivity extends AppCompatActivity implements VoteAdapter.LikeC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         recyclerView = findViewById(R.id.voteRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
