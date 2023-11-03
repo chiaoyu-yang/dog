@@ -117,19 +117,19 @@ public class DetailActivity extends AppCompatActivity {
                                     .error(R.drawable.error_image) // 加載失敗時顯示的圖片（可選）
                                     .into(dog_image);
                         } else {
-                            Toast.makeText(DetailActivity.this, "資料不存在", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailActivity.this, "No data in the list", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(DetailActivity.this, "錯誤: " + detailResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this, "Error: " + detailResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(DetailActivity.this, "回應中發生錯誤", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailActivity.this, "Error in response", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DetailResponseModel> call, Throwable t) {
-                Toast.makeText(DetailActivity.this, "連線錯誤", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailActivity.this, "Connection Error", Toast.LENGTH_SHORT).show();
             }
         });
     }

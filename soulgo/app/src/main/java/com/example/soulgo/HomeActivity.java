@@ -302,7 +302,7 @@ public class HomeActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("SoulGo", "錯誤: " + error.getMessage());
+                        Log.d("SoulGo", "Error: " + error.getMessage());
                     }
                 });
 
