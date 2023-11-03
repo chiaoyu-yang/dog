@@ -98,9 +98,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                             holder.messageLike.setText(like);
 
                             if (!error) {
-                                Toast.makeText(context.getApplicationContext(), "成功: " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context.getApplicationContext(), "Success: " + message, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(context.getApplicationContext(), "錯誤: " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context.getApplicationContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -110,7 +110,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context.getApplicationContext(), "請求失敗: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context.getApplicationContext(), "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
