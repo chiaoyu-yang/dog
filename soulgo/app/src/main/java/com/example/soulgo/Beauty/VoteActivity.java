@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +29,6 @@ public class VoteActivity extends AppCompatActivity implements VoteAdapter.LikeC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
-        Objects.requireNonNull(getSupportActionBar()).hide();
 
         recyclerView = findViewById(R.id.voteRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -48,45 +46,45 @@ public class VoteActivity extends AppCompatActivity implements VoteAdapter.LikeC
     }
 
     public void openMainActivity() {
-    Intent intent = new Intent(this, BeautyActivity.class);
+        Intent intent = new Intent(this, BeautyActivity.class);
         startActivity(intent);
     }
     private void fetchAllBeauty() {
-    StringRequest request =
-        new StringRequest(
-            Request.Method.POST,
-            Constants.URL_BEAUTY,
-            response -> {
-              try {
-                JSONObject responseJson = new JSONObject(response);
-                JSONArray voteJsonArray = responseJson.getJSONArray("beautys");
-                int count = voteJsonArray.length();
+        StringRequest request =
+                new StringRequest(
+                        Request.Method.POST,
+                        Constants.URL_BEAUTY,
+                        response -> {
+                            try {
+                                JSONObject responseJson = new JSONObject(response);
+                                JSONArray voteJsonArray = responseJson.getJSONArray("beautys");
+                                int count = voteJsonArray.length();
 
-                List<BeautyItem> beautyList = new ArrayList<>();
+                                List<BeautyItem> beautyList = new ArrayList<>();
 
-                for (int i = 0; i < count; i++) {
-                  JSONObject voteJson = voteJsonArray.getJSONObject(i);
-                  String name = voteJson.getString("name");
-                  int like = voteJson.getInt("like");
-                  String image = voteJson.getString("image");
-                  int beauty_id = voteJson.getInt("beauty_id");
+                                for (int i = 0; i < count; i++) {
+                                    JSONObject voteJson = voteJsonArray.getJSONObject(i);
+                                    String name = voteJson.getString("name");
+                                    int like = voteJson.getInt("like");
+                                    String image = voteJson.getString("image");
+                                    int beauty_id = voteJson.getInt("beauty_id");
 
-                  beautyList.add(new BeautyItem(name, like, image, beauty_id));
-                }
+                                    beautyList.add(new BeautyItem(name, like, image, beauty_id));
+                                }
 
-                RecyclerView recyclerView = findViewById(R.id.voteRecyclerView);
-                recyclerView.setLayoutManager(new GridLayoutManager(VoteActivity.this, 2));
+                                RecyclerView recyclerView = findViewById(R.id.voteRecyclerView);
+                                recyclerView.setLayoutManager(new GridLayoutManager(VoteActivity.this, 2));
 
-                VoteAdapter voteAdapter = new VoteAdapter(beautyList, this, this);
-                recyclerView.setAdapter(voteAdapter);
+                                VoteAdapter voteAdapter = new VoteAdapter(beautyList, this, this);
+                                recyclerView.setAdapter(voteAdapter);
 
-              } catch (JSONException e) {
-                e.printStackTrace();
-              }
-            },
-            error ->
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG)
-                    .show());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        },
+                        error ->
+                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG)
+                                        .show());
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);

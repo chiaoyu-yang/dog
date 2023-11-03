@@ -1,137 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/cloud"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="-20dp"
-        android:alpha="0.8"
-        app:srcCompat="@drawable/login_cloud" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="-5dp"
-        android:layout_marginRight="5dp"
-        android:id="@+id/soul">
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/soul_s"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="-10dp"
-            android:id="@+id/soul_s"
-            />
-
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/soul_o"
-            android:layout_marginTop="60dp"
-            android:layout_marginLeft="-80dp"
-            android:id="@+id/soul_o"
-            />
-
-        <ImageView
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/soul_u"
-            android:layout_marginTop="85dp"
-            android:layout_marginLeft="-85dp"
-            android:id="@+id/soul_u"
-            />
-
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/soul_l"
-            android:layout_marginTop="70dp"
-            android:layout_marginLeft="-80dp"
-            android:layout_marginRight="5dp"
-            android:id="@+id/soul_l"
-            />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/go"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="-5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="140dp">
-
-        <ImageView
-            android:id="@+id/go_g"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/go_g" />
-
-        <ImageView
-            android:id="@+id/go_o"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-50dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/go_o" />
-
-
-    </LinearLayout>
+    <VideoView
+        android:id="@+id/viewVideo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/image"
+        android:layout_width="520dp"
+        android:layout_height="1000dp"
+        android:src="@drawable/login_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/login_google"
-        android:layout_marginTop="-120dp"
-        android:layout_marginLeft="32dp"
-        android:id="@+id/button"
-        android:layout_below="@+id/go"
-        />
-
-    <LinearLayout
-        android:id="@+id/dog_people"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="-25dp"
-        android:layout_marginTop="55dp"
-        android:layout_below="@+id/soul">
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="132dp"
-            android:layout_height="86dp"
-            android:layout_marginStart="117dp"
-            android:layout_marginTop="260dp"
-            app:srcCompat="@drawable/login_dog" />
-
-        <ImageView
-            android:id="@+id/people"
-            android:layout_width="144dp"
-            android:layout_height="195dp"
-            android:layout_marginLeft="-70dp"
-            android:layout_marginTop="185dp"
-            app:srcCompat="@drawable/login_people" />
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/viewVideo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewVideo"
+        app:layout_constraintVertical_bias="0.875"
+        app:srcCompat="@drawable/login_google" />
 
 
-    </LinearLayout>
-
-
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

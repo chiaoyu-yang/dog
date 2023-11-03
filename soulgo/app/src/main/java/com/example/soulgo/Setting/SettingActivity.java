@@ -1,6 +1,8 @@
 package com.example.soulgo.Setting;
 
-import android.content.Intent;import android.graphics.Bitmap;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;import android.os.Bundle;import android.provider.MediaStore;import android.util.Base64;import android.view.View;
@@ -57,10 +59,11 @@ public class SettingActivity extends AppCompatActivity{
         gsc = GoogleSignIn.getClient(this, gso);
 
         imageView = findViewById(R.id.iv_pick_image);
-
         editNickname = findViewById(R.id.editNickname);
-        nickname = getIntent().getStringExtra("nickname");
-        imageUrl = getIntent().getStringExtra("imageUrl");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
+        nickname = sharedPreferences.getString("nickname", "");
+        imageUrl = sharedPreferences.getString("imageUrl", "");
         editNickname.setText(nickname);
 
         Glide.with(SettingActivity.this) // 使用當前活動的上下文
@@ -69,9 +72,6 @@ public class SettingActivity extends AppCompatActivity{
                 .into(imageView); // 加載圖片到 ImageView 中
 
         base64EncodedImage = "0";
-
-
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
