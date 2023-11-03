@@ -1,8 +1,8 @@
-package com.example.soulgo;
+package com.example.soulgo.News;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,6 +28,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.soulgo.Constants;
+import com.example.soulgo.R;
+import com.example.soulgo.HomeActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 public class PublishActivity extends AppCompatActivity {
@@ -36,12 +39,15 @@ public class PublishActivity extends AppCompatActivity {
     private TextView textViewUsername, textViewCount, textViewOverlay;
     private EditText uploadTitleEditText, uploadContentEditText;
     private String base64EncodedImage, nickname;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         textViewUsername = findViewById(R.id.myusername);
         uploadTitleEditText = findViewById(R.id.upload_title);
@@ -52,10 +58,15 @@ public class PublishActivity extends AppCompatActivity {
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
 
-        findViewById(R.id.to_home).setOnClickListener(new View.OnClickListener() {
+        setupButtonListeners();
+    }
+
+    private void setupButtonListeners() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openHome();
+                playButtonClickSound();
             }
         });
 
@@ -70,6 +81,7 @@ public class PublishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadData();
+                playButtonClickSound();
             }
         });
 
@@ -99,6 +111,7 @@ public class PublishActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
 
         uploadContentEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -195,9 +208,14 @@ public class PublishActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(PublishActivity.this, "上傳失敗", Toast.LENGTH_SHORT).show();
+                            String message = error.getMessage();
+                            if (error.networkResponse != null) {
+                                message = "Error code: " + error.networkResponse.statusCode;
+                            }
+                            Toast.makeText(PublishActivity.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
                         }
-                    }) {
+                    }
+            ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
@@ -213,7 +231,13 @@ public class PublishActivity extends AppCompatActivity {
     }
 
     private void openHome() {
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+    }
+
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.example.soulgo.Quiz;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -20,15 +22,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;import com.example.soulgo.Constants;import com.example.soulgo.R;
+import com.android.volley.toolbox.Volley;
+import com.example.soulgo.Constants;
+import com.example.soulgo.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.HashMap;import java.util.List;import java.util.Map;
 
 public class QuizActivity extends AppCompatActivity {
     private TextView questionText, textViewUsername;
@@ -56,12 +59,21 @@ public class QuizActivity extends AppCompatActivity {
     private String answer = "";
 
     private String nickName = "";
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer counter;
+    private MediaPlayer correct;
+    private MediaPlayer wrong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+        counter = MediaPlayer.create(this, R.raw.counter);
+        correct = MediaPlayer.create(this,R.raw.correct);
+        wrong = MediaPlayer.create(this,R.raw.wrong);
+
         questionText = findViewById(R.id.question);
         option1 = findViewById(R.id.option1);
         option2 = findViewById(R.id.option2);
@@ -96,8 +108,10 @@ public class QuizActivity extends AppCompatActivity {
 
                     if (selectedOptionByUser.equals(answer)) {
                         correctAnswers++;
+                        correct.start();
                     } else {
                         incorrectAnswers++;
+                        wrong.start();
                     }
                 }
             }
@@ -108,8 +122,10 @@ public class QuizActivity extends AppCompatActivity {
         option3.setOnClickListener(optionClickListener);
         option4.setOnClickListener(optionClickListener);
 
-        finishBtn();
+        //finishBtn();
+        setupButtonListeners();
     }
+
 
     private void sendRequest() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -151,12 +167,13 @@ public class QuizActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void finishBtn() {
+    private void setupButtonListeners() {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 停止計時器
                 quizTimer();
+                counter.stop();
 
                 handler.removeCallbacksAndMessages(null); // 取消延遲任務
 
@@ -167,6 +184,7 @@ public class QuizActivity extends AppCompatActivity {
                 intent.putExtra("nickname", nickName);
                 startActivity(intent);
                 finish(); // 结束當前的 QuizActivity
+                playButtonClickSound();
             }
         });
     }
@@ -236,6 +254,12 @@ public class QuizActivity extends AppCompatActivity {
         int millisecondsInFuture = totalTimeInSeconds * 1000;
         int countDownInterval = 1000;
 
+        PlaybackParams params = new PlaybackParams();
+        params.setSpeed(0.85f); // 调整速度因子
+
+        // 设置音频播放的速度
+        counter.setPlaybackParams(params);
+
         quizTimer = new CountDownTimer(millisecondsInFuture, countDownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -250,11 +274,15 @@ public class QuizActivity extends AppCompatActivity {
                 }
 
                 tvTimer.setText(String.valueOf(finalSeconds));
+
+                // 每次计时事件触发时播放音效
+                counter.start();
             }
 
             @Override
             public void onFinish() {
-                Toast.makeText(QuizActivity.this, "Time Over", Toast.LENGTH_SHORT).show();
+                // 计时结束时播放音效
+                counter.stop();
                 Intent intent = new Intent(QuizActivity.this, QuizResults.class);
                 intent.putExtra("correct", getCorrectAnswers());
                 intent.putExtra("incorrect", getInCorrectAnswers());
@@ -265,6 +293,7 @@ public class QuizActivity extends AppCompatActivity {
 
         quizTimer.start();
     }
+
 
     private int getCorrectAnswers(){
         return correctAnswers;
@@ -283,6 +312,11 @@ public class QuizActivity extends AppCompatActivity {
                 option.setTextColor(Color.WHITE);
                 break;
             }
+        }
+    }
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
         }
     }
 }

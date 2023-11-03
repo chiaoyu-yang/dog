@@ -1,10 +1,8 @@
 package com.example.soulgo.Book;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;import android.os.Bundle;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,7 +11,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,11 +21,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
+import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
-import com.example.soulgo.SecondActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -34,90 +33,110 @@ import java.util.stream.Collectors;
 public class BookActivity extends AppCompatActivity {
     private RecyclerView recview;
     private List<BookModel> data;
+    private MediaPlayer mediaPlayer;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
-
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new GridLayoutManager(this, 3));
 
-        ImageButton to_home = findViewById(R.id.to_home);
-
-        to_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openactivity();
-            }
-        });
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
 
         processdata();
-        setupSearch();
+        //setupSearch();
+        setupButtonListeners();
     }
 
     public void openactivity() {
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
     private void processdata() {
-    StringRequest request =
-        new StringRequest(
-            Constants.URL_Booklist,
-            new Response.Listener<String>() {
-              @Override
-              public void onResponse(String response) {
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
-                data = Arrays.asList(gson.fromJson(response, BookModel[].class));
+        StringRequest request =
+                new StringRequest(
+                        Constants.URL_Booklist,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                GsonBuilder builder = new GsonBuilder();
+                                Gson gson = builder.create();
+                                data = Arrays.asList(gson.fromJson(response, BookModel[].class));
 
-                // 检查是否有足够的数据
-                if (data.size() >= 3) {
-                  // 设置top1_text、top1_button的文本和图像
-                  ((TextView) findViewById(R.id.top1_text)).setText(data.get(0).getName());
-                  Glide.with(BookActivity.this)
-                      .load(
-                          "http://140.131.114.145/Android/112_dog/books/" + data.get(0).getImage())
-                      .error(R.drawable.error_image)
-                      .into((ImageView) findViewById(R.id.top1_button));
+                                // 检查是否有足够的数据
+                                if (data.size() >= 3) {
+                                    // 设置top1_text、top1_button的文本和图像
+                                    ((TextView) findViewById(R.id.top1_text)).setText(data.get(0).getName());
+                                    Glide.with(BookActivity.this)
+                                            .load(
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(0).getImage())
+                                            .error(R.drawable.error_image)
+                                            .into((ImageView) findViewById(R.id.top1_button));
 
-                  // 设置top2_text、top2_button的文本和图像
-                  ((TextView) findViewById(R.id.top2_text)).setText(data.get(1).getName());
-                  Glide.with(BookActivity.this)
-                      .load(
-                          "http://140.131.114.145/Android/112_dog/books/" + data.get(1).getImage())
-                      .error(R.drawable.error_image)
-                      .into((ImageView) findViewById(R.id.top2_button));
+                                    // 设置top2_text、top2_button的文本和图像
+                                    ((TextView) findViewById(R.id.top2_text)).setText(data.get(1).getName());
+                                    Glide.with(BookActivity.this)
+                                            .load(
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(1).getImage())
+                                            .error(R.drawable.error_image)
+                                            .into((ImageView) findViewById(R.id.top2_button));
 
-                  // 设置top3_text、top3_button的文本和图像
-                  ((TextView) findViewById(R.id.top3_text)).setText(data.get(2).getName());
-                  Glide.with(BookActivity.this)
-                      .load(
-                          "http://140.131.114.145/Android/112_dog/books/" + data.get(2).getImage())
-                      .error(R.drawable.error_image)
-                      .into((ImageView) findViewById(R.id.top3_button));
-                }
+                                    // 设置top3_text、top3_button的文本和图像
+                                    ((TextView) findViewById(R.id.top3_text)).setText(data.get(2).getName());
+                                    Glide.with(BookActivity.this)
+                                            .load(
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(2).getImage())
+                                            .error(R.drawable.error_image)
+                                            .into((ImageView) findViewById(R.id.top3_button));
+                                }
 
-                // 设置RecyclerView的Adapter
-                BookAdapter adapter = new BookAdapter(data);
-                recview.setAdapter(adapter);
-              }
-            },
-            new Response.ErrorListener() {
-              @Override
-              public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-              }
-            });
+                                // 设置RecyclerView的Adapter
+                                BookAdapter adapter = new BookAdapter(data);
+                                recview.setAdapter(adapter);
+
+                                adapter.setItemClickListener(new BookAdapter.ItemClickListener() {
+                                    @Override
+                                    public void onItemClick(String bookId) {
+                                        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                                        intent.putExtra("bookId", bookId);
+                                        intent.putExtra("uid", uid);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        });
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);
     }
 
 
-    private void setupSearch() {
+    private void setupButtonListeners() {
+
+        ImageButton to_home = findViewById(R.id.back);
+
+        to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity();
+                playButtonClickSound();
+            }
+        });
+
         EditText searchbar = findViewById(R.id.searchbar);
         searchbar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -130,16 +149,17 @@ public class BookActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         View searchButton = findViewById(R.id.searchbutton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String query = searchbar.getText().toString();
                 performSearch(query);
+                playButtonClickSound();
             }
         });
     }
+
 
     private void performSearch(String query) {
         // 使用 Java 8 Stream API 尋找符合搜尋關鍵字的項目
@@ -155,4 +175,9 @@ public class BookActivity extends AppCompatActivity {
         recview.setAdapter(adapter);
     }
 
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
 }

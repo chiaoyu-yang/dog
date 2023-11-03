@@ -1,26 +1,22 @@
 package com.example.soulgo.Book;
 
 public class BookModel {
-    private String id;
+    private String Bid;
     private String name;
     private String image;
 
-    public BookModel() {
-        // 空的建構子可供 Firebase Realtime Database 使用
-    }
-
-    public BookModel(String id, String name, String image) {
-        this.id = id;
+    public BookModel(String Bid, String name, String image) {
+        this.Bid = Bid;
         this.name = name;
         this.image = image;
     }
 
     public String getId() {
-        return id;
+        return Bid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String Bid) {
+        this.Bid = Bid;
     }
 
     public String getName() {

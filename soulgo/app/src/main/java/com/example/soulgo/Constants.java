@@ -19,7 +19,25 @@ public class Constants {
 
     public static final String URL_Booklist = ROOT_URL + "booklist.php";
 
-    public static final String URL_setting = ROOT_URL + "updateSetting.php";
+    public static final String URL_setting_image = ROOT_URL + "updateSettingImage.php";
+    public static final String URL_setting_nickname = ROOT_URL + "/updateSettingNickname.php";
 
     public static final String URL_publish = ROOT_URL + "publish.php";
+
+    public static final String URL_UPDATE_DETAIL = ROOT_URL + "updateDetail.php";
+
+    public static final String URL_News = ROOT_URL + "newsList.php";
+    public static final String URL_Post = ROOT_URL + "postDesc.php";
+    public static final String URL_UpdatePostLike = ROOT_URL + "updatePostLike.php";
+    public static final String URL_SendMessage = ROOT_URL + "insertMessage.php";
+    public static final String URL_UpdateMessageLike = ROOT_URL + "updateMessageLike.php";
+
+    public static final String URL_HomePost = ROOT_URL + "homePost.php";
+
+    public static final String URL_BEAUTY = ROOT_URL + "beautyList.php";
+    public static final String URL_TOPBEAUTY = ROOT_URL + "topBeauty.php";
+
+    public static final String URL_UPDATE_LIKE = ROOT_URL + "updateLikes.php";
+
+    public static final String URL_BEAUTY_PUBLISH = ROOT_URL + "beauty_publish.php";
 }

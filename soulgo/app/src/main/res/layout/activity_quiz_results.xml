@@ -124,10 +124,11 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/startNewQuizBtn"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
         android:background="@color/main_color"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"

@@ -3,6 +3,7 @@ package com.example.soulgo.Quiz;
 import static com.example.soulgo.Constants.URL_MYPOINT;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,20 +14,21 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.SecondActivity;
+import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.HomeActivity;
 import java.util.HashMap;import java.util.Map;
 import java.util.Objects;
 
 public class QuizResults extends AppCompatActivity {
     private TextView textViewUsername;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_results);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        final ImageButton startNewBtn = findViewById(R.id.startNewQuizBtn);
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+
         final TextView correctAnswers = findViewById(R.id.correctAnswers);
         final TextView incorrectAnswers = findViewById(R.id.incorrectAnswers);
         final TextView totleScore = findViewById(R.id.totleScore);
@@ -77,12 +79,26 @@ public class QuizResults extends AppCompatActivity {
         // 加入請求到請求佇列
         Volley.newRequestQueue(this).add(stringRequest);
 
+
+        setupButtonListeners();
+    }
+    private void setupButtonListeners() {
+        final ImageButton startNewBtn = findViewById(R.id.back);
+
         startNewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuizResults.this, SecondActivity.class));
+                startActivity(new Intent(QuizResults.this, HomeActivity.class));
                 finish();
+                playButtonClickSound();
             }
         });
     }
+
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;import com.example.soulgo.R;
-import com.example.soulgo.SecondActivity;
+import com.example.soulgo.HomeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,37 +28,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class RankingActivity extends AppCompatActivity {
 
     private TextView textViewDivision, textViewUsername, textViewIntegral;
-
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rank);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         textViewDivision = findViewById(R.id.mydivision);
         textViewUsername = findViewById(R.id.myusername);
         textViewIntegral = findViewById(R.id.myintegral);
 
-        ImageButton button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openactivity();
-            }
-        });
-
         String nickname = getIntent().getStringExtra("nickname");
         fetchMyRankData(nickname);
 
         fetchTop100Ranks();
+        setupButtonListeners();
+
+    }
+
+    private void setupButtonListeners() {
+        ImageButton button = findViewById(R.id.back);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity();
+                playButtonClickSound();
+            }
+        });
     }
 
     public void openactivity() {
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
@@ -149,6 +159,11 @@ public class RankingActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    private void playButtonClickSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
 
 }
 

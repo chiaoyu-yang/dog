@@ -21,7 +21,7 @@
             android:name=".Quiz.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".SecondActivity"
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".Rank.RankingActivity"
@@ -30,10 +30,28 @@
             android:name=".Book.BookActivity"
             android:exported="false" />
         <activity
-            android:name=".PublishActivity"
+            android:name=".News.NewsActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".News.PostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".News.PublishActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Book.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Beauty.VoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Beauty.BeautyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Beauty.VotePublish"
+            android:exported="false" />
+        <activity
+            android:name=".Setting.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -47,6 +65,8 @@
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
+        <service android:name=".Setting.BackgroundMusicService" />
+        <service android:name=".Setting.Beep" />
     </application>
 
 

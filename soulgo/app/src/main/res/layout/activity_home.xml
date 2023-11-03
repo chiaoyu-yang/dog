@@ -63,6 +63,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:text="使用者名稱" />
+
+            <Button
+                android:id="@+id/beautybutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="beauty" />
         </LinearLayout>
 
         <LinearLayout
@@ -230,75 +237,85 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:orientation="vertical"
+                <RelativeLayout
+                    android:layout_width="160dp"
+                    android:layout_height="240dp"
+                    android:background="@drawable/news_item"
+                    tools:ignore="MissingConstraints"
                     android:layout_weight="1"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/button2">
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/items_news_left">
 
-                    <ImageView
-                        android:id="@+id/imageView4"
+                    <ImageButton
+                        android:id="@+id/booklist_image_button_left"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_marginRight="5dp"
-                        android:background="@drawable/image"
-                        app:srcCompat="@drawable/appicon" />
-
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp"
-                        android:padding="10dp"
-                        android:textStyle="bold"
-                        android:text="黃金獵犬" />
+                        android:layout_height="140dp"
+                        android:background="@drawable/news_item_2"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/dog_image" />
 
                     <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="match_parent"
+                        android:id="@+id/newsTitle_left"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="145dp"
-                        android:padding="10dp"
-                        android:text="跟狗狗在草原吹著微風好舒服" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/button2">
-
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_marginRight="5dp"
-                        android:background="@drawable/image"
-                        app:srcCompat="@drawable/appicon" />
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:textSize="15dp"
+                        android:text="TextView" />
 
                     <TextView
-                        android:id="@+id/text2"
-                        android:layout_width="match_parent"
+                        android:id="@+id/newsContent_left"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp"
-                        android:padding="10dp"
-                        android:textStyle="bold"
-                        android:text="吉娃娃" />
+                        android:layout_marginTop="170dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:textSize="12dp"
+                        android:maxLines="3"
+                        android:ellipsize="end"
+                        android:text="TextView" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="160dp"
+                    android:layout_height="240dp"
+                    android:background="@drawable/news_item"
+                    tools:ignore="MissingConstraints"
+                    android:layout_weight="1"
+                    android:id="@+id/items_news_right">
+
+                    <ImageButton
+                        android:id="@+id/booklist_image_button_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:background="@drawable/news_item_2"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/dog_image" />
 
                     <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="match_parent"
+                        android:id="@+id/newsTitle_right"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="145dp"
-                        android:padding="10dp"
-                        android:text="你家狗狗上廁所也都這麼兇嗎??" />
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:textSize="15dp"
+                        android:text="TextView" />
 
-                </FrameLayout>
+                    <TextView
+                        android:id="@+id/newsContent_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="170dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:textSize="12dp"
+                        android:maxLines="3"
+                        android:ellipsize="end"
+                        android:text="TextView" />
+                </RelativeLayout>
 
             </LinearLayout>
 
