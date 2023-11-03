@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
-  private final List<BeautyItem> beautyList;
+    private final List<BeautyItem> beautyList;
 
     private final LikeClickListener likeClickListener;
 
@@ -144,4 +144,3 @@ public class VoteAdapter extends RecyclerView.Adapter<VoteAdapter.ViewHolder> {
         return currentDate.equals(savedDate);
     }
 }
-

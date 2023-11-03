@@ -1,6 +1,8 @@
 package com.example.soulgo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,94 +40,128 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HomeActivity extends AppCompatActivity {
+    // 声明全局变量
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     TextView userName, myusername;
     ImageButton image;
     ImageView imageview;
-
-    String imageUrl;
-
-    private String uid, nickname;
-
     MediaPlayer mediaPlayer;
-
-    private String nid1, nid2;
+    private String uid, nickname, nid1, nid2, imageUrl;
+    private SharedPreferences sharedPreferences;
+    private static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        // 初始化SharedPreferences
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        // 初始化Google登入選項和客戶端
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
+
+        // 初始化MediaPlayer
         mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
+        // 取得視圖元件
         userName = findViewById(R.id.userName);
         myusername = findViewById(R.id.myusername);
         image = findViewById(R.id.imageButton);
         imageview = findViewById(R.id.imageView);
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(this, gso);
-
-        getPost();
-        newsClick();
-
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if (acct != null) {
-            String personEmail = acct.getEmail();
-
-            String url = Constants.URL_MYNICKNAME;
-
-            final Map<String, String> params = new HashMap<>();
-            params.put("gmail", personEmail);
-
-            final StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject responseJson = new JSONObject(response);
-
-                        JSONArray myNicknameArray = responseJson.getJSONArray("myNickname");
-
-                        if (myNicknameArray.length() > 0) {
-                            JSONObject nicknameObject = myNicknameArray.getJSONObject(0);
-                            nickname = nicknameObject.getString("Nickname");
-                            uid = nicknameObject.getString("Uid");
-                            imageUrl = nicknameObject.getString("userimage");
-
-                            userName.setText(nickname); // 將值設置到userName的TextView
-                            myusername.setText(uid); // 將值設置到myusername的TextView
-
-                            Glide.with(HomeActivity.this) // 使用當前活動的上下文
-                                    .load("http://140.131.114.145/Android/112_dog/setting/" + imageUrl) // 加載圖片的 URL
-                                    .error(R.drawable.error_image) // 加載失敗時顯示的圖片（可選）
-                                    .into(imageview); // 加載圖片到 ImageView 中
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                        }
-                    }
-            ) {
-                @Override
-                protected Map<String, String> getParams() {
-                    return params;
-                }
-            };
-
-            RequestQueue queue = Volley.newRequestQueue(this);
-            queue.add(request);
+        // 檢查SharedPreferences是否包含這三個值，如果有則從SharedPreferences中讀取
+        if (sharedPreferences.contains("uid") && sharedPreferences.contains("nickname") && sharedPreferences.contains("imageUrl")) {
+            uid = sharedPreferences.getString("uid", "");
+            nickname = sharedPreferences.getString("nickname", "");
+            imageUrl = sharedPreferences.getString("imageUrl", "");
+            setUserInfo();
+        } else {
+            // 如果SharedPreferences中不包含這三個值，則發送Volley請求獲取資訊
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+            if (acct != null) {
+                handleGoogleSignInAccount(acct);
+            }
         }
 
+        getPost();
         setupButtonListeners();
+        newsClick();
+    }
+
+    // 處理Google帳戶資訊
+    private void handleGoogleSignInAccount(GoogleSignInAccount account) {
+        String personEmail = account.getEmail();
+        String url = Constants.URL_MYNICKNAME;
+
+        final Map<String, String> params = new HashMap<>();
+        params.put("gmail", personEmail);
+
+        performVolleyRequest(url, params);
+    }
+
+    private void performVolleyRequest(String url, Map<String, String> params) {
+        final StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject responseJson = new JSONObject(response);
+                    JSONArray myNicknameArray = responseJson.getJSONArray("myNickname");
+
+                    if (myNicknameArray.length() > 0) {
+                        JSONObject nicknameObject = myNicknameArray.getJSONObject(0);
+                        nickname = nicknameObject.getString("Nickname");
+                        uid = nicknameObject.getString("Uid");
+                        imageUrl = nicknameObject.getString("userimage");
+
+                        // 將使用者資訊設定到相應的視圖元件
+                        setUserInfo();
+
+                        // 儲存使用者資訊到SharedPreferences
+                        saveUserDataToSharedPreferences(nickname, uid, imageUrl);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
+
+    private void saveUserDataToSharedPreferences(String nickname, String uid, String imageUrl) {
+        // 使用Context.MODE_PRIVATE
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nickname", nickname);
+        editor.putString("uid", uid);
+        editor.putString("imageUrl", imageUrl);
+        editor.apply();
+    }
+
+    // 將使用者資訊設定到相應的視圖元件
+    private void setUserInfo() {
+        userName.setText(nickname);
+        myusername.setText(uid);
+
+        Glide.with(HomeActivity.this)
+                .load("http://140.131.114.145/Android/112_dog/setting/" + imageUrl)
+                .error(R.drawable.error_image)
+                .into(imageview);
     }
 
     private void setupButtonListeners() {
@@ -219,7 +255,6 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, BeautyActivity.class);
                 intent.putExtra("nickname", nickname);
                 startActivity(intent);
-                playButtonClickSound();
 
             }
         });

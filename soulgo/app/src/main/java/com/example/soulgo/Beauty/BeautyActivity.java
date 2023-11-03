@@ -1,7 +1,6 @@
 package com.example.soulgo.Beauty;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -24,7 +23,6 @@ import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,15 +33,11 @@ public class BeautyActivity extends AppCompatActivity {
 
     private String nickname;
     private TextView textViewUsername;
-    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty);
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
-
         Window window = BeautyActivity.this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -62,45 +56,22 @@ public class BeautyActivity extends AppCompatActivity {
         for (int i = 0; i < myImageButtons.length; i++) {
             setButtonClickHandler(myImageButtons[i]);
         }
-        setupButtonListeners();
 
-    }
-
-    private void openHome() {
-    Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
-    private void setupButtonListeners() {
         back = findViewById(R.id.back);
-        vote = findViewById(R.id.vote);
-        image = findViewById(R.id.image);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openHome();
-                playButtonClickSound();
-            }
-        });
-
-        // 初始化vote按鈕
-        vote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openVoteActivity();
-                playButtonClickSound();
-            }
-        });
-
-        // 初始化image按鈕
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openVotePublish();
-                playButtonClickSound();
             }
         });
     }
+
+    private void openHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
     private void setButtonClickHandler(final ImageButton button) {
         button.setOnClickListener(new View.OnClickListener() {
             boolean isImage1 = true; // 初始圖片為 image1
@@ -119,13 +90,29 @@ public class BeautyActivity extends AppCompatActivity {
             }
         });
 
+        // 初始化vote按鈕
+        vote = findViewById(R.id.vote);
+        vote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openVoteActivity();
+            }
+        });
 
+        // 初始化image按鈕
+        image = findViewById(R.id.image);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openVotePublish();
+            }
+        });
 
         fetchTopBeautyData();
     }
 
     public void openVoteActivity() {
-    Intent intent = new Intent(this, VoteActivity.class);
+        Intent intent = new Intent(this, VoteActivity.class);
         intent.putExtra("nickname", nickname);
         startActivity(intent);
     }
@@ -139,48 +126,48 @@ public class BeautyActivity extends AppCompatActivity {
     }
 
     private void fetchTopBeautyData() {
-    StringRequest request =
-        new StringRequest(
-            Request.Method.POST,
-            Constants.URL_TOPBEAUTY,
-            new Response.Listener<String>() {
-              @Override
-              public void onResponse(String response) {
-                try {
-                  // 將 JSON 字串轉換為 JSONObject
-                  JSONObject jsonResponse = new JSONObject(response);
+        StringRequest request =
+                new StringRequest(
+                        Request.Method.POST,
+                        Constants.URL_TOPBEAUTY,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    // 將 JSON 字串轉換為 JSONObject
+                                    JSONObject jsonResponse = new JSONObject(response);
 
-                  // 獲取 "topbeautys" 陣列
-                  JSONArray topBeautysArray = jsonResponse.getJSONArray("topbeautys");
+                                    // 獲取 "topbeautys" 陣列
+                                    JSONArray topBeautysArray = jsonResponse.getJSONArray("topbeautys");
 
-                  // 創建一個 List 來保存 TopBeauty 物件
-                  List<TopBeauty> topBeautyList = new ArrayList<>();
+                                    // 創建一個 List 來保存 TopBeauty 物件
+                                    List<TopBeauty> topBeautyList = new ArrayList<>();
 
-                  // 迭代 "topbeautys" 陣列，創建 TopBeauty 物件並添加到列表中
-                  for (int i = 0; i < topBeautysArray.length(); i++) {
-                    JSONObject topBeautyJson = topBeautysArray.getJSONObject(i);
-                    TopBeauty topBeauty = new TopBeauty();
-                    topBeauty.setImage(topBeautyJson.getString("image"));
-                    topBeauty.setName(topBeautyJson.getString("name"));
-                    topBeauty.setLike(topBeautyJson.getInt("like"));
-                    topBeautyList.add(topBeauty);
-                  }
+                                    // 迭代 "topbeautys" 陣列，創建 TopBeauty 物件並添加到列表中
+                                    for (int i = 0; i < topBeautysArray.length(); i++) {
+                                        JSONObject topBeautyJson = topBeautysArray.getJSONObject(i);
+                                        TopBeauty topBeauty = new TopBeauty();
+                                        topBeauty.setImage(topBeautyJson.getString("image"));
+                                        topBeauty.setName(topBeautyJson.getString("name"));
+                                        topBeauty.setLike(topBeautyJson.getInt("like"));
+                                        topBeautyList.add(topBeauty);
+                                    }
 
-                  // 更新 UI，使用 topBeautyList 中的資料
-                  updateUI(topBeautyList);
+                                    // 更新 UI，使用 topBeautyList 中的資料
+                                    updateUI(topBeautyList);
 
-                } catch (JSONException e) {
-                  e.printStackTrace();
-                }
-              }
-            },
-            new Response.ErrorListener() {
-              @Override
-              public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Error loading image", Toast.LENGTH_LONG)
-                    .show();
-              }
-            });
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), "Error loading image", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);
@@ -221,10 +208,6 @@ public class BeautyActivity extends AppCompatActivity {
         nameTextView.setText(name);
         likeTextView.setText(String.valueOf(like));
     }
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
+
 
 }
