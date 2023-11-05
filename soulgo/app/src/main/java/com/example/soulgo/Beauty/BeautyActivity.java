@@ -29,7 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BeautyActivity extends AppCompatActivity {
-    private ImageButton vote,image,back;
+    private ImageButton vote,image,to_home;
     private String nickname;
     private TextView textViewUsername;
     MediaPlayer mediaPlayer;
@@ -53,11 +53,11 @@ public class BeautyActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void setupButtonListeners() {
-        back = findViewById(R.id.back);
+        to_home = findViewById(R.id.to_home);
         vote = findViewById(R.id.vote);
         image = findViewById(R.id.image);
 
-        back.setOnClickListener(new View.OnClickListener() {
+        to_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openHome();
