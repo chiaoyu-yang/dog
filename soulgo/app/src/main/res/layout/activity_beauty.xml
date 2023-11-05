@@ -18,11 +18,11 @@
         tools:layout_editor_absoluteY="30dp" />
 
     <ImageButton
-        android:id="@+id/back"
+        android:id="@+id/to_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/background_color"
-        android:src="@drawable/to_home"
+        android:src="@drawable/back"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
