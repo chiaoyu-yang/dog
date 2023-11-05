@@ -5,6 +5,7 @@ public class DetailModel {
     private String desc;
     private String manege_desc;
     private String image;
+    private String nickname;
 
     public String getName() {
         return name;
@@ -36,5 +37,12 @@ public class DetailModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void getNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

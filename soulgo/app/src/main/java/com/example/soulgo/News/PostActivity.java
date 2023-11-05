@@ -1,10 +1,12 @@
 package com.example.soulgo.News;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,6 +27,8 @@ import com.example.soulgo.R;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import retrofit2.Call;
@@ -45,6 +49,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         postRecview = findViewById(R.id.postRecview);
         postRecview.setLayoutManager(new GridLayoutManager(this, 1));
@@ -245,6 +250,8 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(sendButton.getWindowToken(), 0);
             }
         });
     }

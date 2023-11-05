@@ -232,6 +232,15 @@
                 android:layout_below="@id/top3"
                 android:id="@+id/recview"/>
 
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="Loading..."
+                android:visibility="visible" />
+
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 

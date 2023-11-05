@@ -61,6 +61,9 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void processdata() {
+        TextView loadingText = findViewById(R.id.loadingText);
+        loadingText.setVisibility(View.VISIBLE);
+
         StringRequest request =
                 new StringRequest(
                         Constants.URL_Booklist,
@@ -111,12 +114,15 @@ public class BookActivity extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                 });
+
+                                loadingText.setVisibility(View.GONE);
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                                loadingText.setVisibility(View.GONE);
                             }
                         });
 

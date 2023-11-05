@@ -25,6 +25,7 @@ public class Constants {
     public static final String URL_publish = ROOT_URL + "publish.php";
 
     public static final String URL_UPDATE_DETAIL = ROOT_URL + "updateDetail.php";
+    public static final String URL_DETAIL_REPORT = ROOT_URL + "detailReport.php";
 
     public static final String URL_News = ROOT_URL + "newsList.php";
     public static final String URL_Post = ROOT_URL + "postDesc.php";

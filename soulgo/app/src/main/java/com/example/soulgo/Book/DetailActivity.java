@@ -1,17 +1,25 @@
 package com.example.soulgo.Book;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,9 +29,12 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -31,13 +42,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private TextView name, textView, detailContent;
+    private TextView name, textView, detailContent, submit, lastName;
     private String Bid, Uid;
     private EditText editDetail;
     private android.widget.LinearLayout nullLayout, editLayout, detailLayout, containerLayout;
-    private Button submit, cancel;
     private boolean isTextEmpty = true;
-    private ImageButton editButton, backBtn;
+    private ImageButton editButton, backBtn, warnBtn;
     private RequestQueue requestQueue;
     private ImageView dog_image;
 
@@ -47,6 +57,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -58,13 +69,14 @@ public class DetailActivity extends AppCompatActivity {
         editLayout = findViewById(R.id.editLayout);
         detailLayout = findViewById(R.id.detailLayout);
         submit = findViewById(R.id.submit);
-        cancel = findViewById(R.id.cancel);
         name = findViewById(R.id.name);
         textView = findViewById(R.id.textView);
         editDetail = findViewById(R.id.editDetail);
         detailContent = findViewById(R.id.detailContent);
         dog_image = findViewById(R.id.imageView2);
         backBtn = findViewById(R.id.back);
+        lastName = findViewById(R.id.lastName);
+        warnBtn = findViewById(R.id.warnBtn);
 
         Intent intent = getIntent();
         Bid = intent.getStringExtra("bookId");
@@ -73,6 +85,7 @@ public class DetailActivity extends AppCompatActivity {
         fetchDetail();
         updateDetail();
         backBtn();
+        warnAction();
 
         nullLayout.setVisibility(View.GONE);
         detailLayout.setVisibility(View.GONE);
@@ -84,10 +97,71 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchDetail() {
+    private void warnAction() {
+        warnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DetailActivity.this);
 
+                alertDialogBuilder.setTitle("檢舉");
+                alertDialogBuilder.setMessage("檢舉此內容原因:");
+
+                final EditText input = new EditText(DetailActivity.this);
+                alertDialogBuilder.setView(input);
+
+                alertDialogBuilder.setPositiveButton("送出", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String warningMessage = input.getText().toString();
+                        if (!warningMessage.isEmpty())  {
+                            reportAction(warningMessage);
+                        } else {
+                            Toast.makeText(DetailActivity.this, "請輸入檢舉此內容原因", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+    }
+
+    private void reportAction(String warningMessage) {
+        String url = Constants.URL_DETAIL_REPORT;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("SoulGooo", "成功: " + response);
+                        Toast.makeText(DetailActivity.this, "已檢舉", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        name.setText("Error: " + error.getMessage());
+                        Log.d("SoulGooo", "Error: " + error.getMessage());
+                        Toast.makeText(DetailActivity.this, "失敗" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Uid", Uid);
+                params.put("Bid", Bid);
+                params.put("reason", warningMessage);
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
+    private void fetchDetail() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://140.131.114.145/Android/v1/detail.php/") // 請替換為實際的 API 基本 URL
+                .baseUrl("http://140.131.114.145/Android/v1/detail.php/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -110,6 +184,7 @@ public class DetailActivity extends AppCompatActivity {
                             detailContent.setText(detail.getDesc());
                             editDetail.setText(detail.getDesc());
                             textView.setText(detail.getManege_desc());
+                            lastName.setText("最後編輯人: " + detail.getNickname());
 
                             String imageUrl = detail.getImage();
                             Glide.with(getApplicationContext()) // 使用當前活動的上下文
@@ -134,6 +209,10 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    private void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(submit.getWindowToken(), 0);
+    }
 
     private void updateDetail() {
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -161,13 +240,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fetchUpdate();
-                cancelEdit();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                closeKeyboard();
                 cancelEdit();
             }
         });
@@ -188,10 +261,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void fetchUpdate() {
-        Log.e("SoulGooo", "click");
-
         String getEditDetail = editDetail.getText().toString();
-        Log.e("SoulGooo", "getEditDetail" + getEditDetail + "Bid" + Bid + "update_id" + Uid);
         String url = Constants.URL_UPDATE_DETAIL;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -200,6 +270,7 @@ public class DetailActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d("SoulGooo", "成功: " + response);
                         Toast.makeText(DetailActivity.this, "新增成功！", Toast.LENGTH_SHORT).show();
+                        fetchDetail();
                     }
                 },
                 new Response.ErrorListener() {
@@ -216,7 +287,7 @@ public class DetailActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("desc", getEditDetail);
                 params.put("Bid", Bid);
-                params.put("update_id", "1");
+                params.put("update_id", Uid);
                 return params;
             }
         };
