@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -30,15 +31,12 @@ public class NewsActivity extends AppCompatActivity {
     private RecyclerView newsRecview;
     private List<NewsModel> data;
     private String uid, nickname;
-    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         Objects.requireNonNull(getSupportActionBar()).hide();
-
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         newsRecview = findViewById(R.id.newsRecview);
         newsRecview.setLayoutManager(new GridLayoutManager(this, 2));
@@ -48,19 +46,20 @@ public class NewsActivity extends AppCompatActivity {
         nickname = intent.getStringExtra("nickname");
 
         processdata();
-        setupButtonListeners();
-    }
-    private void setupButtonListeners() {
+
         ImageButton back = findViewById(R.id.back);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openactivity();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
+
     }
+
+
 
     private void processdata() {
         StringRequest request = new StringRequest(Constants.URL_News,
@@ -82,28 +81,26 @@ public class NewsActivity extends AppCompatActivity {
                                 intent.putExtra("uid", uid);
                                 intent.putExtra("nickname", nickname);
                                 startActivity(intent);
+                                Beep.playBeepSound(getApplicationContext());
                             }
                         });
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
 
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                queue.add(request);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(request);
     }
 
     private void openactivity() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+
     }
 
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
+
 }

@@ -24,6 +24,8 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,6 +169,7 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PostActivity.this, NewsActivity.class); // 替换成前一页的Activity类名
                 startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
             }
         });
     }
@@ -252,6 +255,7 @@ public class PostActivity extends AppCompatActivity {
                 sendMessage();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(sendButton.getWindowToken(), 0);
+                Beep.playBeepSound(getApplicationContext());
             }
         });
     }

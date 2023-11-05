@@ -15,19 +15,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.HomeActivity;
+import com.example.soulgo.Setting.Beep;
+
 import java.util.HashMap;import java.util.Map;
 import java.util.Objects;
 
 public class QuizResults extends AppCompatActivity {
     private TextView textViewUsername;
-    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_results);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         final TextView correctAnswers = findViewById(R.id.correctAnswers);
         final TextView incorrectAnswers = findViewById(R.id.incorrectAnswers);
@@ -39,6 +39,7 @@ public class QuizResults extends AppCompatActivity {
         textViewUsername = findViewById(R.id.myusername);
         String nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
+
 
         correctAnswers.setText(String.valueOf(getCorrectAnswers));
         incorrectAnswers.setText(String.valueOf(getIncorrectAnswers));
@@ -79,10 +80,6 @@ public class QuizResults extends AppCompatActivity {
         // 加入請求到請求佇列
         Volley.newRequestQueue(this).add(stringRequest);
 
-
-        setupButtonListeners();
-    }
-    private void setupButtonListeners() {
         final ImageButton startNewBtn = findViewById(R.id.back);
 
         startNewBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,15 +87,12 @@ public class QuizResults extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(QuizResults.this, HomeActivity.class));
                 finish();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
+
     }
 
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
+
 
 }

@@ -30,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 public class VotePublish extends AppCompatActivity {
@@ -55,19 +56,13 @@ public class VotePublish extends AppCompatActivity {
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
 
-        setupButtonListeners();
-
-    }
-
-    private void setupButtonListeners() {
-
         findViewById(R.id.to_home).setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            openHome();
-            playButtonClickSound();
-        }
-    });
+            @Override
+            public void onClick(View view) {
+                openHome();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
 
         findViewById(R.id.ic_outline_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +73,7 @@ public class VotePublish extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadData();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
@@ -101,7 +96,14 @@ public class VotePublish extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {}
-        });}
+        });
+
+
+    }
+
+
+
+
 
 
     private void pickImage() {
@@ -205,10 +207,5 @@ public class VotePublish extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
 }
 

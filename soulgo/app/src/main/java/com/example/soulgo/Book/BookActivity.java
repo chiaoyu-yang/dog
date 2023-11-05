@@ -1,7 +1,6 @@
 package com.example.soulgo.Book;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.Arrays;
@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 public class BookActivity extends AppCompatActivity {
     private RecyclerView recview;
     private List<BookModel> data;
-    private MediaPlayer mediaPlayer;
     private String uid;
 
     @Override
@@ -42,17 +41,25 @@ public class BookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
-
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new GridLayoutManager(this, 3));
 
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
 
+        ImageButton to_home = findViewById(R.id.back);
+
+        to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
         processdata();
-        //setupSearch();
-        setupButtonListeners();
+        setupSearch();
+
     }
 
     public void openactivity() {
@@ -131,17 +138,7 @@ public class BookActivity extends AppCompatActivity {
     }
 
 
-    private void setupButtonListeners() {
-
-        ImageButton to_home = findViewById(R.id.back);
-
-        to_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openactivity();
-                playButtonClickSound();
-            }
-        });
+    private void setupSearch() {
 
         EditText searchbar = findViewById(R.id.searchbar);
         searchbar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -161,7 +158,7 @@ public class BookActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String query = searchbar.getText().toString();
                 performSearch(query);
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
     }
@@ -181,9 +178,5 @@ public class BookActivity extends AppCompatActivity {
         recview.setAdapter(adapter);
     }
 
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
+
 }

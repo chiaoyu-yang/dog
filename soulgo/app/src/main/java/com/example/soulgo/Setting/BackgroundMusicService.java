@@ -2,6 +2,7 @@ package com.example.soulgo.Setting;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.IBinder;
 
 import com.example.soulgo.R;
@@ -47,5 +48,12 @@ public class BackgroundMusicService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    public class LocalBinder extends Binder {
+        public BackgroundMusicService getService() {
+            // 返回当前服务的实例
+            return BackgroundMusicService.this;
+        }
     }
 }

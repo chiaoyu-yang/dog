@@ -31,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
 import com.example.soulgo.HomeActivity;
+import com.example.soulgo.Setting.Beep;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 public class PublishActivity extends AppCompatActivity {
@@ -47,8 +48,6 @@ public class PublishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_publish);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
-
         textViewUsername = findViewById(R.id.myusername);
         uploadTitleEditText = findViewById(R.id.upload_title);
         uploadContentEditText = findViewById(R.id.upload_content_rec);
@@ -58,15 +57,11 @@ public class PublishActivity extends AppCompatActivity {
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
 
-        setupButtonListeners();
-    }
-
-    private void setupButtonListeners() {
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openHome();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
@@ -81,7 +76,7 @@ public class PublishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadData();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
@@ -126,6 +121,9 @@ public class PublishActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {}
         });
     }
+
+
+
 
     private void pickImage() {
         ImagePicker.with(this)
@@ -181,7 +179,7 @@ public class PublishActivity extends AppCompatActivity {
         String content = uploadContentEditText.getText().toString().trim();
 
         if (icOutlineAdd.getVisibility() == View.VISIBLE && uploadText.getVisibility() == View.VISIBLE) {
-            Toast.makeText(this, "请选取一张图片", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "請選取一張圖片", Toast.LENGTH_SHORT).show();
         } else if (title.isEmpty() && content.isEmpty()) {
             Toast.makeText(this, "請填寫標題和內容", Toast.LENGTH_SHORT).show();
         } else if (title.isEmpty()) {
@@ -235,9 +233,4 @@ public class PublishActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
 }

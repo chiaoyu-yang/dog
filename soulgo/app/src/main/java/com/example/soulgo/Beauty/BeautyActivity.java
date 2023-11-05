@@ -22,6 +22,8 @@ import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -43,16 +45,6 @@ public class BeautyActivity extends AppCompatActivity {
         textViewUsername = findViewById(R.id.myusername);
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
-
-        setupButtonListeners();
-
-    }
-
-    private void openHome() {
-    Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-    }
-    private void setupButtonListeners() {
         to_home = findViewById(R.id.to_home);
         vote = findViewById(R.id.vote);
         image = findViewById(R.id.image);
@@ -61,7 +53,7 @@ public class BeautyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openHome();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
@@ -70,7 +62,7 @@ public class BeautyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openVoteActivity();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
@@ -79,12 +71,22 @@ public class BeautyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openVotePublish();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
         fetchTopBeautyData();
+
+
     }
+
+    private void openHome() {
+    Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+
+
 
     public void openVoteActivity() {
     Intent intent = new Intent(this, VoteActivity.class);
@@ -178,11 +180,6 @@ public class BeautyActivity extends AppCompatActivity {
         TextView nameTextView = findViewById(nameResourceId);
 
         nameTextView.setText(name);
-    }
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
     }
 
 }

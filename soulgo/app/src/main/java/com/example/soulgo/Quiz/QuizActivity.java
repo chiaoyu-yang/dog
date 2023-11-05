@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +60,7 @@ public class QuizActivity extends AppCompatActivity {
     private String answer = "";
 
     private String nickName = "";
-    private MediaPlayer mediaPlayer;
+
     private MediaPlayer counter;
     private MediaPlayer correct;
     private MediaPlayer wrong;
@@ -69,7 +70,6 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
         counter = MediaPlayer.create(this, R.raw.counter);
         correct = MediaPlayer.create(this,R.raw.correct);
         wrong = MediaPlayer.create(this,R.raw.wrong);
@@ -122,9 +122,30 @@ public class QuizActivity extends AppCompatActivity {
         option3.setOnClickListener(optionClickListener);
         option4.setOnClickListener(optionClickListener);
 
-        //finishBtn();
-        setupButtonListeners();
+
+        finishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 停止计时器
+                quizTimer.cancel();
+                counter.stop();
+
+                handler.removeCallbacksAndMessages(null); // 取消延迟任务
+
+                // 跳转到结果页面，传回答对和答错题数跳转到结果页面
+                Intent intent = new Intent(QuizActivity.this, QuizResults.class);
+                intent.putExtra("correct", getCorrectAnswers());
+                intent.putExtra("incorrect", getInCorrectAnswers());
+                intent.putExtra("nickname", nickName);
+                startActivity(intent);
+                finish(); // 结束当前的 QuizActivity
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
     }
+
+
+
 
 
     private void sendRequest() {
@@ -167,27 +188,8 @@ public class QuizActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void setupButtonListeners() {
-        finishBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 停止計時器
-                quizTimer();
-                counter.stop();
 
-                handler.removeCallbacksAndMessages(null); // 取消延遲任務
 
-                // 跳轉到結果頁面，傳回答對和答錯題數挑轉到結果頁面
-                Intent intent = new Intent(QuizActivity.this, QuizResults.class);
-                intent.putExtra("correct", getCorrectAnswers());
-                intent.putExtra("incorrect", getInCorrectAnswers());
-                intent.putExtra("nickname", nickName);
-                startActivity(intent);
-                finish(); // 结束當前的 QuizActivity
-                playButtonClickSound();
-            }
-        });
-    }
 
     public void quizTimer() {
         if (quizTimer != null) {
@@ -312,11 +314,6 @@ public class QuizActivity extends AppCompatActivity {
                 option.setTextColor(Color.WHITE);
                 break;
             }
-        }
-    }
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
         }
     }
 }

@@ -46,7 +46,7 @@ public class SettingActivity extends AppCompatActivity{
     ImageView imageView;
     String base64EncodedImage, nickname, imageUrl, Uid;
     EditText editNickname;
-    MediaPlayer mediaPlayer;
+
     AudioManager audioManager;
     SeekBar volumeSeekBar,gameSeekBar;
 
@@ -56,7 +56,6 @@ public class SettingActivity extends AppCompatActivity{
         setContentView(R.layout.activity_setting);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
@@ -88,33 +87,66 @@ public class SettingActivity extends AppCompatActivity{
             }
 
         });
-        setupButtonListeners();
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
-        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        ImageButton to_home = findViewById(R.id.back);
+        ImageButton logout = findViewById(R.id.logout);
+
+        to_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadNickname();
+                openactivity();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut(); // 呼叫登出方法
+                Beep.playBeepSound(getApplicationContext());
+            }
+
+            private void signOut() {
+                gsc.signOut().addOnCompleteListener(SettingActivity.this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // 登出成功，執行登出後的操作，例如導航到登入畫面
+                        navigateToMainActivity();
+                        Beep.playBeepSound(getApplicationContext());
+                    }
+
+                    private void navigateToMainActivity() {
+                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish(); // 結束當前的活動
+                        Beep.playBeepSound(getApplicationContext());
+                    }
+
+                });
+            }
+        });
+
+
+        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE); // 初始化audioManager
+
         volumeSeekBar = findViewById(R.id.bg_seekbar);
         gameSeekBar = findViewById(R.id.game_seekbar);
 
-        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        int backgroundMusicVolume = preferences.getInt("background_music_volume", 0);
+        int gameVolume = preferences.getInt("game_volume", 50);
 
-        volumeSeekBar.setMax(maxVolume);
-        volumeSeekBar.setProgress(currentVolume);
+        volumeSeekBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        volumeSeekBar.setProgress(backgroundMusicVolume);
 
-        gameSeekBar.setMax(maxVolume);
-        gameSeekBar.setProgress(currentVolume);
+        gameSeekBar.setMax(100);
+        gameSeekBar.setProgress(gameVolume);
 
         volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (seekBar.getId() == R.id.bg_seekbar) {
-                    // 如果是 bg_seekbar 被改變
-                    if (fromUser) {
-                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
-                        float volume = (float) progress / seekBar.getMax();
-                        BackgroundMusicService.setVolume(volume);
-                    }
-                }
+                // 处理进度改变事件
             }
 
             @Override
@@ -125,22 +157,17 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
+                saveVolumeProgress(seekBar, "background_music_volume");
+                float volume = (float) seekBar.getProgress() / seekBar.getMax();
+                BackgroundMusicService.setVolume(volume);
             }
-
-
         });
 
         gameSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (seekBar.getId() == R.id.game_seekbar) {
-                    // 如果是 game_seekbar 被改變
-                    if (fromUser) {
-                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
-                        float volume = (float) progress / seekBar.getMax();
-                        Beep.setBeep(volume);
-                    }
-                }
+                // 处理进度改变事件
+                float volume = (float) progress / seekBar.getMax();
             }
 
             @Override
@@ -151,9 +178,24 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
+                saveVolumeProgress(seekBar, "game_volume");
+                float volume = (float) seekBar.getProgress() / seekBar.getMax();
+                Beep.setVolume(volume);
             }
         });
+
     }
+
+    private void saveVolumeProgress(SeekBar seekBar, String key) {
+        if (seekBar.getId() == R.id.bg_seekbar || seekBar.getId() == R.id.game_seekbar) {
+            int progress = seekBar.getProgress();
+            SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(key, progress);
+            editor.apply();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
@@ -173,46 +215,10 @@ public class SettingActivity extends AppCompatActivity{
 
     }
 
-    private void setupButtonListeners() {
-        ImageButton to_home = findViewById(R.id.back);
-        ImageButton logout = findViewById(R.id.logout);
-
-        to_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadNickname();
-                openactivity();
-                playButtonClickSound();
-            }
-        });
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut(); // 呼叫登出方法
-            }
-
-            private void signOut() {
-                gsc.signOut().addOnCompleteListener(SettingActivity.this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // 登出成功，執行登出後的操作，例如導航到登入畫面
-                        navigateToMainActivity();
-                    }
-
-                    private void navigateToMainActivity() {
-                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish(); // 結束當前的活動
-                        playButtonClickSound();
-                    }
-
-                });
-            }
-        });
 
 
-    }
+
+
 
 
 
@@ -327,15 +333,6 @@ public class SettingActivity extends AppCompatActivity{
         };
 
         requestQueue.add(stringRequest);
-    }
-
-
-
-
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
     }
 
 

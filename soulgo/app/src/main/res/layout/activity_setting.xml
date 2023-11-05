@@ -115,7 +115,7 @@
         android:layout_below="@id/editNickname"
         android:layout_marginTop="150dp"
         android:layout_marginLeft="25dp"
-        android:text="遊戲音樂"
+        android:text="遊戲音效"
         android:textSize="16sp"
         android:textColor="@color/text_color"/>
 

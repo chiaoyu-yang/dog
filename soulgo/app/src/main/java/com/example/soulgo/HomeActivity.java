@@ -27,6 +27,7 @@ import com.example.soulgo.News.PostActivity;
 import com.example.soulgo.News.PublishActivity;
 import com.example.soulgo.Quiz.QuizActivity;
 import com.example.soulgo.Rank.RankingActivity;
+import com.example.soulgo.Setting.Beep;
 import com.example.soulgo.Setting.SettingActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -65,7 +66,99 @@ public class HomeActivity extends AppCompatActivity {
         gsc = GoogleSignIn.getClient(this, gso);
 
         // 初始化MediaPlayer
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+        final LinearLayout startRank = findViewById(R.id.startRankBtn);
+        final LinearLayout startBook = findViewById(R.id.startBookBtn);
+        final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
+        final ImageButton startimageBtn = findViewById(R.id.imageButton);
+        final ImageButton startpublish = findViewById(R.id.imageButton4);
+        final ImageButton startNewsBtn = findViewById(R.id.imageButton3);
+        final Button startBeauty = findViewById(R.id.beautybutton);
+
+
+        startBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView textViewNickname = findViewById(R.id.myusername);
+                        String nickname = textViewNickname.getText().toString().trim();
+                        Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+                        intent.putExtra("nickname", nickname);
+                        startActivity(intent);
+                        Beep.playBeepSound(getApplicationContext());
+                    }
+                });
+
+        startRank.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView textViewNickname = findViewById(R.id.userName);
+                        String nickname = textViewNickname.getText().toString().trim();
+                        Intent intent = new Intent(HomeActivity.this, RankingActivity.class);
+                        intent.putExtra("nickname", nickname);
+                        startActivity(intent);
+                        Beep.playBeepSound(getApplicationContext());
+                    }
+                });
+
+        startBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, BookActivity.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
+
+        startimageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.userName);
+                String nickname = textViewNickname.getText().toString().trim();
+                Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
+                intent.putExtra("nickname", nickname);
+                intent.putExtra("imageUrl", imageUrl);
+                startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
+        startpublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.myusername);
+                String nickname = textViewNickname.getText().toString().trim();
+                Intent intent = new Intent(HomeActivity.this, PublishActivity.class);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
+        startNewsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, NewsActivity.class);
+                intent.putExtra("uid", uid);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
+        startBeauty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.myusername);
+                String nickname = textViewNickname.getText().toString().trim();
+                Intent intent = new Intent(HomeActivity.this, BeautyActivity.class);
+                intent.putExtra("nickname", nickname);
+                startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
 
         // 取得視圖元件
         userName = findViewById(R.id.userName);
@@ -88,7 +181,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         getPost();
-        setupButtonListeners();
         newsClick();
     }
 
@@ -164,102 +256,10 @@ public class HomeActivity extends AppCompatActivity {
                 .into(imageview);
     }
 
-    private void setupButtonListeners() {
-        final LinearLayout startRank = findViewById(R.id.startRankBtn);
-        final LinearLayout startBook = findViewById(R.id.startBookBtn);
-        final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
-        final ImageButton startimageBtn = findViewById(R.id.imageButton);
-        final ImageButton startpublish = findViewById(R.id.imageButton4);
-        final ImageButton startNewsBtn = findViewById(R.id.imageButton3);
-        final Button startBeauty = findViewById(R.id.beautybutton);
 
 
-        startBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TextView textViewNickname = findViewById(R.id.myusername);
-                        String nickname = textViewNickname.getText().toString().trim();
-                        Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
-                        intent.putExtra("nickname", nickname);
-                        startActivity(intent);
-                        playButtonClickSound();
-                    }
-                });
-
-        startRank.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TextView textViewNickname = findViewById(R.id.userName);
-                        String nickname = textViewNickname.getText().toString().trim();
-                        Intent intent = new Intent(HomeActivity.this, RankingActivity.class);
-                        intent.putExtra("nickname", nickname);
-                        startActivity(intent);
-                        playButtonClickSound();
-                    }
-                });
-
-        startBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, BookActivity.class);
-                intent.putExtra("uid", uid);
-                startActivity(intent);
-                playButtonClickSound();
-            }
-        });
 
 
-        startimageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textViewNickname = findViewById(R.id.userName);
-                String nickname = textViewNickname.getText().toString().trim();
-                Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
-                intent.putExtra("nickname", nickname);
-                intent.putExtra("imageUrl", imageUrl);
-                startActivity(intent);
-                playButtonClickSound();
-            }
-        });
-
-        startpublish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textViewNickname = findViewById(R.id.myusername);
-                String nickname = textViewNickname.getText().toString().trim();
-                Intent intent = new Intent(HomeActivity.this, PublishActivity.class);
-                intent.putExtra("nickname", nickname);
-                startActivity(intent);
-                playButtonClickSound();
-            }
-        });
-
-        startNewsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, NewsActivity.class);
-                intent.putExtra("uid", uid);
-                intent.putExtra("nickname", nickname);
-                startActivity(intent);
-                playButtonClickSound();
-            }
-        });
-
-        startBeauty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView textViewNickname = findViewById(R.id.myusername);
-                String nickname = textViewNickname.getText().toString().trim();
-                Intent intent = new Intent(HomeActivity.this, BeautyActivity.class);
-                intent.putExtra("nickname", nickname);
-                startActivity(intent);
-
-            }
-        });
-
-    }
 
     private void getPost() {
         String url = Constants.URL_HomePost;
@@ -333,9 +333,4 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
 }

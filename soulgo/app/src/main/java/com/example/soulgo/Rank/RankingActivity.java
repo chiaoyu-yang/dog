@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;import com.example.soulgo.R;
 import com.example.soulgo.HomeActivity;
+import com.example.soulgo.Setting.Beep;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,6 @@ import java.util.Objects;
 public class RankingActivity extends AppCompatActivity {
 
     private TextView textViewDivision, textViewUsername, textViewIntegral;
-    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,6 @@ public class RankingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rank);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
 
         textViewDivision = findViewById(R.id.mydivision);
         textViewUsername = findViewById(R.id.myusername);
@@ -49,22 +48,20 @@ public class RankingActivity extends AppCompatActivity {
 
         String nickname = getIntent().getStringExtra("nickname");
         fetchMyRankData(nickname);
-
         fetchTop100Ranks();
-        setupButtonListeners();
 
-    }
-
-    private void setupButtonListeners() {
         ImageButton button = findViewById(R.id.back);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openactivity();
-                playButtonClickSound();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
+
+
     }
+
 
     public void openactivity() {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -158,12 +155,5 @@ public class RankingActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
-
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
-    }
-
 }
 

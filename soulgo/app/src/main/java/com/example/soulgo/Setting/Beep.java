@@ -1,51 +1,28 @@
 package com.example.soulgo.Setting;
 
-import android.app.Service;
-import android.content.Intent;
+import android.content.Context;
 import android.media.MediaPlayer;
-import android.os.IBinder;
 
 import com.example.soulgo.R;
 
-public class Beep extends Service {
-    private static MediaPlayer mediaPlayer;
+public class Beep {
+    private static float volume = 1.0f; // 默认音量为1.0
 
-    private static float beep = 0.5f; // Default volume
-
-    public static void setBeep(float newBeep) {
-        beep = newBeep;
-        if (mediaPlayer != null) {
-            mediaPlayer.setVolume(beep, beep);
-        }
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(beep, beep); // 设置初始音量
-    }
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public static void playBeepSound(Context context) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.beep);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+        mediaPlayer.setVolume(volume, volume); // 设置音量
         mediaPlayer.start();
-        return START_STICKY; // 使服务在被系统杀死后能够自动重启
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public static void setVolume(float newVolume) {
+        volume = newVolume;
     }
 }
+
+

@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
 
 import java.util.HashMap;
 import java.util.List;
@@ -233,6 +234,8 @@ public class DetailActivity extends AppCompatActivity {
                     isTextEmpty = true;
                     cancelEdit();
                 }
+
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
@@ -242,6 +245,7 @@ public class DetailActivity extends AppCompatActivity {
                 fetchUpdate();
                 closeKeyboard();
                 cancelEdit();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
     }
@@ -258,6 +262,7 @@ public class DetailActivity extends AppCompatActivity {
         containerLayoutParam.topMargin = 50;
 
         fetchDetail();
+
     }
 
     private void fetchUpdate() {
@@ -301,6 +306,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), BookActivity.class);
                 startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
             }
         });
     }
