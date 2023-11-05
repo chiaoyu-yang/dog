@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class VoteActivity extends AppCompatActivity implements VoteAdapter.LikeClickListener {
 
     private RecyclerView recyclerView;
-    private ImageButton back;
+    private ImageButton to_home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,8 @@ public class VoteActivity extends AppCompatActivity implements VoteAdapter.LikeC
         recyclerView = findViewById(R.id.voteRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        back = findViewById(R.id.back);
-        back.setOnClickListener(view -> openMainActivity());
+        to_home = findViewById(R.id.to_home);
+        to_home.setOnClickListener(view -> openMainActivity());
 
         fetchAllBeauty();
     }
