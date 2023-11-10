@@ -1,7 +1,6 @@
 package com.example.soulgo.Quiz;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.PlaybackParams;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -26,25 +26,31 @@ import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
 import com.example.soulgo.Setting.Beep;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.HashMap;import java.util.List;import java.util.Map;
 
 public class QuizActivity extends AppCompatActivity {
-    private TextView questionText;
+    private TextView questionText, textViewUsername;
 
     private AppCompatButton option1, option2, option3, option4;
 
+    private AppCompatButton finishBtn;
+
     private CountDownTimer quizTimer;
+
+    private int totalTimeInSeconds = 11;
 
     private int correctAnswers = 0;
     private int incorrectAnswers = 0;
 
     private String selectedOptionByUser = "";
 
-    private final Handler handler = new Handler();
+    private Handler handler = new Handler();
 
     private String question = "";
     private String choice1 = "";
@@ -73,10 +79,12 @@ public class QuizActivity extends AppCompatActivity {
         option2 = findViewById(R.id.option2);
         option3 = findViewById(R.id.option3);
         option4 = findViewById(R.id.option4);
-        AppCompatButton finishBtn = findViewById(R.id.nextBtn);
+        finishBtn = findViewById(R.id.nextBtn);
+        textViewUsername = findViewById(R.id.myusername);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
-        nickName = sharedPreferences.getString("nickname", "");
+        String nickname = getIntent().getStringExtra("nickname");
+        textViewUsername.setText(nickname);
+
         sendRequest();
 
         View.OnClickListener optionClickListener = new View.OnClickListener() {
@@ -92,6 +100,7 @@ public class QuizActivity extends AppCompatActivity {
                     revealAnswer();
 
                     boolean isCorrect = selectedOptionByUser.equals(answer);
+                    nickName = textViewUsername.getText().toString();
                     sendAnswerToServer(question, selectedOptionByUser, isCorrect, nickName);
 
                     quizTimer.cancel();
@@ -244,7 +253,6 @@ public class QuizActivity extends AppCompatActivity {
     private void startTimer() {
         final TextView tvTimer = findViewById(R.id.timer);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
-        int totalTimeInSeconds = 11;
         int millisecondsInFuture = totalTimeInSeconds * 1000;
         int countDownInterval = 1000;
 

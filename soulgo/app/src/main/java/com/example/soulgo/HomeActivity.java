@@ -3,6 +3,7 @@ package com.example.soulgo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,7 +47,9 @@ public class HomeActivity extends AppCompatActivity {
     TextView userName, myusername;
     ImageButton image;
     ImageView imageview;
+    MediaPlayer mediaPlayer;
     private String uid, nickname, nid1, nid2, imageUrl;
+    private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
@@ -56,7 +59,6 @@ public class HomeActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         // 初始化SharedPreferences
-        SharedPreferences sharedPreferences;
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         // 初始化Google登入選項和客戶端
@@ -77,7 +79,10 @@ public class HomeActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        TextView textViewNickname = findViewById(R.id.myusername);
+                        String nickname = textViewNickname.getText().toString().trim();
                         Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+                        intent.putExtra("nickname", nickname);
                         startActivity(intent);
                         Beep.playBeepSound(getApplicationContext());
                     }
@@ -87,7 +92,10 @@ public class HomeActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        TextView textViewNickname = findViewById(R.id.userName);
+                        String nickname = textViewNickname.getText().toString().trim();
                         Intent intent = new Intent(HomeActivity.this, RankingActivity.class);
+                        intent.putExtra("nickname", nickname);
                         startActivity(intent);
                         Beep.playBeepSound(getApplicationContext());
                     }
@@ -107,7 +115,11 @@ public class HomeActivity extends AppCompatActivity {
         startimageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView textViewNickname = findViewById(R.id.userName);
+                String nickname = textViewNickname.getText().toString().trim();
                 Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
+                intent.putExtra("nickname", nickname);
+                intent.putExtra("imageUrl", imageUrl);
                 startActivity(intent);
                 Beep.playBeepSound(getApplicationContext());
             }
