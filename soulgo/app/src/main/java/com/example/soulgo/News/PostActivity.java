@@ -72,8 +72,14 @@ public class PostActivity extends AppCompatActivity {
 
         userName.setText(nickname);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
-        uid = sharedPreferences.getString("uid", "");
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs_" + uid, MODE_PRIVATE);
+        isLiked = getLikeStatus(newsId);
+        if (isLiked) {
+            postLikeBtn.setImageResource(R.drawable.active_like);
+        } else {
+            postLikeBtn.setImageResource(R.drawable.like_button);
+        }
+
 
         postTitle();
         postLikeBtn();
@@ -198,16 +204,18 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void saveLikeStatus(String newsId, boolean isLiked) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs_" + uid, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(newsId, isLiked);
         editor.apply();
     }
 
     private boolean getLikeStatus(String newsId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs_" + uid, MODE_PRIVATE);
         return sharedPreferences.getBoolean(newsId, false);
     }
+
+
 
     private void updatePostLike() {
         String url = Constants.URL_UpdatePostLike;
