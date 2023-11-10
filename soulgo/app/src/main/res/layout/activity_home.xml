@@ -48,7 +48,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:background="@color/white"
-                    android:src="@drawable/_1"
+                    android:src="@drawable/top1_img"
                     app:shapeAppearanceOverlay="@style/RoundedCornerImageView2"
                     app:strokeColor="@color/black"
                     app:strokeWidth="0.5dp" />
