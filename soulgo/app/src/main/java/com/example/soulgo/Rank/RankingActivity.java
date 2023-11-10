@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -46,9 +46,8 @@ public class RankingActivity extends AppCompatActivity {
         textViewUsername = findViewById(R.id.myusername);
         textViewIntegral = findViewById(R.id.myintegral);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
-        String nickName = sharedPreferences.getString("nickname", "");
-        fetchMyRankData(nickName);
+        String nickname = getIntent().getStringExtra("nickname");
+        fetchMyRankData(nickname);
         fetchTop100Ranks();
 
         ImageButton button = findViewById(R.id.back);

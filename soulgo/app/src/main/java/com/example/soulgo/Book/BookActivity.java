@@ -87,7 +87,7 @@ public class BookActivity extends AppCompatActivity {
                                     ((TextView) findViewById(R.id.top1_text)).setText(data.get(0).getName());
                                     Glide.with(BookActivity.this)
                                             .load(
-                                                    "http://140.131.114.145/Android/112_dog/beauty_top_season_history/" + data.get(0).getImage())
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(0).getImage())
                                             .error(R.drawable.error_image)
                                             .into((ImageView) findViewById(R.id.top1_button));
 
@@ -95,7 +95,7 @@ public class BookActivity extends AppCompatActivity {
                                     ((TextView) findViewById(R.id.top2_text)).setText(data.get(1).getName());
                                     Glide.with(BookActivity.this)
                                             .load(
-                                                    "http://140.131.114.145/Android/112_dog/beauty_top_season_history/" + data.get(1).getImage())
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(1).getImage())
                                             .error(R.drawable.error_image)
                                             .into((ImageView) findViewById(R.id.top2_button));
 
@@ -103,7 +103,7 @@ public class BookActivity extends AppCompatActivity {
                                     ((TextView) findViewById(R.id.top3_text)).setText(data.get(2).getName());
                                     Glide.with(BookActivity.this)
                                             .load(
-                                                    "http://140.131.114.145/Android/112_dog/beauty_top_season_history/" + data.get(2).getImage())
+                                                    "http://140.131.114.145/Android/112_dog/books/" + data.get(2).getImage())
                                             .error(R.drawable.error_image)
                                             .into((ImageView) findViewById(R.id.top3_button));
                                 }
