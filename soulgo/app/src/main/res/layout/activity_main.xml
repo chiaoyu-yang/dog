@@ -17,9 +17,10 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="520dp"
-        android:layout_height="1000dp"
-        android:src="@drawable/login_image"
+        android:layout_width="620dp"
+        android:layout_height="740dp"
+        android:src="@drawable/login_dog"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
