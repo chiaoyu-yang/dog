@@ -160,6 +160,16 @@ public class HomeActivity extends AppCompatActivity {
             nickname = sharedPreferences.getString("nickname", "");
             imageUrl = sharedPreferences.getString("imageUrl", "");
             setUserInfo();
+
+            // 如果这三个值有任何一个不是空值，执行setUserInfo()
+            if (uid.isEmpty() || nickname.isEmpty() || imageUrl.isEmpty()) {
+                // 如果SharedPreferences中不包含這三個值，則發送Volley請求獲取資訊
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+                if (acct != null) {
+                    handleGoogleSignInAccount(acct);
+                }
+            }
+
         } else {
             // 如果SharedPreferences中不包含這三個值，則發送Volley請求獲取資訊
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);

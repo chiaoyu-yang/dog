@@ -72,6 +72,9 @@ public class PostActivity extends AppCompatActivity {
 
         userName.setText(nickname);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
+        uid = sharedPreferences.getString("uid", "");
+
         postTitle();
         postLikeBtn();
         backBtnProcess();

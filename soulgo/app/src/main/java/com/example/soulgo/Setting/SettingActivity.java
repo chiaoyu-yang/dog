@@ -102,6 +102,13 @@ public class SettingActivity extends AppCompatActivity{
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("nickname", "");
+                editor.putString("uid", "");
+                editor.putString("imageUrl", "");
+                editor.apply();
+
                 signOut(); // 呼叫登出方法
                 Beep.playBeepSound(getApplicationContext());
             }
