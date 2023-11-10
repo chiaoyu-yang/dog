@@ -106,7 +106,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/_1" />
+                    android:src="@drawable/top1_img" />
 
                 <TextView
                     android:id="@+id/top1_text"
@@ -153,7 +153,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/_1" />
+                    android:src="@drawable/_2" />
 
                 <TextView
                     android:id="@+id/top2_text"
@@ -198,7 +198,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/_1" />
+                    android:src="@drawable/_3" />
 
                 <TextView
                     android:id="@+id/top3_text"
@@ -237,6 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="0dp"
                 android:gravity="center"
                 android:text="Loading..."
                 android:visibility="visible" />
