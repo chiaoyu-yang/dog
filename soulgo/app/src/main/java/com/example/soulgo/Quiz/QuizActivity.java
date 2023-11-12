@@ -75,6 +75,20 @@ public class QuizActivity extends AppCompatActivity {
         option4 = findViewById(R.id.option4);
         AppCompatButton finishBtn = findViewById(R.id.nextBtn);
 
+
+        // 在 QuizActivity 的 onCreate 方法中
+
+        // 從 SharedPreferences 中檢索音效音量
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        int soundEffectVolume = preferences.getInt("sound_effect_volume", 50);
+
+        // 為 MediaPlayer 實例設置音效音量
+        float volume = (float) soundEffectVolume / 100;
+        counter.setVolume(volume, volume);
+        correct.setVolume(volume, volume);
+        wrong.setVolume(volume, volume);
+
+
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
         nickName = sharedPreferences.getString("nickname", "");
         sendRequest();

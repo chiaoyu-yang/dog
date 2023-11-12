@@ -141,7 +141,7 @@ public class SettingActivity extends AppCompatActivity{
 
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         int backgroundMusicVolume = preferences.getInt("background_music_volume", 0);
-        int gameVolume = preferences.getInt("game_volume", 50);
+        int gameVolume = preferences.getInt("sound_effect_volume", 50);
 
         volumeSeekBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         volumeSeekBar.setProgress(backgroundMusicVolume);
@@ -184,7 +184,7 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
-                saveVolumeProgress(seekBar, "game_volume");
+                saveVolumeProgress(seekBar, "sound_effect_volume");
                 float volume = (float) seekBar.getProgress() / seekBar.getMax();
                 Beep.setVolume(volume);
             }

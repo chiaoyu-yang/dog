@@ -12,6 +12,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.soulgo.Constants;import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +52,8 @@ public class VoteActivity extends AppCompatActivity implements VoteAdapter.LikeC
     public void openMainActivity() {
         Intent intent = new Intent(this, BeautyActivity.class);
         startActivity(intent);
+        Beep.playBeepSound(getApplicationContext());
+
     }
     private void fetchAllBeauty() {
         StringRequest request =

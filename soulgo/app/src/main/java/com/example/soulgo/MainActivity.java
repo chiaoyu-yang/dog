@@ -14,6 +14,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.soulgo.Setting.BackgroundMusicService;
+import com.example.soulgo.Setting.Beep;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,7 +33,6 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private GoogleSignInClient gsc;
-    private MediaPlayer mediaPlayer;
     private VideoView videoView;
     private ImageView imageView;
 
@@ -43,7 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
         setupGoogleSignIn();
         initializeUI();
-        setupButtonListeners();
+        ImageView googleBtn = findViewById(R.id.button);
+        googleBtn.setOnClickListener(view -> {
+            signIn();
+            Beep.playBeepSound(getApplicationContext());
+        });
+
+        Intent serviceIntent = new Intent(MainActivity.this, BackgroundMusicService.class);
+        startService(serviceIntent);
     }
 
     private void setupGoogleSignIn() {
@@ -53,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeUI() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         videoView = findViewById(R.id.viewVideo);
@@ -72,23 +79,13 @@ public class MainActivity extends AppCompatActivity {
         videoView.setOnCompletionListener(MediaPlayer::start);
     }
 
-    private void setupButtonListeners() {
-        ImageView googleBtn = findViewById(R.id.button);
-        googleBtn.setOnClickListener(view -> {
-            signIn();
-            playButtonClickSound();
-        });
-    }
+
+
+
 
     private void signIn() {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent, 1000);
-    }
-
-    private void playButtonClickSound() {
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
-        }
     }
 
     @Override
