@@ -41,6 +41,7 @@ public class BeautyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty);
         mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         textViewUsername = findViewById(R.id.myusername);
         nickname = getIntent().getStringExtra("nickname");
