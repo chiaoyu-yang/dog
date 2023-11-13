@@ -3,47 +3,59 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-
-
-    <RelativeLayout
-        android:id="@+id/booklist"
+    <FrameLayout
         android:layout_width="100dp"
         android:layout_height="110dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/rectangle_7"
-        android:scaleType="centerInside">
+        android:background="@drawable/rounded_frame_small"
+        android:padding="2dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
-
-        <ImageButton
-            android:id="@+id/booklist_image_button"
-            android:layout_width="match_parent"
-            android:layout_height="93dp"
-            android:layout_marginTop="-1dp"
-            android:layout_marginBottom="15dp"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/top1_img" />
-
-
-        <TextView
-            android:id="@+id/booklist_text"
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/booklist"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="86dp"
-            android:gravity="center"
-            android:text="吉娃娃"
-            android:textStyle="bold"
-            android:textColor="#000000" />
+            android:layout_centerHorizontal="false"
+            card_view:cardCornerRadius="15dp">
 
+            <ImageView
+                android:id="@+id/booklist_image_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/_2" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#E4EFD7"
+                    android:elevation="1dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/booklist_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="阿金"
+                        android:textColor="@color/black"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
 </RelativeLayout>
