@@ -63,6 +63,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         counter = MediaPlayer.create(this, R.raw.counter);
         correct = MediaPlayer.create(this,R.raw.correct);
