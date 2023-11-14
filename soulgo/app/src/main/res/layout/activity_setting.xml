@@ -69,69 +69,97 @@
         android:background="#F1FAEE"
         android:src="@drawable/edit"
         tools:visibility="invisible" />
-    <TextView
-        android:id="@+id/bgmusic"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/bgmusicLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editNickname"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="100dp"
-        android:text="背景音樂"
-        android:textColor="@color/text_color"
-        android:textSize="16sp" />
+        android:layout_below="@id/editNickname">
 
-    <SeekBar
-        android:id="@+id/bg_seekbar"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/editNickname"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="90dp"
-        android:paddingTop="1dp"
-        android:paddingBottom="1dp"
-        android:progress="30"
-        android:progressDrawable="@drawable/bg_custom_seekbar"
-        android:splitTrack="false"
-        android:thumb="@drawable/pawbar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:weightSum="4">
 
-    <SeekBar
-        android:id="@+id/game_seekbar"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/editNickname"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="140dp"
-        android:paddingTop="1dp"
-        android:paddingBottom="1dp"
-        android:progress="30"
-        android:progressDrawable="@drawable/bg_custom_seekbar"
-        android:splitTrack="false"
-        android:thumb="@drawable/pawbar" />
+            <TextView
+                android:id="@+id/bgmusic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="背景音樂"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"/>
 
-    <TextView
-        android:id="@+id/gamemusic"
-        android:layout_width="wrap_content"
+            <SeekBar
+                android:id="@+id/bg_seekbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:progress="30"
+                android:progressDrawable="@drawable/bg_custom_seekbar"
+                android:splitTrack="false"
+                android:thumb="@drawable/pawbar"
+                android:layout_weight="3"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/gamemusicLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editNickname"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/bgmusicLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/gamemusic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="背景音樂"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:gravity="center_vertical"/>
+
+            <SeekBar
+                android:id="@+id/game_seekbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:progress="30"
+                android:progressDrawable="@drawable/bg_custom_seekbar"
+                android:splitTrack="false"
+                android:thumb="@drawable/pawbar"
+                android:layout_alignParentEnd="true"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="150dp"
-        android:layout_marginLeft="25dp"
-        android:text="遊戲音效"
-        android:textSize="16sp"
-        android:textColor="@color/text_color"/>
+        android:layout_below="@id/gamemusicLayout">
 
-
-    <ImageButton
-        android:id="@+id/logout"
-        android:layout_width="106dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/back"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="550dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/logout" />
-
-
-
-
-
+        <ImageButton
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logout"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
 </RelativeLayout>
