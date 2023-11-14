@@ -8,7 +8,8 @@
     android:paddingLeft="30dp"
     android:paddingTop="40dp"
     android:paddingRight="30dp"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id='@+id/myusername'
@@ -234,24 +235,25 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="260dp"
                 android:orientation="horizontal">
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="160dp"
                     android:layout_height="240dp"
                     android:background="@drawable/news_item"
                     tools:ignore="MissingConstraints"
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
-                    android:id="@+id/items_news_left">
+                    android:id="@+id/items_news_left"
+                    card_view:cardCornerRadius="10dp">
 
                     <ImageButton
                         android:id="@+id/booklist_image_button_left"
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:background="@drawable/news_item_2"
-                        android:scaleType="fitCenter"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/dog_image" />
 
                     <TextView
@@ -278,22 +280,23 @@
                         android:ellipsize="end"
                         android:text="TextView" />
 
-                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="160dp"
                     android:layout_height="240dp"
                     android:background="@drawable/news_item"
                     tools:ignore="MissingConstraints"
                     android:layout_weight="1"
-                    android:id="@+id/items_news_right">
+                    android:id="@+id/items_news_right"
+                    card_view:cardCornerRadius="10dp">
 
                     <ImageButton
                         android:id="@+id/booklist_image_button_right"
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:background="@drawable/news_item_2"
-                        android:scaleType="fitCenter"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/dog_image" />
 
                     <TextView
@@ -317,7 +320,7 @@
                         android:maxLines="3"
                         android:ellipsize="end"
                         android:text="TextView" />
-                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
