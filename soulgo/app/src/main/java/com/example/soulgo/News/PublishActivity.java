@@ -1,6 +1,7 @@
 package com.example.soulgo.News;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -47,6 +48,7 @@ public class PublishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         textViewUsername = findViewById(R.id.myusername);
         uploadTitleEditText = findViewById(R.id.upload_title);

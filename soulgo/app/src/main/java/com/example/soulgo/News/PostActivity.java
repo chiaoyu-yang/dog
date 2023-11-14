@@ -3,6 +3,7 @@ package com.example.soulgo.News;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +53,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         postRecview = findViewById(R.id.postRecview);
         postRecview.setLayoutManager(new GridLayoutManager(this, 1));

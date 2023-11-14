@@ -1,6 +1,7 @@
 package com.example.soulgo.News;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +38,7 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         newsRecview = findViewById(R.id.newsRecview);
         newsRecview.setLayoutManager(new GridLayoutManager(this, 2));

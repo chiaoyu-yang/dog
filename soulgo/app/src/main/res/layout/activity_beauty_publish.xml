@@ -49,8 +49,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="@color/white"
-            android:scaleX="0.85"
-            android:scaleY="0.85"
+            android:scaleX="0.95"
+            android:scaleY="0.95"
             app:shapeAppearanceOverlay="@style/RoundedCornerImageView"
             />
 
@@ -84,7 +84,7 @@
             android:text="上傳圖片"
             android:textSize="14dp"
             android:textStyle="bold"
-            android:layout_below="@+id/setting"
+            android:layout_below="@+id/title"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:layout_marginTop="240dp"
@@ -92,12 +92,13 @@
             tools:ignore="MissingConstraints" />
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/clickToUploadImg"
             android:layout_centerHorizontal="true"
-            android:scaleX="0.75"
-            android:scaleY="0.85"
+            android:scaleType="fitCenter"
+            android:scaleX="0.95"
+            android:scaleY="0.95"
             android:id="@+id/bar1">
 
             <EditText
@@ -107,6 +108,8 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:background="@drawable/publish_3"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitCenter"
                 android:paddingStart="10dp"
                 android:hint="標題"
                 android:textColor="#AAAAAA"
@@ -118,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="10dp"
+                android:layout_marginTop="4dp"
                 android:text="0/10"
                 android:textSize="14dp"
                 android:textColor="#AAAAAA" />
@@ -142,14 +146,15 @@
 
         <ImageButton
             android:id="@+id/btnUpload"
-            android:layout_width="315dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bar2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:src="@drawable/publish_5"
-            android:scaleX="0.85"
-            android:scaleY="0.85"
+            android:scaleType="fitCenter"
+            android:scaleX="0.95"
+            android:scaleY="1.1"
             android:background="@android:color/transparent"
             android:onClick="uploadData"
             />

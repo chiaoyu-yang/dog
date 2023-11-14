@@ -1,6 +1,7 @@
 package com.example.soulgo.Beauty;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.example.soulgo.Setting.Beep;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,8 +43,10 @@ public class BeautyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty);
-        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+
 
         textViewUsername = findViewById(R.id.myusername);
         nickname = getIntent().getStringExtra("nickname");
