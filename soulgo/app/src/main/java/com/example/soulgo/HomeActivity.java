@@ -154,7 +154,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // 閃亮亮的晃動效果
+        // 晃動效果
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(startBeauty, "scaleX", 1f, 1.1f, 1f);
         scaleXAnimator.setRepeatCount(ValueAnimator.INFINITE);
         scaleXAnimator.setRepeatMode(ValueAnimator.REVERSE);

@@ -310,7 +310,7 @@ public class SettingActivity extends AppCompatActivity{
                             boolean error = jsonObject.getBoolean("error");
                             String message = jsonObject.getString("message");
 
-                            Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
 
                             // 在這裡處理回調邏輯
                             // 例如，更新 UI 或顯示訊息給使用者

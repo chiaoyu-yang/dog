@@ -49,12 +49,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
                     .error(R.drawable.error_image) // 載入錯誤時顯示的圖片
                     .into(holder.img);
 
-            // 如果名字長度小於 3，隱藏item
-            if (book.getName().length() < 3) {
-                holder.itemView.setVisibility(View.GONE);
-            } else {
-                holder.itemView.setVisibility(View.VISIBLE);
-            }
         } else {
             // 如果超出範圍，隱藏item
             holder.itemView.setVisibility(View.GONE);
