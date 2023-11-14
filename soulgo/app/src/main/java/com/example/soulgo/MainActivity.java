@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
         setupGoogleSignIn();
         initializeUI();
         ImageView googleBtn = findViewById(R.id.button);
