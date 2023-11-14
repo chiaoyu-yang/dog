@@ -41,8 +41,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_below="@+id/title"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
 
         <ImageView
             android:id="@+id/top1_crown"
@@ -124,8 +124,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_below="@+id/top2_crown"
-                    android:layout_width="140dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
                     android:layout_centerHorizontal="true"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp">
@@ -166,6 +166,12 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1">
+            </RelativeLayout>>
+
+            <RelativeLayout
                 android:id="@+id/top3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -179,8 +185,8 @@
                     android:layout_centerHorizontal="true"/>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="140dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
                     tools:layout_editor_absoluteX="31dp"
                     tools:layout_editor_absoluteY="130dp"
                     android:layout_centerHorizontal="true"
@@ -229,7 +235,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/top23"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
