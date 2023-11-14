@@ -65,12 +65,18 @@
                 android:layout_weight="1"
                 android:text="使用者名稱" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/beautybutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="100dp"
                 android:layout_weight="1"
+                android:background="@color/main_color"
+                android:scaleType="fitCenter"
+                android:src="@drawable/home_dog"
                 android:text="beauty" />
+
+
         </LinearLayout>
 
         <LinearLayout

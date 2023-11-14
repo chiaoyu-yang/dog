@@ -2,6 +2,7 @@ package com.example.soulgo.Quiz;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.PlaybackParams;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class QuizActivity extends AppCompatActivity {
     private TextView questionText;
@@ -64,6 +66,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         counter = MediaPlayer.create(this, R.raw.counter);
         correct = MediaPlayer.create(this,R.raw.correct);
@@ -91,7 +94,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
-        nickName = sharedPreferences.getString("nickname", "");
+        nickName = sharedPreferences.getString("uid", "");
         sendRequest();
 
         View.OnClickListener optionClickListener = new View.OnClickListener() {

@@ -6,6 +6,7 @@
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
     android:background="@color/main_color">
 
     <RelativeLayout
@@ -63,7 +64,7 @@
             android:id="@+id/ic_outline_add_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/setting"
+            android:layout_below="@id/title"
             android:layout_centerHorizontal="true">
 
             <ImageButton
@@ -88,7 +89,7 @@
             android:text="上傳圖片"
             android:textSize="14dp"
             android:textStyle="bold"
-            android:layout_below="@+id/setting"
+            android:layout_below="@+id/title"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:layout_marginTop="200dp"
@@ -96,7 +97,7 @@
             tools:ignore="MissingConstraints" />
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/clickToUploadImg"
             android:layout_centerHorizontal="true"
@@ -172,14 +173,15 @@
 
         <ImageButton
             android:id="@+id/btnUpload"
-            android:layout_width="wrap_content"
+            android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bar2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:src="@drawable/publish_5"
+            android:scaleType="fitCenter"
             android:scaleX="0.85"
-            android:scaleY="0.85"
+            android:scaleY="1"
             android:background="@android:color/transparent"
             android:onClick="uploadData"
             />

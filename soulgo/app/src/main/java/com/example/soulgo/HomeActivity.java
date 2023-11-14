@@ -1,11 +1,16 @@
 package com.example.soulgo;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -54,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // 初始化SharedPreferences
         SharedPreferences sharedPreferences;
@@ -70,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         final ImageButton startimageBtn = findViewById(R.id.imageButton);
         final ImageButton startpublish = findViewById(R.id.imageButton4);
         final ImageButton startNewsBtn = findViewById(R.id.imageButton3);
-        final Button startBeauty = findViewById(R.id.beautybutton);
+        final ImageButton startBeauty = findViewById(R.id.beautybutton);
 
 
         startBtn.setOnClickListener(
@@ -147,6 +153,24 @@ public class HomeActivity extends AppCompatActivity {
                 Beep.playBeepSound(getApplicationContext());
             }
         });
+
+        // 閃亮亮的晃動效果
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(startBeauty, "scaleX", 1f, 1.1f, 1f);
+        scaleXAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        scaleXAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        scaleXAnimator.setInterpolator(new LinearInterpolator());
+
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(startBeauty, "scaleY", 1f, 1.1f, 1f);
+        scaleYAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        scaleYAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        scaleYAnimator.setInterpolator(new LinearInterpolator());
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
+        animatorSet.setDuration(2000); // 設定動畫的執行時間
+
+        // 開始動畫
+        animatorSet.start();
 
         // 取得視圖元件
         userName = findViewById(R.id.userName);

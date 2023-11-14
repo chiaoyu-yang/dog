@@ -1,6 +1,7 @@
 package com.example.soulgo.Beauty;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class VoteActivity extends AppCompatActivity implements VoteAdapter.LikeC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         recyclerView = findViewById(R.id.voteRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
