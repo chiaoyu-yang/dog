@@ -159,6 +159,7 @@ public class BookActivity extends AppCompatActivity {
                 String query = searchbar.getText().toString();
                 performSearch(query);
                 Beep.playBeepSound(getApplicationContext());
+//                processdata();
             }
         });
     }
@@ -176,6 +177,16 @@ public class BookActivity extends AppCompatActivity {
         // 將符合搜尋結果的項目傳遞給適配器
         BookAdapter adapter = new BookAdapter(searchResults);
         recview.setAdapter(adapter);
+
+        adapter.setItemClickListener(new BookAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(String bookId) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra("bookId", bookId);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+            }
+        });
     }
 
 

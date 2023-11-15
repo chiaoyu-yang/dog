@@ -1,22 +1,5 @@
 package com.jstappdev.dbclf;
 
-/*
- * Copyright 2016 The TensorFlow Authors. All Rights Reserved.
- * Modifications copyright (C) 2018 Josef Steppan
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import android.Manifest;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -113,7 +96,7 @@ public abstract class CameraActivity extends FragmentActivity
     protected int previewHeight = 0;
     protected ClassifierActivity.InferenceTask inferenceTask;
     TextView resultsView;
-    PieChart mChart;
+    PieChart mChart, mChart2;
     AtomicBoolean snapShot = new AtomicBoolean(false);
     boolean continuousInference = false;
     boolean imageSet = false;
@@ -140,8 +123,10 @@ public abstract class CameraActivity extends FragmentActivity
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(null);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
 
         preferredLanguageCode = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("lang", "en");
@@ -185,7 +170,7 @@ public abstract class CameraActivity extends FragmentActivity
                     break;
                 case PERMISSION_STORAGE_WRITE:
                     // user might have clicked on save or share button
-                    //shareButton.callOnClick();
+                    shareButton.callOnClick();
                     break;
             }
         }
@@ -195,6 +180,7 @@ public abstract class CameraActivity extends FragmentActivity
         imageViewFromGallery = findViewById(R.id.imageView);
         resultsView = findViewById(R.id.results);
         mChart = findViewById(R.id.chart);
+        mChart2 = findViewById(R.id.chart2);
         progressBar = findViewById(R.id.progressBar);
         //new line20230330
         progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightgreen)));
@@ -211,6 +197,7 @@ public abstract class CameraActivity extends FragmentActivity
         cameraButton.setEnabled(false);
 
         setButtonsVisibility(View.GONE);
+        setButtonsVisibility2(View.VISIBLE);
 
         cameraButton.setOnClickListener(v -> {
             if (!hasPermission(PERMISSION_CAMERA)) {
@@ -379,7 +366,7 @@ public abstract class CameraActivity extends FragmentActivity
 
     private void pickImage() {
         final Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        continuousInferenceButton.setChecked(false);
+//        continuousInferenceButton.setChecked(false);
         startActivityForResult(i, PICK_IMAGE);
     }
 
@@ -511,6 +498,9 @@ public abstract class CameraActivity extends FragmentActivity
         mChart.getDescription().setEnabled(false);
         mChart.setUsePercentValues(true);
         mChart.setTouchEnabled(false);
+        mChart2.getDescription().setEnabled(false);
+        mChart2.setUsePercentValues(true);
+        mChart2.setTouchEnabled(false);
 
         // show center text only first time
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -524,6 +514,11 @@ public abstract class CameraActivity extends FragmentActivity
             mChart.setCenterText(generateCenterSpannableText());
             mChart.setCenterTextSizePixels(23);
             mChart.setDrawCenterText(true);
+
+            mChart2.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf"));
+            mChart2.setCenterText(generateCenterSpannableText());
+            mChart2.setCenterTextSizePixels(23);
+            mChart2.setDrawCenterText(true);
         }
 
         mChart.setExtraOffsets(14, 0.f, 14, 0.f);
@@ -536,16 +531,28 @@ public abstract class CameraActivity extends FragmentActivity
         mChart.getLegend().setEnabled(false);
         mChart.setAlpha(0.9f);
 
+
+        mChart2.setExtraOffsets(14, 0.f, 14, 0.f);
+        mChart2.setHoleRadius(85);
+        mChart2.setHoleColor(Color.TRANSPARENT);
+        mChart2.setHovered(true);
+        mChart2.setDrawMarkers(false);
+        mChart2.setRotationEnabled(false);
+        mChart2.setHighlightPerTapEnabled(false);
+        mChart2.getLegend().setEnabled(false);
+        mChart2.setAlpha(0.9f);
+
         // display unknown slice
         final ArrayList<PieEntry> entries = new ArrayList<>();
         // set unknown slice to transparent
         entries.add(new PieEntry(100, ""));
         final PieDataSet set = new PieDataSet(entries, "");
-        set.setColor(R.color.black);
+        set.setColor(Color.WHITE);
         set.setDrawValues(false);
 
         final PieData data = new PieData(set);
         mChart.setData(data);
+        mChart2.setData(data);
     }
 
     private SpannableString generateCenterSpannableText() {
@@ -719,6 +726,14 @@ public abstract class CameraActivity extends FragmentActivity
         closeButton.setEnabled(enabled);
         saveButton.setVisibility(visibility);
         saveButton.setEnabled(enabled);
+        mChart2.setVisibility(visibility);
+        mChart2.setEnabled(enabled);
+    }
+
+    void setButtonsVisibility2(final int visibility) {
+        final boolean enabled = visibility == View.VISIBLE;
+        mChart.setVisibility(visibility);
+        mChart.setEnabled(enabled);
     }
 
     // update results on our custom textview
@@ -731,6 +746,8 @@ public abstract class CameraActivity extends FragmentActivity
 
             if (!continuousInference) {
                 setButtonsVisibility(View.VISIBLE);
+                setButtonsVisibility2(View.GONE);
+
             }
 
             if (results.size() > 0) {
@@ -784,18 +801,22 @@ public abstract class CameraActivity extends FragmentActivity
             sliceColors.add(c);
 
         if (entries.size() > 0)
-            sliceColors.set(entries.size() - 1, R.color.transparent);
+            sliceColors.set(entries.size() - 1, Color.WHITE);
 
         set.setColors(sliceColors);
         set.setDrawValues(false);
 
         final PieData data = new PieData(set);
         mChart.setData(data);
+        mChart2.setData(data);
 
         //rotate to center of first slice
         mChart.setRotationAngle(end);
         mChart.setEntryLabelTextSize(16);
         mChart.invalidate();
+        mChart2.setRotationAngle(end);
+        mChart2.setEntryLabelTextSize(0);
+        mChart2.invalidate();
     }
 
     protected void setImage(Bitmap image) {
@@ -827,6 +848,7 @@ public abstract class CameraActivity extends FragmentActivity
                 transition.reverseTransition(transitionTime);
                 imageViewFromGallery.setVisibility(View.GONE);
                 setButtonsVisibility(View.GONE);
+                setButtonsVisibility2(View.VISIBLE);
             }
 
             @Override
@@ -858,10 +880,12 @@ public abstract class CameraActivity extends FragmentActivity
 
     public Bitmap takeScreenshot() {
         setButtonsVisibility(View.GONE);
+        setButtonsVisibility2(View.VISIBLE);
         final View rootView = findViewById(android.R.id.content).getRootView();
         rootView.setDrawingCacheEnabled(true);
         final Bitmap b = rootView.getDrawingCache();
         setButtonsVisibility(View.VISIBLE);
+        setButtonsVisibility2(View.GONE);
         return b;
     }
 
@@ -870,7 +894,7 @@ public abstract class CameraActivity extends FragmentActivity
             requestPermission(PERMISSION_STORAGE_WRITE);
             return;
         }
-        
+
         if (!alreadyAdded) {
             final String fileName = getString(R.string.app_name) + " " + System.currentTimeMillis() / 1000;
             fileUrl = MediaStore.Images.Media.insertImage(getContentResolver(), takeScreenshot(), fileName, currentRecognitions.toString());
