@@ -6,8 +6,8 @@
 
     <com.jstappdev.dbclf.AutoFitTextureView
         android:id="@+id/texture"
-        android:layout_width="640dp"
-        android:layout_height="480dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 </RelativeLayout>

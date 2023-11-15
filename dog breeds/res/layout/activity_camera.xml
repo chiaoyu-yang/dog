@@ -24,46 +24,58 @@
         android:id="@+id/cameraButton"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_alignTop="@+id/continuousInferenceButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"
         android:background="@drawable/roundedbutton"
-        android:src="@drawable/camera_icon"
-        android:translationZ="50dp" />
+        android:src="@drawable/camera"
+        android:translationZ="50dp"
+         />
 
     <ImageButton
         android:id="@+id/shareButton"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_alignTop="@+id/continuousInferenceButton"
-        android:layout_centerHorizontal="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="250dp"
+        android:layout_marginBottom="180dp"
         android:background="@drawable/roundedbutton"
         android:src="@android:drawable/ic_menu_share"
         android:translationZ="200dp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="10dp"
+        android:translationZ="200dp" />
 
     <ImageButton
         android:id="@+id/saveButton"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_alignTop="@+id/continuousInferenceButton"
-        android:layout_marginEnd="48dp"
-        android:layout_toStartOf="@+id/cameraButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="290dp"
+        android:layout_marginBottom="180dp"
         android:background="@drawable/roundedbutton"
         android:src="@drawable/ic_action_save"
         android:translationZ="200dp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/closeButton"
-        android:layout_width="54dp"
-        android:layout_height="54dp"
-        android:layout_alignTop="@+id/continuousInferenceButton"
-        android:layout_marginStart="48dp"
-        android:layout_toEndOf="@+id/cameraButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="330dp"
+        android:layout_marginBottom="180dp"
         android:background="@drawable/roundedbutton"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         android:translationZ="200dp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <com.jstappdev.dbclf.RecognitionScoreView
         android:id="@+id/results"
@@ -75,7 +87,7 @@
         android:enabled="false"
         android:paddingLeft="5dp"
         android:textColor="@android:color/primary_text_dark"
-        android:textSize="22sp"
+        android:textSize="12sp"
         android:translationZ="200dp"
         tools:ignore="MissingClass,RtlHardcoded,RtlSymmetry" />
 
@@ -86,7 +98,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:translationZ="200dp" />
 
     <ImageView
@@ -100,7 +112,7 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="@android:style/Widget.Holo.ProgressBar.Large"
-        android:layout_width="100dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
