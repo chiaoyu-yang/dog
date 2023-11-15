@@ -1,10 +1,12 @@
 package com.example.soulgo.Book;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -159,7 +161,8 @@ public class BookActivity extends AppCompatActivity {
                 String query = searchbar.getText().toString();
                 performSearch(query);
                 Beep.playBeepSound(getApplicationContext());
-//                processdata();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
     }
