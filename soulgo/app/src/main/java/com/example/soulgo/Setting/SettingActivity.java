@@ -1,21 +1,41 @@
 package com.example.soulgo.Setting;
 
 import static com.example.soulgo.Constants.URL_setting_nickname;
+
+import android.Manifest;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
-import android.net.Uri;import android.os.Bundle;import android.provider.MediaStore;import android.util.Base64;import android.view.View;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.util.Base64;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,6 +47,9 @@ import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.MainActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.BackgroundMusicService;
+import com.example.soulgo.Setting.Beep;
+import com.example.soulgo.Setting.ReminderBroadcast;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,7 +60,9 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;import java.io.IOException;import java.util.HashMap;import java.util.Map;import java.util.Objects;
+import java.io.ByteArrayOutputStream;import java.io.IOException;
+import java.util.Calendar;
+import java.util.HashMap;import java.util.Map;import java.util.Objects;
 
 public class SettingActivity extends AppCompatActivity{
 
@@ -50,6 +75,14 @@ public class SettingActivity extends AppCompatActivity{
     AudioManager audioManager;
     SeekBar volumeSeekBar,gameSeekBar;
 
+    ImageButton button;
+
+    String[] permissions = new String[]{
+            Manifest.permission.POST_NOTIFICATIONS
+    };
+
+    boolean permission_post_notification = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +90,18 @@ public class SettingActivity extends AppCompatActivity{
         Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        createNotificationChannel();
+
+        button = (ImageButton) findViewById(R.id.button2);
+
+        button.setOnClickListener(view -> {
+            if(!permission_post_notification){
+                requestPermissionNotification();
+            } else {
+                Toast.makeText(this, "已授予通知許可..", Toast.LENGTH_SHORT).show();
+            }
+
+        });
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
@@ -104,13 +149,6 @@ public class SettingActivity extends AppCompatActivity{
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("nickname", "");
-                editor.putString("uid", "");
-                editor.putString("imageUrl", "");
-                editor.apply();
-
                 signOut(); // 呼叫登出方法
                 Beep.playBeepSound(getApplicationContext());
             }
@@ -143,7 +181,7 @@ public class SettingActivity extends AppCompatActivity{
 
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         int backgroundMusicVolume = preferences.getInt("background_music_volume", 0);
-        int gameVolume = preferences.getInt("sound_effect_volume", 50);
+        int gameVolume = preferences.getInt("game_volume", 50);
 
         volumeSeekBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         volumeSeekBar.setProgress(backgroundMusicVolume);
@@ -186,12 +224,98 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
-                saveVolumeProgress(seekBar, "sound_effect_volume");
+                saveVolumeProgress(seekBar, "game_volume");
                 float volume = (float) seekBar.getProgress() / seekBar.getMax();
                 Beep.setVolume(volume);
             }
         });
 
+    }
+    //~~~~~ step2
+    public void requestPermissionNotification() {
+        if (ContextCompat.checkSelfPermission(SettingActivity.this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+            permission_post_notification = true;
+        } else {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                Log.d("Permission", "inside else first time don't allow");
+            } else {
+                Log.d("Permission", "inside else 2nd time don't allow");
+            }
+            requestPermissionLauncherNotification.launch(permissions[0]);
+        }
+    }
+
+    //~~~~~ step3
+    private ActivityResultLauncher<String> requestPermissionLauncherNotification =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted->{
+                if (isGranted) {
+                    permission_post_notification = true;
+                    setReminder();
+                } else {
+                    permission_post_notification = false;
+                    showPermissionDialog("Notification Permission");
+                }
+            });
+
+    //~~~~~ step4
+    public void showPermissionDialog(String permission_desc) {
+        new AlertDialog.Builder(
+                SettingActivity.this
+        ).setTitle("許可提醒")
+                .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent rintent = new Intent();
+                        rintent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        rintent.setData(uri);
+                        startActivity(rintent);
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+    }
+
+    //~~~~~ step5
+    private void setReminder() {
+        Toast.makeText(this, "Reminder Set!", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(SettingActivity.this, ReminderBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        // 設定提醒時間為每天下午2:00
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 42);
+        calendar.set(Calendar.SECOND, 0);
+
+        // 使用 setInexactRepeating 設定每天觸發提醒
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    //~~~~~ step6
+    private void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "LemubitReminderChannel";
+            String description = "Channel for Lemubit Reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notifyLemubit", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void saveVolumeProgress(SeekBar seekBar, String key) {
@@ -222,13 +346,6 @@ public class SettingActivity extends AppCompatActivity{
         }
 
     }
-
-
-
-
-
-
-
 
     public void openactivity() {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -310,7 +427,7 @@ public class SettingActivity extends AppCompatActivity{
                             boolean error = jsonObject.getBoolean("error");
                             String message = jsonObject.getString("message");
 
-                            // Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
 
                             // 在這裡處理回調邏輯
                             // 例如，更新 UI 或顯示訊息給使用者
@@ -342,6 +459,4 @@ public class SettingActivity extends AppCompatActivity{
 
         requestQueue.add(stringRequest);
     }
-
-
 }
