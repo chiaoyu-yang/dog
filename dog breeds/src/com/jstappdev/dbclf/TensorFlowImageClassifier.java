@@ -1,17 +1,18 @@
 package com.jstappdev.dbclf;
 
-/*
- * 版權聲明:
- * 2016年 TensorFlow 作者保留所有權利。
- * 2018年 Josef Steppan 所作修改版權歸其所有。
- *
- * 授權條款:
- * 使用本文件的程式碼需遵守 Apache License, Version 2.0。
- * 詳細資訊可參見 http://www.apache.org/licenses/LICENSE-2.0
- * 除非依法要求或書面同意，否則本軟體按"原樣"提供，不提供任何明示或暗示的保證或條件。
- * 請參閱授權條款以了解具體的法律條款和限制。
- * ==============================================================================
- */
+/* Copyright 2016 The TensorFlow Authors. All Rights Reserved.
+ * Modifications copyright (C) 2018 Josef Steppan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+==============================================================================*/
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -26,22 +27,22 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
-/**
- * 一個使用 TensorFlow 進行圖片分類的專用分類器。
+/**.l
+ * A classifier specialized to label images using TensorFlow.
  */
 public class TensorFlowImageClassifier implements Classifier {
-    // 只返回最有可能的幾個結果，且置信度不低於這個閾值。
+    // Only return this many results with at least this confidence.
     private static final int MAX_RESULTS = 3;
     private static final float THRESHOLD = 0.1f;
 
-    // 配置值。
+    // Config values.
     private String inputName;
     private String outputName;
     private int inputSize;
     private int imageMean;
     private float imageStd;
 
-    // 預先分配的緩衝區。
+    // Pre-allocated buffers.
     private Vector<String> labels = new Vector<String>();
     private int[] intValues;
     private float[] floatValues;
@@ -52,21 +53,20 @@ public class TensorFlowImageClassifier implements Classifier {
 
     private TensorFlowInferenceInterface inferenceInterface;
 
-    // 私有的無參數建構子，限制實例化。
     private TensorFlowImageClassifier() {
     }
 
     /**
-     * 初始化一個用於分類圖片的本地 TensorFlow 會話。
+     * Initializes a native TensorFlow session for classifying images.
      *
-     * @param assetManager 用於加載資產的AssetManager。
-     * @param modelFilename 模型 GraphDef 協議緩衝區的檔案路徑。
-     * @param labels 標籤的字符串數組。
-     * @param inputSize 輸入大小。假定輸入是 inputSize x inputSize 的方形影像。
-     * @param imageMean 影像值的假定平均值。
-     * @param imageStd 影像值的假定標準差。
-     * @param inputName 影像輸入節點的標籤。
-     * @param outputName 輸出節點的標籤。
+     * @param assetManager  The asset manager to be used to load assets.
+     * @param modelFilename The filepath of the model GraphDef protocol buffer.
+     * @param labels        String array of labels.
+     * @param inputSize     The input size. A square image of inputSize x inputSize is assumed.
+     * @param imageMean     The assumed mean of the image values.
+     * @param imageStd      The assumed std of the image values.
+     * @param inputName     The label of the image input node.
+     * @param outputName    The label of the output node.
      * @throws IOException
      */
     public static Classifier create(
@@ -82,22 +82,23 @@ public class TensorFlowImageClassifier implements Classifier {
         c.inputName = inputName;
         c.outputName = outputName;
 
-        // 將標籤名稱讀入內存。
+        // Read the label names into memory.
         Collections.addAll(c.labels, labels);
 
         c.inferenceInterface = new TensorFlowInferenceInterface(assetManager, modelFilename);
 
-        // 輸出的形狀為 [N, NUM_CLASSES]，其中 N 是批處理的大小。
+        // The shape of the output is [N, NUM_CLASSES], where N is the batch size.
         final Operation operation = c.inferenceInterface.graphOperation(outputName);
         final int numClasses = (int) operation.output(0).shape().size(1);
 
-        // 理論上，inputSize 可以從輸入操作的形狀中獲取。然而，通常使用的 graphdef 中的 input 占位符節點並未指定形狀，
-        // 因此必須作為參數傳入。
+        // Ideally, inputSize could have been retrieved from the shape of the input operation.  Alas,
+        // the placeholder node for input in the graphdef typically used does not specify a shape, so it
+        // must be passed in as a parameter.
         c.inputSize = inputSize;
         c.imageMean = imageMean;
         c.imageStd = imageStd;
 
-        // 預先分配緩衝區。
+        // Pre-allocate buffers.
         c.outputNames = new String[]{outputName};
         c.intValues = new int[inputSize * inputSize];
         c.floatValues = new float[inputSize * inputSize * 3];
@@ -110,7 +111,8 @@ public class TensorFlowImageClassifier implements Classifier {
     @Override
     public List<Recognition> recognizeImage(final Bitmap bitmap) {
 
-        // 從0-255整數對圖片數據進行預處理，轉換為基於提供參數的正規化浮點數。
+        // Preprocess the image data from 0-255 int to normalized float based
+        // on the provided parameters.
         bitmap.getPixels(intValues, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
         for (int i = 0; i < intValues.length; ++i) {
             final int val = intValues[i];
@@ -119,21 +121,21 @@ public class TensorFlowImageClassifier implements Classifier {
             floatValues[i * 3 + 2] = ((val & 0xFF) - imageMean) / imageStd;
         }
 
-        // 將輸入數據複製到 TensorFlow 中。
+        // Copy the input data into TensorFlow.
         inferenceInterface.feed(inputName, floatValues, 1, inputSize, inputSize, 3);
 
-        // 執行推斷呼叫。
+        // Run the inference call.
         inferenceInterface.run(outputNames, logStats);
 
-        // 將輸出 Tensor 複製回輸出陣列。
+        // Copy the output Tensor back into the output array.
         inferenceInterface.fetch(outputName, outputs);
 
-        // 找到最佳的分類。
+        // Find the best classifications.
         PriorityQueue<Recognition> pq =
                 new PriorityQueue<Recognition>(
                         3,
                         (lhs, rhs) -> {
-                            // 故意反轉，以將高置信度放在隊列的前面。
+                            // Intentionally reversed to put high confidence at the head of the queue.
                             return Float.compare(rhs.getConfidence(), lhs.getConfidence());
                         });
 

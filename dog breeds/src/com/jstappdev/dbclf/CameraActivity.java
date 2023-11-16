@@ -102,8 +102,9 @@ public abstract class CameraActivity extends FragmentActivity
     boolean imageSet = false;
     ImageButton cameraButton, shareButton, closeButton, saveButton, pick_image2;
     ToggleButton continuousInferenceButton;
-    ImageView imageViewFromGallery;
+    ImageView imageViewFromGallery, imageView2;
     ProgressBar progressBar;
+    TextView title;
     private Handler handler;
     private HandlerThread handlerThread;
     private boolean isProcessingFrame = false;
@@ -184,11 +185,13 @@ public abstract class CameraActivity extends FragmentActivity
 
     private void setupButtons() {
         imageViewFromGallery = findViewById(R.id.imageView);
+        imageView2 = findViewById(R.id.imageView2);
         pick_image2 = findViewById(R.id.pick_image2);
         resultsView = findViewById(R.id.results);
         mChart = findViewById(R.id.chart);
         mChart2 = findViewById(R.id.chart2);
         progressBar = findViewById(R.id.progressBar);
+        title = findViewById(R.id.title);
         //new line20230330
         progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightgreen)));
 
@@ -220,6 +223,7 @@ public abstract class CameraActivity extends FragmentActivity
             updateResults(null);
 
             imageViewFromGallery.setVisibility(View.GONE);
+            imageView2.setVisibility(View.GONE);
             continuousInferenceButton.setChecked(false);
 
             // show flash animation
@@ -249,6 +253,7 @@ public abstract class CameraActivity extends FragmentActivity
             if (!hasPermission(PERMISSION_CAMERA)) requestPermission(PERMISSION_CAMERA);
 
             imageViewFromGallery.setVisibility(View.GONE);
+            imageView2.setVisibility(View.GONE);
             continuousInference = isChecked;
 
             if (!continuousInference)
@@ -547,7 +552,7 @@ public abstract class CameraActivity extends FragmentActivity
 
 
         mChart2.setExtraOffsets(14, 0.f, 14, 0.f);
-        mChart2.setHoleRadius(85);
+        mChart2.setHoleRadius(75);
         mChart2.setHoleColor(Color.TRANSPARENT);
         mChart2.setHovered(true);
         mChart2.setDrawMarkers(false);
@@ -744,6 +749,8 @@ public abstract class CameraActivity extends FragmentActivity
         mChart2.setEnabled(enabled);
         resultsView.setVisibility(visibility);
         resultsView.setEnabled(enabled);
+        title.setVisibility(visibility);
+        title.setEnabled(enabled);
     }
 
     void setButtonsVisibility2(final int visibility) {
@@ -762,8 +769,9 @@ public abstract class CameraActivity extends FragmentActivity
             resultsView.setEnabled(true);
 
             if (!continuousInference) {
-                setButtonsVisibility(View.VISIBLE);
                 setButtonsVisibility2(View.GONE);
+                setButtonsVisibility(View.VISIBLE);
+
 
             }
 
@@ -842,8 +850,9 @@ public abstract class CameraActivity extends FragmentActivity
         alreadyAdded = false;
 
         cameraButton.setEnabled(false);
-        imageViewFromGallery.setImageBitmap(image);
+        imageView2.setImageBitmap(image);
         imageViewFromGallery.setVisibility(View.VISIBLE);
+        imageView2.setVisibility(View.VISIBLE);
 
         final TransitionDrawable transition = (TransitionDrawable) imageViewFromGallery.getBackground();
         transition.startTransition(transitionTime);
@@ -864,6 +873,7 @@ public abstract class CameraActivity extends FragmentActivity
                 runInBackground(() -> updateResults(null));
                 transition.reverseTransition(transitionTime);
                 imageViewFromGallery.setVisibility(View.GONE);
+                imageView2.setVisibility(View.GONE);
                 setButtonsVisibility(View.GONE);
                 setButtonsVisibility2(View.VISIBLE);
             }
@@ -902,8 +912,9 @@ public abstract class CameraActivity extends FragmentActivity
         final View rootView = findViewById(android.R.id.content).getRootView();
         rootView.setDrawingCacheEnabled(true);
         final Bitmap b = rootView.getDrawingCache();
-        setButtonsVisibility(View.VISIBLE);
         setButtonsVisibility2(View.GONE);
+        setButtonsVisibility(View.VISIBLE);
+
         return b;
     }
 
