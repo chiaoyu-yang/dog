@@ -32,7 +32,7 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
         android:background="@color/white"
-        android:src="@drawable/top1_img"
+        android:src="@drawable/error_image"
         app:shapeAppearanceOverlay="@style/circular" />
 
     <ImageButton
@@ -145,6 +145,55 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/remind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/gamemusicLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/remindtext"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="上線提醒"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:gravity="center_vertical"/>
+
+            <FrameLayout
+                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="15dp">
+                <ImageButton
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/roundcorner"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="開啟"
+                    android:textColor="@color/white">
+                </TextView>
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
