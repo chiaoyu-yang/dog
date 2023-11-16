@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_NOTIFICATION_POLICY" />
 
     <application
         android:allowBackup="true"
@@ -67,8 +71,10 @@
 
         <service android:name=".Setting.BackgroundMusicService" />
         <service android:name=".Setting.Beep" />
+        <service
+            android:name=".Setting.ReminderJobIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver android:name=".Setting.ReminderBroadcast"/>
     </application>
-
-
-
 </manifest>
