@@ -103,7 +103,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, BookActivity.class);
-                intent.putExtra("uid", uid);
                 startActivity(intent);
                 Beep.playBeepSound(getApplicationContext());
             }
