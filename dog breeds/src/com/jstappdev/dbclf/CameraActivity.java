@@ -129,7 +129,7 @@ public abstract class CameraActivity extends FragmentActivity
 
 
 
-        preferredLanguageCode = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("lang", "en");
+        preferredLanguageCode = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("lang", "zh");
         supportedLanguageNames = Arrays.asList(getResources().getStringArray(R.array.array_languages));
         supportedLanguageCodes = Arrays.asList(getResources().getStringArray(R.array.array_language_codes));
 
@@ -271,6 +271,7 @@ public abstract class CameraActivity extends FragmentActivity
         });
     }
 
+    // 創建選單
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         final MenuInflater inflater = getMenuInflater();
@@ -279,6 +280,7 @@ public abstract class CameraActivity extends FragmentActivity
     }
 
     public void setLocale() {
+        // 設置語言環境
         Locale locale;
 
         if (supportedLanguageCodes.contains(preferredLanguageCode)) {
@@ -295,6 +297,7 @@ public abstract class CameraActivity extends FragmentActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // 選項菜單項目處理
         switch (item.getItemId()) {
             case R.id.action_about:
 
@@ -728,6 +731,8 @@ public abstract class CameraActivity extends FragmentActivity
         saveButton.setEnabled(enabled);
         mChart2.setVisibility(visibility);
         mChart2.setEnabled(enabled);
+        resultsView.setVisibility(visibility);
+        resultsView.setEnabled(enabled);
     }
 
     void setButtonsVisibility2(final int visibility) {
@@ -737,6 +742,7 @@ public abstract class CameraActivity extends FragmentActivity
     }
 
     // update results on our custom textview
+    // 更新結果視圖
     void updateResultsView(List<Classifier.Recognition> results) {
         final StringBuilder sb = new StringBuilder();
         currentRecognitions = new ArrayList<String>();
@@ -879,6 +885,7 @@ public abstract class CameraActivity extends FragmentActivity
     }
 
     public Bitmap takeScreenshot() {
+        // 拍攝螢幕截圖
         setButtonsVisibility(View.GONE);
         setButtonsVisibility2(View.VISIBLE);
         final View rootView = findViewById(android.R.id.content).getRootView();

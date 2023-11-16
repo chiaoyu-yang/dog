@@ -49,8 +49,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_alignParentStart="true"
         android:translationZ="200dp" />
 
     <ImageButton
@@ -79,9 +78,12 @@
 
     <com.jstappdev.dbclf.RecognitionScoreView
         android:id="@+id/results"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:layout_alignParentTop="true"
+        android:layout_width="220dp"
+        android:layout_height="140dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_background_selector"
         android:elevation="@android:dimen/app_icon_size"
         android:enabled="false"
@@ -89,7 +91,8 @@
         android:textColor="@android:color/primary_text_dark"
         android:textSize="12sp"
         android:translationZ="200dp"
-        tools:ignore="MissingClass,RtlHardcoded,RtlSymmetry" />
+        tools:ignore="MissingClass,RtlHardcoded,RtlSymmetry"
+        android:visibility="visible"/>
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart"
