@@ -100,7 +100,7 @@ public abstract class CameraActivity extends FragmentActivity
     AtomicBoolean snapShot = new AtomicBoolean(false);
     boolean continuousInference = false;
     boolean imageSet = false;
-    ImageButton cameraButton, shareButton, closeButton, saveButton;
+    ImageButton cameraButton, shareButton, closeButton, saveButton, pick_image2;
     ToggleButton continuousInferenceButton;
     ImageView imageViewFromGallery;
     ProgressBar progressBar;
@@ -127,13 +127,19 @@ public abstract class CameraActivity extends FragmentActivity
         super.onCreate(null);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        // 隱藏操作列
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
 
-        preferredLanguageCode = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("lang", "zh");
-        supportedLanguageNames = Arrays.asList(getResources().getStringArray(R.array.array_languages));
-        supportedLanguageCodes = Arrays.asList(getResources().getStringArray(R.array.array_language_codes));
 
-        setLocale();
+//        preferredLanguageCode = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("lang", "zh");
+//        supportedLanguageNames = Arrays.asList(getResources().getStringArray(R.array.array_languages));
+//        supportedLanguageCodes = Arrays.asList(getResources().getStringArray(R.array.array_language_codes));
+
+//        setLocale();
 
         setContentView(R.layout.activity_camera);
 
@@ -178,6 +184,7 @@ public abstract class CameraActivity extends FragmentActivity
 
     private void setupButtons() {
         imageViewFromGallery = findViewById(R.id.imageView);
+        pick_image2 = findViewById(R.id.pick_image2);
         resultsView = findViewById(R.id.results);
         mChart = findViewById(R.id.chart);
         mChart2 = findViewById(R.id.chart2);
@@ -269,103 +276,107 @@ public abstract class CameraActivity extends FragmentActivity
             i.putStringArrayListExtra("recogs", currentRecognitions);
             startActivity(i);
         });
+
+        pick_image2.setOnClickListener(v -> {
+            pickImage();
+        });
     }
 
     // 創建選單
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.mainmenu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        final MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.mainmenu, menu);
+//        return true;
+//    }
 
-    public void setLocale() {
-        // 設置語言環境
-        Locale locale;
+//    public void setLocale() {
+//        // 設置語言環境
+//        Locale locale;
+//
+//        if (supportedLanguageCodes.contains(preferredLanguageCode)) {
+//            locale = new Locale(preferredLanguageCode);
+//        } else {
+//            locale = Locale.getDefault();
+//        }
+//
+//        Locale.setDefault(locale);
+//        Configuration config = new Configuration();
+//        config.locale = locale;
+//        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());    //restart Activity
+//    }
 
-        if (supportedLanguageCodes.contains(preferredLanguageCode)) {
-            locale = new Locale(preferredLanguageCode);
-        } else {
-            locale = Locale.getDefault();
-        }
-
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());    //restart Activity
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // 選項菜單項目處理
-        switch (item.getItemId()) {
-            case R.id.action_about:
-
-                final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.about_message)));
-                Linkify.addLinks(s, Linkify.WEB_URLS);
-
-                final AlertDialog dialog = new AlertDialog.Builder(CameraActivity.this)
-                        .setMessage(s)
-                        .setCancelable(true)
-                        .setPositiveButton(
-                                android.R.string.ok,
-                                (d, id) -> d.cancel())
-                        .create();
-
-                dialog.show();
-
-                ((TextView) dialog.findViewById(android.R.id.message)).
-                        setMovementMethod(LinkMovementMethod.getInstance());
-
-                break;
-            case R.id.pick_image:
-                if (!hasPermission(PERMISSION_STORAGE_READ)) {
-                    requestPermission(PERMISSION_STORAGE_READ);
-                    return false;
-                }
-
-                pickImage();
-                break;
-            case R.id.set_language:
-                final LayoutInflater inflater = getLayoutInflater();
-                final View dialogView = inflater.inflate(R.layout.lang_dialog, null);
-
-                final Spinner langSpinner = dialogView.findViewById(R.id.spinner1);
-                final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                        android.R.layout.simple_spinner_item, supportedLanguageNames);
-
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                langSpinner.setAdapter(dataAdapter);
-                langSpinner.setSelection(supportedLanguageCodes.indexOf(preferredLanguageCode));
-
-                new AlertDialog.Builder(CameraActivity.this)
-                        .setTitle(R.string.change_language)
-                        .setCancelable(true)
-                        .setView(dialogView)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                preferredLanguageCode = supportedLanguageCodes.get(langSpinner.getSelectedItemPosition());
-                                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString("lang", preferredLanguageCode).apply();
-                                recreate();
-                            }
-                        })
-                        .setIcon(R.drawable.ic_change_language)
-                        .show();
-
-                break;
-            case R.id.list_breeds:
-                startActivity(new Intent(this, SimpleListActivity.class));
-                break;
-            case R.id.action_exit:
-                finishAndRemoveTask();
-                break;
-            default:
-                break;
-        }
-
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // 選項菜單項目處理
+//        switch (item.getItemId()) {
+//            case R.id.action_about:
+//
+//                final SpannableString s = new SpannableString(Html.fromHtml(getString(R.string.about_message)));
+//                Linkify.addLinks(s, Linkify.WEB_URLS);
+//
+//                final AlertDialog dialog = new AlertDialog.Builder(CameraActivity.this)
+//                        .setMessage(s)
+//                        .setCancelable(true)
+//                        .setPositiveButton(
+//                                android.R.string.ok,
+//                                (d, id) -> d.cancel())
+//                        .create();
+//
+//                dialog.show();
+//
+//                ((TextView) dialog.findViewById(android.R.id.message)).
+//                        setMovementMethod(LinkMovementMethod.getInstance());
+//
+//                break;
+//            case R.id.pick_image:
+//                if (!hasPermission(PERMISSION_STORAGE_READ)) {
+//                    requestPermission(PERMISSION_STORAGE_READ);
+//                    return false;
+//                }
+//
+//                pickImage();
+//                break;
+//            case R.id.set_language:
+//                final LayoutInflater inflater = getLayoutInflater();
+//                final View dialogView = inflater.inflate(R.layout.lang_dialog, null);
+//
+//                final Spinner langSpinner = dialogView.findViewById(R.id.spinner1);
+//                final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+//                        android.R.layout.simple_spinner_item, supportedLanguageNames);
+//
+//                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                langSpinner.setAdapter(dataAdapter);
+//                langSpinner.setSelection(supportedLanguageCodes.indexOf(preferredLanguageCode));
+//
+//                new AlertDialog.Builder(CameraActivity.this)
+//                        .setTitle(R.string.change_language)
+//                        .setCancelable(true)
+//                        .setView(dialogView)
+//                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                preferredLanguageCode = supportedLanguageCodes.get(langSpinner.getSelectedItemPosition());
+//                                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString("lang", preferredLanguageCode).apply();
+//                                recreate();
+//                            }
+//                        })
+//                        .setIcon(R.drawable.ic_change_language)
+//                        .show();
+//
+//                break;
+//            case R.id.list_breeds:
+//                startActivity(new Intent(this, SimpleListActivity.class));
+//                break;
+//            case R.id.action_exit:
+//                finishAndRemoveTask();
+//                break;
+//            default:
+//                break;
+//        }
+//
+//        return true;
+//    }
 
     private void pickImage() {
         final Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
