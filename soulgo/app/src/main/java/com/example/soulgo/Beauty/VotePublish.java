@@ -40,6 +40,7 @@ public class VotePublish extends AppCompatActivity {
     private TextView textViewUsername, textViewCount;
     private EditText uploadTitleEditText;
     private String base64EncodedImage, nickname;
+    private ImageButton btnUpload;
     MediaPlayer mediaPlayer;
 
     @Override
@@ -54,6 +55,7 @@ public class VotePublish extends AppCompatActivity {
         textViewUsername = findViewById(R.id.myusername);
         uploadTitleEditText = findViewById(R.id.upload_title);
         textViewCount = findViewById(R.id.textViewCount);
+        btnUpload = findViewById(R.id.btnUpload);
 
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
@@ -71,11 +73,13 @@ public class VotePublish extends AppCompatActivity {
             public void onClick(View v) {pickImage();}
         });
 
-        findViewById(R.id.btnUpload).setOnClickListener(new View.OnClickListener() {
+        btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnUpload.setEnabled(false);
                 uploadData();
                 Beep.playBeepSound(getApplicationContext());
+                btnUpload.setEnabled(true);
             }
         });
 
@@ -205,7 +209,7 @@ public class VotePublish extends AppCompatActivity {
     }
 
     private void openHome() {
-        Intent intent = new Intent(this, BeautyActivity.class);
+        Intent intent = new Intent(this, VoteActivity.class);
         startActivity(intent);
     }
 

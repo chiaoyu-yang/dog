@@ -2,6 +2,8 @@ package com.example.soulgo.Book;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -42,13 +44,16 @@ public class BookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         recview = findViewById(R.id.recview);
         recview.setLayoutManager(new GridLayoutManager(this, 3));
 
-        Intent intent = getIntent();
-        uid = intent.getStringExtra("uid");
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
+        uid = sharedPreferences.getString("uid", "");
 
+        processdata();
         ImageButton to_home = findViewById(R.id.back);
 
         to_home.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +64,9 @@ public class BookActivity extends AppCompatActivity {
             }
         });
 
-        processdata();
+
         setupSearch();
+
 
     }
 
@@ -72,6 +78,7 @@ public class BookActivity extends AppCompatActivity {
     private void processdata() {
         TextView loadingText = findViewById(R.id.loadingText);
         loadingText.setVisibility(View.VISIBLE);
+//        recview.setVisibility(View.GONE);
 
         StringRequest request =
                 new StringRequest(
@@ -82,6 +89,11 @@ public class BookActivity extends AppCompatActivity {
                                 GsonBuilder builder = new GsonBuilder();
                                 Gson gson = builder.create();
                                 data = Arrays.asList(gson.fromJson(response, BookModel[].class));
+
+                                // 设置RecyclerView的Adapter
+                                BookAdapter adapter = new BookAdapter(data);
+                                loadingText.setVisibility(View.GONE);
+                                recview.setAdapter(adapter);
 
                                 // 检查是否有足够的数据
                                 if (data.size() >= 3) {
@@ -110,9 +122,7 @@ public class BookActivity extends AppCompatActivity {
                                             .into((ImageView) findViewById(R.id.top3_button));
                                 }
 
-                                // 设置RecyclerView的Adapter
-                                BookAdapter adapter = new BookAdapter(data);
-                                recview.setAdapter(adapter);
+
 
                                 adapter.setItemClickListener(new BookAdapter.ItemClickListener() {
                                     @Override
@@ -123,8 +133,8 @@ public class BookActivity extends AppCompatActivity {
                                         startActivity(intent);
                                     }
                                 });
+                                recview.setVisibility(View.VISIBLE);
 
-                                loadingText.setVisibility(View.GONE);
                             }
                         },
                         new Response.ErrorListener() {

@@ -115,7 +115,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/top1_img" />
+                            android:src="@drawable/s1_top1" />
 
                         <ImageView
                             android:id="@+id/top1_crown"
@@ -143,7 +143,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="阿金"
+                                    android:text="第一名"
                                     android:textColor="@color/black"
                                     android:gravity="center"/>
                             </LinearLayout>
@@ -208,7 +208,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="阿金"
+                                        android:text="第二名"
                                         android:textColor="@color/black"
                                         android:gravity="center"/>
                                 </LinearLayout>
@@ -266,7 +266,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="阿金"
+                                        android:text="第三名"
                                         android:textColor="@color/black"
                                         android:gravity="center"/>
                                 </LinearLayout>
@@ -296,7 +296,7 @@
                 android:layout_marginBottom="-53dp"
                 android:gravity="center"
                 android:text="Loading..."
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

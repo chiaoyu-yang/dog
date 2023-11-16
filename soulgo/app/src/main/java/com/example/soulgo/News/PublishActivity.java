@@ -42,6 +42,7 @@ public class PublishActivity extends AppCompatActivity {
     private EditText uploadTitleEditText, uploadContentEditText;
     private String base64EncodedImage, nickname;
     MediaPlayer mediaPlayer;
+    private ImageButton btnUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class PublishActivity extends AppCompatActivity {
         uploadContentEditText = findViewById(R.id.upload_content_rec);
         textViewCount = findViewById(R.id.textViewCount);
         textViewOverlay = findViewById(R.id.textViewOverlay);
+        btnUpload = findViewById(R.id.btnUpload);
 
         nickname = getIntent().getStringExtra("nickname");
         textViewUsername.setText(nickname);
@@ -74,11 +76,13 @@ public class PublishActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btnUpload).setOnClickListener(new View.OnClickListener() {
+        btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnUpload.setEnabled(false);
                 uploadData();
                 Beep.playBeepSound(getApplicationContext());
+                btnUpload.setEnabled(true);
             }
         });
 
@@ -175,6 +179,7 @@ public class PublishActivity extends AppCompatActivity {
     }
 
     private void uploadData() {
+
         ImageButton icOutlineAdd = findViewById(R.id.ic_outline_add);
         TextView uploadText = findViewById(R.id.upload);
         String title = uploadTitleEditText.getText().toString().trim();
@@ -189,6 +194,7 @@ public class PublishActivity extends AppCompatActivity {
         } else if (content.isEmpty()) {
             Toast.makeText(this, "請填寫內容", Toast.LENGTH_SHORT).show();
         } else {
+
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
@@ -228,10 +234,11 @@ public class PublishActivity extends AppCompatActivity {
             };
             requestQueue.add(stringRequest);
         }
+
     }
 
     private void openHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, NewsActivity.class);
         startActivity(intent);
     }
 
