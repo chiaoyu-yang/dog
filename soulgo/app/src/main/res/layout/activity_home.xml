@@ -49,7 +49,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:background="@color/white"
-                    android:src="@drawable/top1_img"
+                    android:src="@drawable/error_image"
                     app:shapeAppearanceOverlay="@style/RoundedCornerImageView2"
                     app:strokeColor="@color/black"
                     app:strokeWidth="0.5dp" />
@@ -260,7 +260,7 @@
                         android:layout_height="140dp"
                         android:background="@drawable/news_item_2"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/dog_image" />
+                        android:src="@drawable/error_image" />
 
                     <TextView
                         android:id="@+id/newsTitle_left"
@@ -303,7 +303,7 @@
                         android:layout_height="140dp"
                         android:background="@drawable/news_item_2"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/dog_image" />
+                        android:src="@drawable/error_image" />
 
                     <TextView
                         android:id="@+id/newsTitle_right"
