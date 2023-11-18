@@ -115,7 +115,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/s1_top1" />
+                            android:src="@drawable/error_image" />
 
                         <ImageView
                             android:id="@+id/top1_crown"
@@ -180,7 +180,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/_2" />
+                                android:src="@drawable/error_image" />
 
                             <ImageView
                                 android:id="@+id/imageView10"
@@ -238,7 +238,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/_3" />
+                                android:src="@drawable/error_image" />
 
                             <ImageView
                                 android:id="@+id/top3_crown"
