@@ -8,7 +8,7 @@
     tools:context=".CameraActivity">
 
     <ImageButton
-        android:id="@+id/back"
+        android:id="@+id/closeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -19,7 +19,31 @@
         android:translationZ="200dp"
         />
 
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_above="@+id/results"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="-50dp"
+        android:background="@drawable/share"
+        android:translationZ="600dp" />
 
+    <ImageButton
+        android:id="@+id/saveButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_above="@+id/results"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="-50dp"
+        android:background="@drawable/download"
+        android:translationZ="600dp" />
 
     <ToggleButton
         android:id="@+id/continuousInferenceButton"
@@ -43,7 +67,7 @@
         android:background="@drawable/roundedbutton"
         android:src="@drawable/camera"
         android:translationZ="2dp"
-         />
+        />
 
     <ImageButton
         android:id="@+id/pick_image2"
@@ -59,17 +83,17 @@
         android:translationZ="2dp"
         />
 
-    <ImageButton
-        android:id="@+id/shareButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="250dp"
-        android:layout_marginBottom="300dp"
-        android:background="@drawable/roundedbutton"
-        android:src="@android:drawable/ic_menu_share"
-        android:translationZ="200dp"
-        android:visibility="visible"/>
+<!--    <ImageButton-->
+<!--        android:id="@+id/shareButton"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginLeft="250dp"-->
+<!--        android:layout_marginBottom="300dp"-->
+<!--        android:background="@drawable/roundedbutton"-->
+<!--        android:src="@android:drawable/ic_menu_share"-->
+<!--        android:translationZ="200dp"-->
+<!--        android:visibility="visible"/>-->
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart2"
@@ -77,31 +101,20 @@
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_marginBottom="40dp"
         android:translationZ="500dp" />
 
-    <ImageButton
-        android:id="@+id/saveButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="290dp"
-        android:layout_marginBottom="300dp"
-        android:background="@drawable/roundedbutton"
-        android:src="@drawable/ic_action_save"
-        android:translationZ="200dp"
-        android:visibility="visible"/>
-
-    <ImageButton
-        android:id="@+id/closeButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="330dp"
-        android:layout_marginBottom="300dp"
-        android:background="@drawable/roundedbutton"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        android:translationZ="200dp"
-        android:visibility="visible"/>
+<!--    <ImageButton-->
+<!--        android:id="@+id/saveButton"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginLeft="290dp"-->
+<!--        android:layout_marginBottom="300dp"-->
+<!--        android:background="@drawable/roundedbutton"-->
+<!--        android:src="@drawable/ic_action_save"-->
+<!--        android:translationZ="200dp"-->
+<!--        android:visibility="visible"/>-->
 
     <TextView
         android:id="@+id/title"
@@ -119,17 +132,17 @@
     <com.jstappdev.dbclf.RecognitionScoreView
         android:id="@+id/results"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="280dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="0dp"
         android:background="@drawable/button_background_selector"
         android:elevation="@android:dimen/app_icon_size"
         android:enabled="false"
-        android:paddingTop="30dp"
+        android:paddingTop="80dp"
         android:paddingLeft="200dp"
         android:textColor="#000"
-        android:textSize="12sp"
+        android:textSize="14dp"
         android:translationZ="200dp"
         tools:ignore="MissingClass,RtlHardcoded,RtlSymmetry"
         android:visibility="visible"/>
@@ -142,7 +155,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="6dp"
         android:layout_marginTop="5dp"
-        android:translationZ="500dp" />
+        android:translationZ="500dp"
         android:textSize="18dp"/>
 
     <ImageView

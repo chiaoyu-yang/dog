@@ -771,8 +771,6 @@ public abstract class CameraActivity extends FragmentActivity
             if (!continuousInference) {
                 setButtonsVisibility2(View.GONE);
                 setButtonsVisibility(View.VISIBLE);
-
-
             }
 
             if (results.size() > 0) {

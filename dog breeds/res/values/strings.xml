@@ -22,131 +22,131 @@
     <string name="searchFor">Look up on Wikipedia?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="no_detection">No detection</string>
+    <string name="no_detection">辨識失敗</string>
     <string name="change_language">Change Language</string>
 
     <string-array name="breeds_array">
-        <item>Affenpinscher</item>
-        <item>Afghan Hound</item>
-        <item>African Hunting Dog</item>
-        <item>Airedale Terrier</item>
-        <item>American Staffordshire Terrier</item>
-        <item>Appenzeller Sennenhund</item>
-        <item>Australian Terrier</item>
-        <item>Basenji</item>
-        <item>Basset Hound</item>
-        <item>Beagle</item>
-        <item>Bedlington Terrier</item>
-        <item>Bernese Mountain Dog</item>
-        <item>Blenheim Spaniel</item>
-        <item>Bloodhound</item>
-        <item>Bluetick Coonhound</item>
-        <item>Border Collie</item>
-        <item>Border Terrier</item>
-        <item>Borzoi</item>
-        <item>Bouvier Des Flandres</item>
-        <item>Boxer (dog)</item>
-        <item>Griffon Bruxellois</item>
-        <item>Briard</item>
-        <item>Brittany Spaniel</item>
-        <item>Bullmastiff</item>
-        <item>Cairn Terrier</item>
-        <item>Cardigan Welsh Corgi</item>
-        <item>Chesapeake Bay Retriever</item>
-        <item>Chihuahua (dog)</item>
-        <item>Chow Chow</item>
-        <item>Clumber Spaniel</item>
-        <item>Flat-coated Retriever</item>
-        <item>Soft-coated Wheaten Terrier</item>
-        <item>Cocker Spaniel</item>
-        <item>Collie</item>
-        <item>Curly Coated Retriever</item>
-        <item>Dandie Dinmont Terrier</item>
-        <item>Dingo</item>
-        <item>Doberman</item>
-        <item>英國獵狐犬</item>
-        <item>English Setter</item>
-        <item>English Springer Spaniel</item>
-        <item>Entlebucher Mountain Dog</item>
-        <item>Eskimo Dog</item>
-        <item>French Bulldog</item>
-        <item>German Shepherd</item>
-        <item>Giant Schnauzer</item>
-        <item>Golden Retriever</item>
-        <item>Gordon Setter</item>
-        <item>Greater Swiss Mountain Dog</item>
-        <item>Great Dane</item>
-        <item>Great Pyrenees</item>
-        <item>Groenendael dog</item>
-        <item>Fox Terrier</item>
-        <item>German Shorthaired Pointer</item>
-        <item>Irish Setter</item>
-        <item>Irish Terrier</item>
-        <item>Irish Water Spaniel</item>
-        <item>Irish Wolfhound</item>
-        <item>Italian Greyhound</item>
-        <item>Japanese Chin</item>
-        <item>Keeshond</item>
-        <item>Kelpie</item>
-        <item>Kerry Blue Terrier</item>
-        <item>Komondor</item>
-        <item>Kuvasz</item>
-        <item>Labrador Retriever</item>
-        <item>Lakeland Terrier</item>
-        <item>Leonberger</item>
-        <item>Lhasa Apso</item>
-        <item>Dachshund</item>
-        <item>Alaskan Malamute</item>
-        <item>Malinois dog</item>
-        <item>Mexican Hairless Dog</item>
-        <item>Miniature Pinscher</item>
-        <item>Miniature Poodle</item>
-        <item>Miniature Schnauzer</item>
-        <item>Newfoundland dog</item>
-        <item>Norfolk Terrier</item>
-        <item>Norwegian Elkhound</item>
-        <item>Norwich Terrier</item>
-        <item>Old English Sheepdog</item>
-        <item>Otterhound</item>
-        <item>Papillon dog</item>
-        <item>Pekingese</item>
-        <item>Pembroke Welsh Corgi</item>
-        <item>Pomeranian</item>
-        <item>Pug</item>
-        <item>Redbone Coonhound</item>
-        <item>Rhodesian Ridgeback</item>
-        <item>Rottweiler</item>
-        <item>Boston Terrier</item>
-        <item>Dhole</item>
-        <item>Ibizan Hound</item>
-        <item>Maltese dog</item>
-        <item>Saint Bernard</item>
-        <item>Saluki</item>
-        <item>Samoyed dog</item>
-        <item>Schipperke</item>
-        <item>Scotch Terrier</item>
-        <item>Scottish Deerhound</item>
-        <item>Sealyham Terrier</item>
-        <item>Shetland Sheepdog</item>
-        <item>Siberian Husky</item>
-        <item>Silky Terrier</item>
-        <item>Staffordshire Bull Terrier</item>
-        <item>Standard Poodle</item>
-        <item>Standard Schnauzer</item>
-        <item>Sussex Spaniel</item>
-        <item>Black and Tan Coonhound</item>
-        <item>Tibetan Mastiff</item>
-        <item>Tibetan Terrier</item>
-        <item>Toy Poodle</item>
-        <item>English Toy Terrier (Black &amp; Tan)</item>
-        <item>Shih Tzu</item>
-        <item>Vizsla</item>
-        <item>Treeing Walker Coonhound</item>
-        <item>Weimaraner</item>
-        <item>Welsh Springer Spaniel</item>
-        <item>West Highland White Terrier</item>
-        <item>Whippet</item>
-        <item>Yorkshire Terrier</item>
+        <item>猴㹴</item>
+        <item>阿富汗獵狗</item>
+        <item>非洲獵犬</item>
+        <item>萬能㹴</item>
+        <item>美國斯塔福郡梗</item>
+        <item>阿彭策爾山犬</item>
+        <item>澳洲梗犬</item>
+        <item>貝生吉犬</item>
+        <item>巴吉度獵犬</item>
+        <item>小獵犬</item>
+        <item>貝林登㹴</item>
+        <item>伯恩山犬</item>
+        <item>查理王小獵犬</item>
+        <item>尋血獵犬</item>
+        <item>布魯克浣熊獵犬</item>
+        <item>邊境牧羊犬</item>
+        <item>邊境㹴</item>
+        <item>蘇俄牧羊犬</item>
+        <item>法蘭德斯畜牧犬</item>
+        <item>拳師犬</item>
+        <item>布魯塞爾格林芬犬</item>
+        <item>伯瑞犬</item>
+        <item>布列塔尼獵犬</item>
+        <item>鬥牛獒犬</item>
+        <item>凱恩梗犬</item>
+        <item>卡提根威爾斯柯基犬</item>
+        <item>切薩皮克獵犬</item>
+        <item>吉娃娃</item>
+        <item>鬆獅犬</item>
+        <item>克倫伯獵犬</item>
+        <item>平毛尋回犬</item>
+        <item>愛爾蘭軟毛㹴</item>
+        <item>可卡獵犬</item>
+        <item>長毛牧羊犬</item>
+        <item>捲毛尋回犬</item>
+        <item>丹迪丁蒙梗</item>
+        <item>澳洲野犬</item>
+        <item>杜賓犬</item>
+        <item></item>
+        <item>英國塞特犬</item>
+        <item>史賓格犬</item>
+        <item>恩特布山犬</item>
+        <item>美國愛斯基摩犬</item>
+        <item>法國鬥牛犬</item>
+        <item>德國牧羊犬</item>
+        <item>巨型雪納瑞犬</item>
+        <item>黃金獵犬</item>
+        <item>戈登蹲獵犬</item>
+        <item>大瑞士山地犬</item>
+        <item>大丹犬</item>
+        <item>大白熊犬</item>
+        <item>格羅安達犬</item>
+        <item>獵狐梗</item>
+        <item>德國短毛指示犬</item>
+        <item>愛爾蘭雪達犬</item>
+        <item>愛爾蘭㹴</item>
+        <item>愛爾蘭水獵犬</item>
+        <item>愛爾蘭獵狼犬</item>
+        <item>義大利靈緹犬</item>
+        <item>日本狆</item>
+        <item>凱斯犬</item>
+        <item>澳洲卡爾比犬</item>
+        <item>凱利藍㹴</item>
+        <item>可蒙犬</item>
+        <item>庫瓦茲犬</item>
+        <item>拉布拉多犬</item>
+        <item>湖畔梗</item>
+        <item>蘭伯格犬</item>
+        <item>拉薩犬</item>
+        <item>臘腸犬</item>
+        <item>阿拉斯加雪橇犬</item>
+        <item>比利時牧羊犬</item>
+        <item>墨西哥無毛犬</item>
+        <item>迷你品犬</item>
+        <item>迷你貴賓犬</item>
+        <item>迷你雪納瑞犬</item>
+        <item>紐芬蘭犬</item>
+        <item>諾福克㹴</item>
+        <item>挪威獵麋犬</item>
+        <item>挪利其㹴</item>
+        <item>英國古代牧羊犬</item>
+        <item>獵水獺犬</item>
+        <item>蝴蝶犬</item>
+        <item>獅子狗</item>
+        <item>潘布魯克威爾斯柯基犬</item>
+        <item>博美犬</item>
+        <item>巴哥犬</item>
+        <item>紅骨獵浣熊犬</item>
+        <item>羅得西亞背脊犬</item>
+        <item>羅威那</item>
+        <item>波士頓㹴</item>
+        <item>豺</item>
+        <item>伊比莎獵犬</item>
+        <item>馬爾濟斯</item>
+        <item>聖伯納犬</item>
+        <item>薩路基獵犬</item>
+        <item>薩摩耶犬</item>
+        <item>史奇派克犬</item>
+        <item>蘇格蘭㹴犬</item>
+        <item>蘇格蘭獵鹿犬</item>
+        <item>西里漢㹴</item>
+        <item>喜樂蒂牧羊犬</item>
+        <item>西伯利亞哈士奇</item>
+        <item>澳洲絲毛㹴</item>
+        <item>斯塔福郡鬥牛梗</item>
+        <item>標準貴賓犬</item>
+        <item>標準型雪納瑞</item>
+        <item>薩塞克斯獵犬</item>
+        <item>黑褐色獵浣熊犬</item>
+        <item>藏獒</item>
+        <item>西藏㹴</item>
+        <item>玩具貴賓犬</item>
+        <item>英國玩賞㹴</item>
+        <item>西施犬</item>
+        <item>維茲拉犬</item>
+        <item>樹行者獵浣熊犬</item>
+        <item>威瑪犬</item>
+        <item>威爾斯激飛獵犬</item>
+        <item>西高地白㹴</item>
+        <item>惠比特犬</item>
+        <item>约克夏梗</item>
     </string-array>
 
     <string-array name="array_languages" translatable="false">
