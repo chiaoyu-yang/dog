@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="breeds_array">
+        <item>Affenpinscher</item>
+        <item>Afghanischer Windhund</item>
+        <item>Afrikanischer Wildhund</item>
+        <item>Airedale Terrier</item>
+        <item>American Staffordshire Terrier</item>
+        <item>Appenzeller Sennenhund</item>
+        <item>Australian Terrier</item>
+        <item>Basenji</item>
+        <item>Basset Hound</item>
+        <item>Beagle</item>
+        <item>Bedlington Terrier</item>
+        <item>Berner Sennenhund</item>
+        <item>Cavalier King Charles Spaniel</item>
+        <item>Bloodhound</item>
+        <item>Bluetick Coonhound</item>
+        <item>Border Collie</item>
+        <item>Border Terrier</item>
+        <item>Barsoi</item>
+        <item>Bouvier des Flandres</item>
+        <item>Deutscher Boxer</item>
+        <item>Belgischer Zwerggriffon</item>
+        <item>Briard</item>
+        <item>Brittany Spaniel</item>
+        <item>Bullmastiff</item>
+        <item>Cairn Terrier</item>
+        <item>Welsh Corgi Cardigan</item>
+        <item>Chesapeake Bay Retriever</item>
+        <item>Chihuahua (Hunderasse)</item>
+        <item>Chow Chow</item>
+        <item>Clumber Spaniel</item>
+        <item>Flat Coated Retriever</item>
+        <item>Irish Soft Coated Wheaten Terrier</item>
+        <item>Cocker Spaniel</item>
+        <item>Langhaarcollie</item>
+        <item>Curly Coated Retriever</item>
+        <item>Dandie Dinmont Terrier</item>
+        <item>Dingo</item>
+        <item>Dobermann</item>
+        <item>English Foxhound</item>
+        <item>English Setter</item>
+        <item>English Springer Spaniel</item>
+        <item>Entlebucher Sennenhund</item>
+        <item>American Eskimo Dog</item>
+        <item>Französische Bulldogge</item>
+        <item>Deutscher Schäferhund</item>
+        <item>Riesenschnauzer</item>
+        <item>Golden Retriever</item>
+        <item>Gordon Setter</item>
+        <item>Grosser Schweizer Sennenhund</item>
+        <item>Deutsche Dogge</item>
+        <item>Chien de Montagne des Pyrénées</item>
+        <item>Groenendael</item>
+        <item>Foxterrier</item>
+        <item>Deutsch Kurzhaar</item>
+        <item>Irish Setter</item>
+        <item>Irish Terrier</item>
+        <item>Irish Water Spaniel</item>
+        <item>Irish Wolfhound</item>
+        <item>Italienisches Windspiel</item>
+        <item>Japan Chin</item>
+        <item>Keeshond</item>
+        <item>Kelpie</item>
+        <item>Kerry Blue Terrier</item>
+        <item>Komondor</item>
+        <item>Kuvasz</item>
+        <item>Labrador Retriever</item>
+        <item>Lakeland Terrier</item>
+        <item>Leonberger</item>
+        <item>Lhasa Apso</item>
+        <item>Dackel</item>
+        <item>Alaskan Malamute</item>
+        <item>Malinois</item>
+        <item>Xoloitzcuintle</item>
+        <item>Zwergpinscher</item>
+        <item>Zwergpudel</item>
+        <item>Zwergschnauzer</item>
+        <item>Neufundländer</item>
+        <item>Norfolk Terrier</item>
+        <item>Norwegischer Elchhund grau</item>
+        <item>Norwich Terrier</item>
+        <item>Bobtail</item>
+        <item>Otterhund</item>
+        <item>Kontinentaler Zwergspaniel</item>
+        <item>Pekingese</item>
+        <item>Welsh Corgi Pembroke</item>
+        <item>Deutsche Spitze</item>
+        <item>Mops</item>
+        <item>Redbone Coonhound</item>
+        <item>Rhodesian Ridgeback</item>
+        <item>Rottweiler</item>
+        <item>Boston Terrier</item>
+        <item>Rothund</item>
+        <item>Podenco Ibicenco</item>
+        <item>Malteser (Hunderasse)</item>
+        <item>Saint Bernard</item>
+        <item>Saluki</item>
+        <item>Samojede</item>
+        <item>Schipperke</item>
+        <item>Scotch Terrier</item>
+        <item>Deerhound</item>
+        <item>Sealyham Terrier</item>
+        <item>Shetland Sheepdog</item>
+        <item>Siberian Husky</item>
+        <item>Australian Silky Terrier</item>
+        <item>Staffordshire Bull Terrier</item>
+        <item>Pudel</item>
+        <item>Schnauzer</item>
+        <item>Sussex Spaniel</item>
+        <item>Black and Tan Coonhound</item>
+        <item>Do Khyi</item>
+        <item>Tibet-Terrier</item>
+        <item>Kleinpudel</item>
+        <item>English Toy Terrier</item>
+        <item>Shih Tzu</item>
+        <item>Vizsla</item>
+        <item>Treeing Walker Coonhound</item>
+        <item>Weimaraner</item>
+        <item>Welsh Springer Spaniel</item>
+        <item>West Highland White Terrier</item>
+        <item>Whippet</item>
+        <item>Yorkshire Terrier</item>
+    </string-array>
+    <string msgid="5976598919945601918" name="abc_action_bar_home_description">"Zur Startseite"</string>
+    <string msgid="8388173803310557296" name="abc_action_bar_up_description">"Nach oben"</string>
+    <string msgid="3937310113216875497" name="abc_action_menu_overflow_description">"Weitere Optionen"</string>
+    <string msgid="4692188335987374352" name="abc_action_mode_done">"Fertig"</string>
+    <string msgid="1189761859438369441" name="abc_activity_chooser_view_see_all">"Alle anzeigen"</string>
+    <string msgid="2165779757652331008" name="abc_activitychooserview_choose_application">"App auswählen"</string>
+    <string msgid="4215997306490295099" name="abc_capital_off">"AUS"</string>
+    <string msgid="884982626291842264" name="abc_capital_on">"AN"</string>
+    <string msgid="8833365367933412986" name="abc_menu_alt_shortcut_label">"Alt +"</string>
+    <string msgid="2223301931652355242" name="abc_menu_ctrl_shortcut_label">"Strg +"</string>
+    <string msgid="838001238306846836" name="abc_menu_delete_shortcut_label">"Löschen"</string>
+    <string msgid="7986526966204849475" name="abc_menu_enter_shortcut_label">"Eingabetaste"</string>
+    <string msgid="375214403600139847" name="abc_menu_function_shortcut_label">"Funktionstaste +"</string>
+    <string msgid="4192209724446364286" name="abc_menu_meta_shortcut_label">"Meta-Taste +"</string>
+    <string msgid="4741552369836443843" name="abc_menu_shift_shortcut_label">"Umschalttaste +"</string>
+    <string msgid="5473865519181928982" name="abc_menu_space_shortcut_label">"Leertaste"</string>
+    <string msgid="6180552449598693998" name="abc_menu_sym_shortcut_label">"Sym-Taste +"</string>
+    <string msgid="5520303668377388990" name="abc_prepend_shortcut_label">"Menütaste +"</string>
+    <string msgid="7208076849092622260" name="abc_search_hint">"Suchen…"</string>
+    <string msgid="3741173234950517107" name="abc_searchview_description_clear">"Suchanfrage löschen"</string>
+    <string msgid="693312494995508443" name="abc_searchview_description_query">"Suchanfrage"</string>
+    <string msgid="3417662926640357176" name="abc_searchview_description_search">"Suche"</string>
+    <string msgid="1486535517437947103" name="abc_searchview_description_submit">"Anfrage senden"</string>
+    <string msgid="2293578557972875415" name="abc_searchview_description_voice">"Sprachsuche"</string>
+    <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"Teilen mit"</string>
+    <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"Mit <ns1:g id="APPLICATION_NAME">%s</ns1:g> teilen"</string>
+    <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"Minimieren"</string>
+    <string name="about_menu">Über diese App</string>
+    <string name="about_message"><![CDATA[
+    <h1>Erkenne Hunderassen</h1>
+    <p>Erkenne über einhundert verschiedene Hunderassen mit deinem Smartphone.</p>
+    <p>Klicken Sie auf den Kamera-Button oder laden Sie ein Bild aus der Bildergalerie, um ein einzelnes Bild zu analysieren. Tippen Sie auf die Anzeige, um das angezeigte Ergebnis zu schließen, oder verwenden Sie die Teilen-Schaltfläche, um einen Screenshot zu teilen.</p>
+    <p>Aktivieren Sie kontinuierliche Vorhersagen und halten Sie den Hund im Kreis, um Vorhersagen direkt aus dem Videostrom zu erhalten. Die Anwendung meldet die drei Vorhersagen mit der höchsten Wahrscheinlichkeit. Bitte behandeln Sie die Ausgabe nur als Vorschlag.</p>
+    <p>Wenn Ihnen diese App gefällt, sollten Sie die Premium Version kaufen, die die Identifizierung von mehr als zweihundert verschiedenen Hunderassen mit viel höherer Genauigkeit erlaubt: https://play.google.com/store/apps/details?id=com.jstappdev.identify_dog_breeds_pro</p>
+    <h2>Anerkennungen</h2>
+    <p>Basierend auf einer erweiterten Version des Stanford Dogs Datensatzes. Icons von Pause08, Smashicons, Becris, Freepik von www.flaticon.com.</p>
+    <p>Apache License 2.0. Source code verfügbar auf github.com/j05t/dbclf. Bilder von Wikipedia.</p>
+    ]]></string>
+    <string name="activity_name_classification">Erkenne Hunderassen</string>
+    <string name="app_name">Erkenne Hunderassen</string>
+    <string name="camera_error">Dieses Gerät unterstützt die Camera2 API nicht.</string>
+    <string name="change_language">Sprache ändern</string>
+    <string name="error_tf_init">Zu wenig freier Speicher. Versuchen Sie, einige Hintergrundanwendungen zu schließen.</string>
+    <string name="exit_menu">Beenden</string>
+    <string name="from_gallery">Lade Foto..</string>
+    <string name="list_breeds">Unterstützte Rassen</string>
+    <string name="no">Nein</string>
+    <string name="no_detection">Keine Erkennung</string>
+    <string name="searchFor">Suche auf Wikipedia?</string>
+    <string msgid="6264217191555673260" name="search_menu_title">"Suche"</string>
+    <string name="share_with">Teile mit..</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="yes">Ja</string>
+</resources>

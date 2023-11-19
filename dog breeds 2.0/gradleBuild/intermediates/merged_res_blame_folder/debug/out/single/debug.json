@@ -1,0 +1,126 @@
+[
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_roundedbutton.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/roundedbutton.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-mdpi_ic_launcher.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_baseline_insert_photo_24.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/baseline_insert_photo_24.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_blackout_transition.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/blackout_transition.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-xhdpi_ic_launcher.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_back_white.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/back_white.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-v21_button_background_selector.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-v21/button_background_selector.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-xxxhdpi_ic_action_save.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-xxxhdpi/ic_action_save.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-hdpi_ic_action_save.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-hdpi/ic_action_save.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/layout_activity_list.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/layout/activity_list.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-xhdpi_ic_action_save.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-xhdpi/ic_action_save.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_share.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/share.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/layout_list_group.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/layout/list_group.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_ic_change_language.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/ic_change_language.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/layout_list_item.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/layout/list_item.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/layout_lang_dialog.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/layout/lang_dialog.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/xml_filepaths.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/xml/filepaths.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-xhdpi_camera_icon.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-xhdpi/camera_icon.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-xxhdpi_camera_icon.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-xxhdpi/camera_icon.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-xxhdpi_ic_action_save.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-xxhdpi/ic_action_save.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/layout_activity_camera.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/layout/activity_camera.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_back.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/back.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-hdpi_camera_icon.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-hdpi/camera_icon.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/menu_mainmenu.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/menu/mainmenu.xml"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_camera.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/camera.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-mdpi_camera_icon.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-mdpi/camera_icon.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-mdpi_ic_action_save.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-mdpi/ic_action_save.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-hdpi_ic_launcher.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/drawable_download.png.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/drawable/download.png"
+    },
+    {
+        "merged": "com.jstappdev.dbclf-merged_res-12:/layout_camera_connection_fragment.xml.flat",
+        "source": "com.jstappdev.dbclf-dog breeds-13:/layout/camera_connection_fragment.xml"
+    }
+]
