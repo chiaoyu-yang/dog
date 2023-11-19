@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF1FAEE"
+    tools:context=".CameraActivity">
+
+    <ImageButton
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/back"
+        android:translationZ="200dp"
+        />
+
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_above="@+id/results"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="-50dp"
+        android:background="@drawable/share"
+        android:translationZ="600dp" />
+
+    <ImageButton
+        android:id="@+id/saveButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_above="@+id/results"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="-50dp"
+        android:background="@drawable/download"
+        android:translationZ="600dp" />
+
+    <ToggleButton
+        android:id="@+id/continuousInferenceButton"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="32dp"
+        android:layout_marginBottom="46dp"
+        android:background="@drawable/roundedbutton"
+        android:textSize="8sp"
+        android:translationZ="50dp"
+        tools:ignore="RtlHardcoded,SmallSp" />
+
+    <ImageButton
+        android:id="@+id/cameraButton"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/roundedbutton"
+        android:src="@drawable/camera"
+        android:translationZ="2dp"
+        />
+
+    <ImageButton
+        android:id="@+id/pick_image2"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="46dp"
+        android:background="@drawable/roundedbutton"
+        android:src="@drawable/baseline_insert_photo_24"
+        android:textSize="8sp"
+        android:translationZ="2dp"
+        />
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/shareButton"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginLeft="250dp"-->
+<!--        android:layout_marginBottom="300dp"-->
+<!--        android:background="@drawable/roundedbutton"-->
+<!--        android:src="@android:drawable/ic_menu_share"-->
+<!--        android:translationZ="200dp"-->
+<!--        android:visibility="visible"/>-->
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="40dp"
+        android:translationZ="500dp" />
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/saveButton"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginLeft="290dp"-->
+<!--        android:layout_marginBottom="300dp"-->
+<!--        android:background="@drawable/roundedbutton"-->
+<!--        android:src="@drawable/ic_action_save"-->
+<!--        android:translationZ="200dp"-->
+<!--        android:visibility="visible"/>-->
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="辨識結果"
+        android:textColor="@color/text_color"
+        android:translationZ="200dp"
+        android:visibility="visible"
+        android:textSize="18dp"/>
+
+    <com.jstappdev.dbclf.RecognitionScoreView
+        android:id="@+id/results"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/button_background_selector"
+        android:elevation="@android:dimen/app_icon_size"
+        android:enabled="false"
+        android:paddingTop="80dp"
+        android:paddingLeft="200dp"
+        android:textColor="#000"
+        android:textSize="14dp"
+        android:translationZ="200dp"
+        tools:ignore="MissingClass,RtlHardcoded,RtlSymmetry"
+        android:visibility="visible"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="5dp"
+        android:translationZ="500dp"
+        android:textSize="18dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/blackout_transition"
+        android:translationZ="50dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:background="@drawable/blackout_transition"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:translationZ="50dp"
+        android:visibility="gone" />
+
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:translationZ="200dp"
+        android:visibility="gone"
+        android:progressBackgroundTint="@color/lightgreen"
+        />
+
+    <FrameLayout
+        android:id="@+id/pnlFlash"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFF"
+        android:translationZ="200dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

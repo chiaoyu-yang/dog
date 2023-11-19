@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Erkenne Hunderassen</string>
+    <string name="activity_name_classification">Erkenne Hunderassen</string>
+    <string name="camera_error">Dieses Gerät unterstützt die Camera2 API nicht.</string>
+    <string name="from_gallery">Lade Foto..</string>
+    <string name="about_message"><![CDATA[
+    <h1>Erkenne Hunderassen</h1>
+    <p>Erkenne über einhundert verschiedene Hunderassen mit deinem Smartphone.</p>
+    <p>Klicken Sie auf den Kamera-Button oder laden Sie ein Bild aus der Bildergalerie, um ein einzelnes Bild zu analysieren. Tippen Sie auf die Anzeige, um das angezeigte Ergebnis zu schließen, oder verwenden Sie die Teilen-Schaltfläche, um einen Screenshot zu teilen.</p>
+    <p>Aktivieren Sie kontinuierliche Vorhersagen und halten Sie den Hund im Kreis, um Vorhersagen direkt aus dem Videostrom zu erhalten. Die Anwendung meldet die drei Vorhersagen mit der höchsten Wahrscheinlichkeit. Bitte behandeln Sie die Ausgabe nur als Vorschlag.</p>
+    <p>Wenn Ihnen diese App gefällt, sollten Sie die Premium Version kaufen, die die Identifizierung von mehr als zweihundert verschiedenen Hunderassen mit viel höherer Genauigkeit erlaubt: https://play.google.com/store/apps/details?id=com.jstappdev.identify_dog_breeds_pro</p>
+    <h2>Anerkennungen</h2>
+    <p>Basierend auf einer erweiterten Version des Stanford Dogs Datensatzes. Icons von Pause08, Smashicons, Becris, Freepik von www.flaticon.com.</p>
+    <p>Apache License 2.0. Source code verfügbar auf github.com/j05t/dbclf. Bilder von Wikipedia.</p>
+    ]]></string>
+    <string name="about_menu">Über diese App</string>
+    <string name="exit_menu">Beenden</string>
+    <string name="error_tf_init">Zu wenig freier Speicher. Versuchen Sie, einige Hintergrundanwendungen zu schließen.</string>
+    <string name="share_with">Teile mit..</string>
+    <string name="list_breeds">Unterstützte Rassen</string>
+    <string name="searchFor">Suche auf Wikipedia?</string>
+    <string name="no">Nein</string>
+    <string name="yes">Ja</string>
+    <string name="no_detection">Keine Erkennung</string>
+    <string name="change_language">Sprache ändern</string>
+
+    <string-array name="breeds_array">
+        <item>Affenpinscher</item>
+        <item>Afghanischer Windhund</item>
+        <item>Afrikanischer Wildhund</item>
+        <item>Airedale Terrier</item>
+        <item>American Staffordshire Terrier</item>
+        <item>Appenzeller Sennenhund</item>
+        <item>Australian Terrier</item>
+        <item>Basenji</item>
+        <item>Basset Hound</item>
+        <item>Beagle</item>
+        <item>Bedlington Terrier</item>
+        <item>Berner Sennenhund</item>
+        <item>Cavalier King Charles Spaniel</item>
+        <item>Bloodhound</item>
+        <item>Bluetick Coonhound</item>
+        <item>Border Collie</item>
+        <item>Border Terrier</item>
+        <item>Barsoi</item>
+        <item>Bouvier des Flandres</item>
+        <item>Deutscher Boxer</item>
+        <item>Belgischer Zwerggriffon</item>
+        <item>Briard</item>
+        <item>Brittany Spaniel</item>
+        <item>Bullmastiff</item>
+        <item>Cairn Terrier</item>
+        <item>Welsh Corgi Cardigan</item>
+        <item>Chesapeake Bay Retriever</item>
+        <item>Chihuahua (Hunderasse)</item>
+        <item>Chow Chow</item>
+        <item>Clumber Spaniel</item>
+        <item>Flat Coated Retriever</item>
+        <item>Irish Soft Coated Wheaten Terrier</item>
+        <item>Cocker Spaniel</item>
+        <item>Langhaarcollie</item>
+        <item>Curly Coated Retriever</item>
+        <item>Dandie Dinmont Terrier</item>
+        <item>Dingo</item>
+        <item>Dobermann</item>
+        <item>English Foxhound</item>
+        <item>English Setter</item>
+        <item>English Springer Spaniel</item>
+        <item>Entlebucher Sennenhund</item>
+        <item>American Eskimo Dog</item>
+        <item>Französische Bulldogge</item>
+        <item>Deutscher Schäferhund</item>
+        <item>Riesenschnauzer</item>
+        <item>Golden Retriever</item>
+        <item>Gordon Setter</item>
+        <item>Grosser Schweizer Sennenhund</item>
+        <item>Deutsche Dogge</item>
+        <item>Chien de Montagne des Pyrénées</item>
+        <item>Groenendael</item>
+        <item>Foxterrier</item>
+        <item>Deutsch Kurzhaar</item>
+        <item>Irish Setter</item>
+        <item>Irish Terrier</item>
+        <item>Irish Water Spaniel</item>
+        <item>Irish Wolfhound</item>
+        <item>Italienisches Windspiel</item>
+        <item>Japan Chin</item>
+        <item>Keeshond</item>
+        <item>Kelpie</item>
+        <item>Kerry Blue Terrier</item>
+        <item>Komondor</item>
+        <item>Kuvasz</item>
+        <item>Labrador Retriever</item>
+        <item>Lakeland Terrier</item>
+        <item>Leonberger</item>
+        <item>Lhasa Apso</item>
+        <item>Dackel</item>
+        <item>Alaskan Malamute</item>
+        <item>Malinois</item>
+        <item>Xoloitzcuintle</item>
+        <item>Zwergpinscher</item>
+        <item>Zwergpudel</item>
+        <item>Zwergschnauzer</item>
+        <item>Neufundländer</item>
+        <item>Norfolk Terrier</item>
+        <item>Norwegischer Elchhund grau</item>
+        <item>Norwich Terrier</item>
+        <item>Bobtail</item>
+        <item>Otterhund</item>
+        <item>Kontinentaler Zwergspaniel</item>
+        <item>Pekingese</item>
+        <item>Welsh Corgi Pembroke</item>
+        <item>Deutsche Spitze</item>
+        <item>Mops</item>
+        <item>Redbone Coonhound</item>
+        <item>Rhodesian Ridgeback</item>
+        <item>Rottweiler</item>
+        <item>Boston Terrier</item>
+        <item>Rothund</item>
+        <item>Podenco Ibicenco</item>
+        <item>Malteser (Hunderasse)</item>
+        <item>Saint Bernard</item>
+        <item>Saluki</item>
+        <item>Samojede</item>
+        <item>Schipperke</item>
+        <item>Scotch Terrier</item>
+        <item>Deerhound</item>
+        <item>Sealyham Terrier</item>
+        <item>Shetland Sheepdog</item>
+        <item>Siberian Husky</item>
+        <item>Australian Silky Terrier</item>
+        <item>Staffordshire Bull Terrier</item>
+        <item>Pudel</item>
+        <item>Schnauzer</item>
+        <item>Sussex Spaniel</item>
+        <item>Black and Tan Coonhound</item>
+        <item>Do Khyi</item>
+        <item>Tibet-Terrier</item>
+        <item>Kleinpudel</item>
+        <item>English Toy Terrier</item>
+        <item>Shih Tzu</item>
+        <item>Vizsla</item>
+        <item>Treeing Walker Coonhound</item>
+        <item>Weimaraner</item>
+        <item>Welsh Springer Spaniel</item>
+        <item>West Highland White Terrier</item>
+        <item>Whippet</item>
+        <item>Yorkshire Terrier</item>
+    </string-array>
+
+</resources>
