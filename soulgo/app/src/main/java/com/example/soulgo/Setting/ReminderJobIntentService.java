@@ -17,7 +17,6 @@ public class ReminderJobIntentService extends JobIntentService {
 
     static final int JOB_ID = 1000;
 
-    // Enqueue work to the JobIntentService.
     public static void enqueueWork(Context context, Intent work) {
         enqueueWork(context, ReminderJobIntentService.class, JOB_ID, work);
     }
