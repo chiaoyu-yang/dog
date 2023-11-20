@@ -50,6 +50,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.MainActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.Beep;
 import com.example.soulgo.Setting.SettingActivity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -158,6 +159,7 @@ public abstract class CameraActivity extends FragmentActivity
             public void onClick(View view) {
                 Intent intent = new Intent(CameraActivity.this, HomeActivity.class);
                 startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
             }
         });
     }
@@ -221,6 +223,7 @@ public abstract class CameraActivity extends FragmentActivity
             snapShot.set(true);
             imageSet = false;
             updateResults(null);
+            Beep.playBeepSound(getApplicationContext());
 
             imageViewFromGallery.setVisibility(View.GONE);
             imageView2.setVisibility(View.GONE);
@@ -280,7 +283,7 @@ public abstract class CameraActivity extends FragmentActivity
             final Intent i = new Intent(getApplicationContext(), SimpleListActivity.class);
             i.putStringArrayListExtra("recogs", currentRecognitions);
             startActivity(i);
-        });
+            });
 
         pick_image2.setOnClickListener(v -> {
             pickImage();
@@ -759,7 +762,9 @@ public abstract class CameraActivity extends FragmentActivity
         mChart.setEnabled(enabled);
         closeButton2.setVisibility(visibility);
         closeButton2.setEnabled(enabled);
+
     }
+
 
     // update results on our custom textview
     // 更新結果視圖
@@ -900,6 +905,7 @@ public abstract class CameraActivity extends FragmentActivity
             @Override
             public void onClick(View view) {
                 saveImage();
+                Beep.playBeepSound(getApplicationContext());
                 Toast.makeText(CameraActivity.this, "已下載", Toast.LENGTH_SHORT).show();
             }
         });
@@ -909,6 +915,7 @@ public abstract class CameraActivity extends FragmentActivity
             public void onClick(View view) {
                 Intent intent = new Intent(CameraActivity.this, HomeActivity.class);
                 startActivity(intent);
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 

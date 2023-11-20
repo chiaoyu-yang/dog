@@ -93,13 +93,13 @@ public class SettingActivity extends AppCompatActivity{
         button = findViewById(R.id.button2);
 
         button.setOnClickListener(view -> {
-                if(!permission_post_notification){
-                    requestPermissionNotification();
-                } else {
-                    Toast.makeText(this, "已授予通知許可..", Toast.LENGTH_SHORT).show();
-                    setReminder();
+            if(!permission_post_notification){
+                requestPermissionNotification();
+            } else {
+                Toast.makeText(this, "已授予通知許可..", Toast.LENGTH_SHORT).show();
+                setReminder();
 
-                }
+            }
         });
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
@@ -180,7 +180,7 @@ public class SettingActivity extends AppCompatActivity{
 
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         int backgroundMusicVolume = preferences.getInt("background_music_volume", 0);
-        int gameVolume = preferences.getInt("game_volume", 50);
+        int gameVolume = preferences.getInt("sound_effect_volume", 50);
 
         volumeSeekBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         volumeSeekBar.setProgress(backgroundMusicVolume);
@@ -223,7 +223,7 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
-                saveVolumeProgress(seekBar, "game_volume");
+                saveVolumeProgress(seekBar, "sound_effect_volume");
                 float volume = (float) seekBar.getProgress() / seekBar.getMax();
                 Beep.setVolume(volume);
             }
@@ -291,8 +291,8 @@ public class SettingActivity extends AppCompatActivity{
         Calendar currentTime = Calendar.getInstance();
 
         Calendar alarmTime = Calendar.getInstance();
-        alarmTime.set(Calendar.HOUR_OF_DAY, 1);
-        alarmTime.set(Calendar.MINUTE, 50);
+        alarmTime.set(Calendar.HOUR_OF_DAY, 2);
+        alarmTime.set(Calendar.MINUTE, 16);
         alarmTime.set(Calendar.SECOND, 0);
 
         if (currentTime.after(alarmTime)) {
@@ -412,7 +412,7 @@ public class SettingActivity extends AppCompatActivity{
                             boolean error = jsonObject.getBoolean("error");
                             String message = jsonObject.getString("message");
 
-                            Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
 
                             // 在這裡處理回調邏輯
                             // 例如，更新 UI 或顯示訊息給使用者

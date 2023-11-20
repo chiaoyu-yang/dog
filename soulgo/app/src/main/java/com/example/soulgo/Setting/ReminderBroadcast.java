@@ -9,7 +9,8 @@ public class ReminderBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("ReminderBroadcast", "Received broadcast");
-        
+
+        // Replace the Notification code with starting the JobIntentService
         ReminderJobIntentService.enqueueWork(context, intent);
     }
 }
