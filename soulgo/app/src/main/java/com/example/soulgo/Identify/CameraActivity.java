@@ -47,7 +47,10 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.soulgo.HomeActivity;
+import com.example.soulgo.MainActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.SettingActivity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -87,7 +90,7 @@ public abstract class CameraActivity extends FragmentActivity
     AtomicBoolean snapShot = new AtomicBoolean(false);
     boolean continuousInference = false;
     boolean imageSet = false;
-    ImageButton cameraButton, shareButton, closeButton, saveButton, pick_image2;
+    ImageButton cameraButton, shareButton, closeButton,closeButton2, saveButton, pick_image2;
     ToggleButton continuousInferenceButton;
     ImageView imageViewFromGallery, imageView2;
     ProgressBar progressBar;
@@ -149,6 +152,14 @@ public abstract class CameraActivity extends FragmentActivity
                 handleSendImage(intent);
             }
         }
+
+        closeButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CameraActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -189,12 +200,14 @@ public abstract class CameraActivity extends FragmentActivity
         cameraButton = findViewById(R.id.cameraButton);
         shareButton = findViewById(R.id.shareButton);
         closeButton = findViewById(R.id.closeButton);
+        closeButton2 = findViewById(R.id.closeButton2);
         saveButton = findViewById(R.id.saveButton);
 
         cameraButton.setEnabled(false);
 
         setButtonsVisibility(View.GONE);
         setButtonsVisibility2(View.VISIBLE);
+
 
         cameraButton.setOnClickListener(v -> {
             if (!hasPermission(PERMISSION_CAMERA)) {
@@ -522,7 +535,7 @@ public abstract class CameraActivity extends FragmentActivity
             mChart.setDrawCenterText(true);
 
             mChart2.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf"));
-            mChart2.setCenterText(generateCenterSpannableText());
+//            mChart2.setCenterText(generateCenterSpannableText());
             mChart2.setCenterTextSizePixels(23);
             mChart2.setDrawCenterText(true);
         }
@@ -553,7 +566,7 @@ public abstract class CameraActivity extends FragmentActivity
         // set unknown slice to transparent
         entries.add(new PieEntry(100, ""));
         final PieDataSet set = new PieDataSet(entries, "");
-        set.setColor(Color.WHITE);
+        set.setColor(R.color.transparent);
         set.setDrawValues(false);
 
         final PieData data = new PieData(set);
@@ -744,6 +757,8 @@ public abstract class CameraActivity extends FragmentActivity
         final boolean enabled = visibility == View.VISIBLE;
         mChart.setVisibility(visibility);
         mChart.setEnabled(enabled);
+        closeButton2.setVisibility(visibility);
+        closeButton2.setEnabled(enabled);
     }
 
     // update results on our custom textview
@@ -811,7 +826,7 @@ public abstract class CameraActivity extends FragmentActivity
             sliceColors.add(c);
 
         if (entries.size() > 0)
-            sliceColors.set(entries.size() - 1, Color.WHITE);
+            sliceColors.set(entries.size() - 1, R.color.transparent);
 
         set.setColors(sliceColors);
         set.setDrawValues(false);
@@ -886,6 +901,14 @@ public abstract class CameraActivity extends FragmentActivity
             public void onClick(View view) {
                 saveImage();
                 Toast.makeText(CameraActivity.this, "已下載", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        closeButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CameraActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
 
