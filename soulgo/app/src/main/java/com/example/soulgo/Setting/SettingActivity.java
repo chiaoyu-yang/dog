@@ -47,6 +47,9 @@ import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.MainActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Setting.BackgroundMusicService;
+import com.example.soulgo.Setting.Beep;
+import com.example.soulgo.Setting.ReminderBroadcast;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -87,17 +90,16 @@ public class SettingActivity extends AppCompatActivity{
         Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        createNotificationChannel();
-
-        button = (ImageButton) findViewById(R.id.button2);
+        button = findViewById(R.id.button2);
 
         button.setOnClickListener(view -> {
-            if(!permission_post_notification){
-                requestPermissionNotification();
-            } else {
-                Toast.makeText(this, "已授予通知許可..", Toast.LENGTH_SHORT).show();
-            }
+                if(!permission_post_notification){
+                    requestPermissionNotification();
+                } else {
+                    Toast.makeText(this, "已授予通知許可..", Toast.LENGTH_SHORT).show();
+                    setReminder();
 
+                }
         });
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
@@ -146,13 +148,6 @@ public class SettingActivity extends AppCompatActivity{
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("nickname", "");
-                editor.putString("uid", "");
-                editor.putString("imageUrl", "");
-                editor.apply();
-
                 signOut(); // 呼叫登出方法
                 Beep.playBeepSound(getApplicationContext());
             }
@@ -235,15 +230,17 @@ public class SettingActivity extends AppCompatActivity{
         });
 
     }
+
     //~~~~~ step2
     public void requestPermissionNotification() {
         if (ContextCompat.checkSelfPermission(SettingActivity.this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
             permission_post_notification = true;
+            setReminder();
         } else {
             if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                Log.d("Permission", "inside else first time don't allow");
+                Log.d("Permission", "第一次不允許權限");
             } else {
-                Log.d("Permission", "inside else 2nd time don't allow");
+                Log.d("Permission", "第二次不允許權限");
             }
             requestPermissionLauncherNotification.launch(permissions[0]);
         }
@@ -263,24 +260,20 @@ public class SettingActivity extends AppCompatActivity{
 
     //~~~~~ step4
     public void showPermissionDialog(String permission_desc) {
-        new AlertDialog.Builder(
-                SettingActivity.this
-        ).setTitle("許可提醒")
-                .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(SettingActivity.this)
+                .setTitle("許可提醒")
+                .setMessage(permission_desc)
+                .setPositiveButton("Grant Permission", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent rintent = new Intent();
-                        rintent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-                        rintent.setData(uri);
-                        startActivity(rintent);
+                        requestPermissionLauncherNotification.launch(permissions[0]);
                         dialogInterface.dismiss();
                     }
                 })
-                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        dialogInterface.dismiss();
                     }
                 })
                 .show();
@@ -288,39 +281,27 @@ public class SettingActivity extends AppCompatActivity{
 
     //~~~~~ step5
     private void setReminder() {
-        Toast.makeText(this, "Reminder Set!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "提醒已開啟!", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(SettingActivity.this, ReminderBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        // 設定提醒時間為每天下午2:00
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 20);
-        calendar.set(Calendar.MINUTE, 42);
-        calendar.set(Calendar.SECOND, 0);
+        Calendar currentTime = Calendar.getInstance();
 
-        // 使用 setInexactRepeating 設定每天觸發提醒
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendingIntent);
-    }
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.set(Calendar.HOUR_OF_DAY, 1);
+        alarmTime.set(Calendar.MINUTE, 50);
+        alarmTime.set(Calendar.SECOND, 0);
 
-    //~~~~~ step6
-    private void createNotificationChannel() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "LemubitReminderChannel";
-            String description = "Channel for Lemubit Reminder";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("notifyLemubit", name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+        if (currentTime.after(alarmTime)) {
+            alarmTime.add(Calendar.DAY_OF_YEAR, 1); // 將提醒時間增加一天
         }
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
     }
+
 
     private void saveVolumeProgress(SeekBar seekBar, String key) {
         if (seekBar.getId() == R.id.bg_seekbar || seekBar.getId() == R.id.game_seekbar) {
@@ -357,7 +338,7 @@ public class SettingActivity extends AppCompatActivity{
     }
 
     private void uploadImage() {
-        //String newNickname = editNickname.getText().toString();
+//        String newNickname = editNickname.getText().toString();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
