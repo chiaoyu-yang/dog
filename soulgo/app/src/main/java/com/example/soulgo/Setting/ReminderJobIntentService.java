@@ -29,7 +29,6 @@ public class ReminderJobIntentService extends JobIntentService {
         createNotificationChannel();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "notifyLemubit")
-                .setSmallIcon(R.drawable.ic_baseline_accessible_forward_24)
                 .setContentTitle("汪汪 汪 汪汪汪汪 嗚 嗚嗚")
                 .setContentText("該上線囉 狗狗們需要你的陪伴 . . .")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

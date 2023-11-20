@@ -16,7 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,6 +28,8 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Beauty.BeautyActivity;
 import com.example.soulgo.Book.BookActivity;
+import com.example.soulgo.Identify.CameraActivity;
+import com.example.soulgo.Identify.ClassifierActivity;
 import com.example.soulgo.News.NewsActivity;
 import com.example.soulgo.News.PostActivity;
 import com.example.soulgo.News.PublishActivity;
@@ -37,9 +41,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,10 +79,21 @@ public class HomeActivity extends AppCompatActivity {
         final LinearLayout startRank = findViewById(R.id.startRankBtn);
         final LinearLayout startBook = findViewById(R.id.startBookBtn);
         final LinearLayout startBtn = findViewById(R.id.startQuizBtn);
+        final LinearLayout identifyBtn = findViewById(R.id.identifyBtn);
         final ImageButton startimageBtn = findViewById(R.id.imageButton);
         final ImageButton startpublish = findViewById(R.id.imageButton4);
         final ImageButton startNewsBtn = findViewById(R.id.imageButton3);
         final ImageButton startBeauty = findViewById(R.id.beautybutton);
+
+        identifyBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(HomeActivity.this, ClassifierActivity.class);
+                        startActivity(intent);
+                        Beep.playBeepSound(getApplicationContext());
+                    }
+                });
 
 
         startBtn.setOnClickListener(
@@ -276,10 +293,6 @@ public class HomeActivity extends AppCompatActivity {
                 .error(R.drawable.error_image)
                 .into(imageview);
     }
-
-
-
-
 
 
     private void getPost() {
