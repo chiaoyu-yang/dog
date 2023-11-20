@@ -8,6 +8,19 @@
     tools:context=".Identify.CameraActivity">
 
     <ImageButton
+        android:id="@+id/closeButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="25dp"
+        android:background="@drawable/back"
+        android:translationZ="200dp"
+        android:visibility="visible"
+        />
+
+    <ImageButton
         android:id="@+id/closeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +30,10 @@
         android:layout_marginLeft="25dp"
         android:background="@drawable/back"
         android:translationZ="200dp"
+        android:visibility="gone"
         />
+
+
 
     <ImageButton
         android:id="@+id/shareButton"
