@@ -127,7 +127,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="背景音樂"
+                android:text="遊戲音樂"
                 android:textColor="@color/text_color"
                 android:textSize="16sp"
                 android:gravity="center_vertical"/>
