@@ -40,7 +40,7 @@ public class RankingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rank);
         Objects.requireNonNull(getSupportActionBar()).hide();
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         textViewDivision = findViewById(R.id.mydivision);
         textViewUsername = findViewById(R.id.myusername);
