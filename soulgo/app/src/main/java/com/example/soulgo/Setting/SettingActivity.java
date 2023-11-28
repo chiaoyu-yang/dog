@@ -291,8 +291,8 @@ public class SettingActivity extends AppCompatActivity{
         Calendar currentTime = Calendar.getInstance();
 
         Calendar alarmTime = Calendar.getInstance();
-        alarmTime.set(Calendar.HOUR_OF_DAY, 2);
-        alarmTime.set(Calendar.MINUTE, 16);
+        alarmTime.set(Calendar.HOUR_OF_DAY, 14);
+        alarmTime.set(Calendar.MINUTE, 0);
         alarmTime.set(Calendar.SECOND, 0);
 
         if (currentTime.after(alarmTime)) {
