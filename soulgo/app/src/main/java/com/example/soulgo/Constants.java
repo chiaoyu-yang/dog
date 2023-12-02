@@ -20,9 +20,9 @@ public class Constants {
     public static final String URL_Booklist = ROOT_URL + "booklist.php";
 
     public static final String URL_setting_image = ROOT_URL + "updateSettingImage.php";
-    public static final String URL_setting_nickname = ROOT_URL + "/updateSettingNickname.php";
+    public static final String URL_setting_nickname = ROOT_URL + "updateSettingNickname.php";
 
-    public static final String URL_publish = ROOT_URL + "publish.php";
+    public static final String URL_publish = ROOT_URL + "publish.ph";
 
     public static final String URL_UPDATE_DETAIL = ROOT_URL + "updateDetail.php";
     public static final String URL_DETAIL_REPORT = ROOT_URL + "detailReport.php";

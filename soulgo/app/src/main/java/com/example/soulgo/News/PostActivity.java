@@ -115,7 +115,7 @@ public class PostActivity extends AppCompatActivity {
 
                     if (data.isError()) {
                         Log.e("soulgo", data.getMessage());
-                        Toast.makeText(getApplicationContext(), "Error: " + data.getMessage(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getApplicationContext(), "Error: " + data.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         PostAdapter adapter = new PostAdapter(PostActivity.this, messageData);
                         postRecview.setAdapter(adapter);
@@ -128,7 +128,7 @@ public class PostActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PostResponseModel> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "網路錯誤", Toast.LENGTH_SHORT).show();
             }
         });
     }
