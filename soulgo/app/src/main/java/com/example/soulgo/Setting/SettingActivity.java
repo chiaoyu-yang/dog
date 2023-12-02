@@ -47,9 +47,6 @@ import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.MainActivity;
 import com.example.soulgo.R;
-import com.example.soulgo.Setting.BackgroundMusicService;
-import com.example.soulgo.Setting.Beep;
-import com.example.soulgo.Setting.ReminderBroadcast;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -139,7 +136,10 @@ public class SettingActivity extends AppCompatActivity{
         to_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadNickname();
+                String oldNickname = editNickname.getText().toString();
+                if (!oldNickname.equals(nickname)) {
+                    uploadNickname();
+                }
                 openactivity();
                 Beep.playBeepSound(getApplicationContext());
             }
@@ -395,24 +395,30 @@ public class SettingActivity extends AppCompatActivity{
     }
 
     private void uploadNickname() {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         String newNickname = editNickname.getText().toString();
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("nickname", newNickname);
         editor.apply();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_setting_nickname,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("UploadResponse", response);
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean error = jsonObject.getBoolean("error");
-                            String message = jsonObject.getString("message");
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean error = jsonResponse.getBoolean("error");
 
-                            //Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
+                            if (!error) {
+
+
+                                Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
+                                // 可以在这里进行其他处理，例如更新 UI
+                            } else {
+                                Toast.makeText(SettingActivity.this, "暱稱重覆", Toast.LENGTH_SHORT).show();
+                            }
 
                             // 在這裡處理回調邏輯
                             // 例如，更新 UI 或顯示訊息給使用者
