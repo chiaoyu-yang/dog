@@ -60,7 +60,6 @@ public class PostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         newsId = intent.getStringExtra("newsId");
-        uid = intent.getStringExtra("uid");
         nickname = intent.getStringExtra("nickname");
 
         postTitle = findViewById(R.id.postTitle);
@@ -74,7 +73,9 @@ public class PostActivity extends AppCompatActivity {
 
         userName.setText(nickname);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs_" + uid, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
+        uid = sharedPreferences.getString("uid", "");
+
         isLiked = getLikeStatus(newsId);
         if (isLiked) {
             postLikeBtn.setImageResource(R.drawable.active_like);
