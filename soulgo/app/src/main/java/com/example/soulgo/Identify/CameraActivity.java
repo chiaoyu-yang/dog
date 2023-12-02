@@ -276,18 +276,6 @@ public abstract class CameraActivity extends FragmentActivity
             readyForNextImage();
         });
 
-        resultsView.setOnClickListener(v -> {
-            if (currentRecognitions == null || continuousInference || currentRecognitions.size() == 0)
-                return;
-
-            final Intent i = new Intent(getApplicationContext(), SimpleListActivity.class);
-            i.putStringArrayListExtra("recogs", currentRecognitions);
-            startActivity(i);
-            });
-
-        pick_image2.setOnClickListener(v -> {
-            pickImage();
-        });
     }
 
     // 創建選單

@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,6 +34,9 @@ import com.example.soulgo.Constants;
 import com.example.soulgo.R;
 import com.example.soulgo.Setting.Beep;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class VotePublish extends AppCompatActivity {
 
@@ -176,12 +180,24 @@ public class VotePublish extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "成功上傳", Toast.LENGTH_SHORT).show();
-                            uploadTitleEditText.setText("");
-                            ImageView clickToUploadImg = findViewById(R.id.clickToUploadImg);
-                            clickToUploadImg.setImageResource(R.drawable.publish_1);
-                            findViewById(R.id.ic_outline_add_container).setVisibility(View.VISIBLE);
-                            findViewById(R.id.upload).setVisibility(View.VISIBLE);
+                            Log.d("UploadResponse", response); // 添加这行输出
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+                                String message = jsonResponse.getString("message");
+                                if ("發布成功".equals(message)) {
+                                    Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "成功上傳", Toast.LENGTH_SHORT).show();
+                                    uploadTitleEditText.setText("");
+                                    ImageView clickToUploadImg = findViewById(R.id.clickToUploadImg);
+                                    clickToUploadImg.setImageResource(R.drawable.publish_1);
+                                    findViewById(R.id.ic_outline_add_container).setVisibility(View.VISIBLE);
+                                    findViewById(R.id.upload).setVisibility(View.VISIBLE);
+                                } else {
+                                    Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "上傳失敗，請再試一次", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     },
                     new Response.ErrorListener() {
