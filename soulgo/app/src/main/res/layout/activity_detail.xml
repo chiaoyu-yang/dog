@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/detail_background"
+            android:id="@+id/detailContainer"
             android:padding="32dp">
 
             <LinearLayout
@@ -74,7 +75,7 @@
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="最後編輯人: 王小明"
+                        android:text="最後編輯人: 還沒有人編輯"
                         android:textSize="12dp" />
 
 
