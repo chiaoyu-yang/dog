@@ -103,7 +103,7 @@ public class PostActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        ApiService apiService = retrofit.create(ApiService.class);
+        MessageApiService apiService = retrofit.create(MessageApiService.class);
 
         Call<PostResponseModel> call = apiService.getDataById(newsId);
 
@@ -116,7 +116,6 @@ public class PostActivity extends AppCompatActivity {
 
                     if (data.isError()) {
                         Log.e("soulgo", data.getMessage());
-                        // Toast.makeText(getApplicationContext(), "Error: " + data.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         PostAdapter adapter = new PostAdapter(PostActivity.this, messageData);
                         postRecview.setAdapter(adapter);

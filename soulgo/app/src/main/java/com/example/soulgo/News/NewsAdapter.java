@@ -1,5 +1,6 @@
 package com.example.soulgo.News;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,11 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
 
     private List<NewsModel> data;
-
+    private Context context;
     private ItemClickListener itemClickListener;
 
-    public NewsAdapter(List<NewsModel> data) {
+    public NewsAdapter(Context context, List<NewsModel> data) {
+        this.context = context;
         this.data = data;
     }
 
