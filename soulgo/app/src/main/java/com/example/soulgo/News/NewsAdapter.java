@@ -69,16 +69,26 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (itemClickListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            NewsModel news = data.get(position);
-                            itemClickListener.onItemClick(news.getId());
-                        }
-                    }
+                    handleItemClick();
                 }
             });
 
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    handleItemClick();
+                }
+            });
+        }
+
+        private void handleItemClick() {
+            if (itemClickListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    NewsModel news = data.get(position);
+                    itemClickListener.onItemClick(news.getId());
+                }
+            }
         }
     }
 }

@@ -253,7 +253,10 @@
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
                     android:id="@+id/items_news_left"
-                    card_view:cardCornerRadius="10dp">
+                    card_view:cardCornerRadius="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="onCardClick">
 
                     <ImageButton
                         android:id="@+id/booklist_image_button_left"
@@ -261,7 +264,10 @@
                         android:layout_height="140dp"
                         android:background="@drawable/news_item_2"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/error_image" />
+                        android:src="@drawable/error_image"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="onImageButtonClick"/>
 
                     <TextView
                         android:id="@+id/newsTitle_left"
@@ -296,7 +302,10 @@
                     tools:ignore="MissingConstraints"
                     android:layout_weight="1"
                     android:id="@+id/items_news_right"
-                    card_view:cardCornerRadius="10dp">
+                    card_view:cardCornerRadius="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="onCardClick">
 
                     <ImageButton
                         android:id="@+id/booklist_image_button_right"
@@ -304,7 +313,10 @@
                         android:layout_height="140dp"
                         android:background="@drawable/news_item_2"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/error_image" />
+                        android:src="@drawable/error_image"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="onImageButtonClick"/>
 
                     <TextView
                         android:id="@+id/newsTitle_right"

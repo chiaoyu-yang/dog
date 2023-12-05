@@ -219,7 +219,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         getPost();
-        newsClick();
+        //newsClick();
     }
 
     // 處理Google帳戶資訊
@@ -344,21 +344,9 @@ public class HomeActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void newsClick() {
-        findViewById(R.id.items_news_left).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startPost(nid1);
-            }
-        });
-        findViewById(R.id.items_news_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startPost(nid2);
-            }
-        });
-    }
+    public void onCardClick(View view) {startPost(view.getId() == R.id.items_news_left ? nid1 : nid2);}
 
+    public void onImageButtonClick(View view){startPost(view.getId() == R.id.booklist_image_button_left ? nid1 : nid2);}
     private void startPost(String nid) {
         Intent intent = new Intent(getApplicationContext(), PostActivity.class);
         intent.putExtra("newsId", nid);
