@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -48,6 +51,8 @@ public class PostActivity extends AppCompatActivity {
     private boolean isLiked;
     private String action;
     private EditText messageInput;
+    private static final long CLICK_INTERVAL_TIME = 300;
+    private static long lastClickTime = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,12 +94,28 @@ public class PostActivity extends AppCompatActivity {
         backBtnProcess();
         sendMessageBtn();
         getMessage();
+        clickImg();
         isLiked = getLikeStatus(newsId);
         if (isLiked) {
             postLikeBtn.setImageResource(R.drawable.active_like);
         } else {
             postLikeBtn.setImageResource(R.drawable.like_button);
         }
+    }
+
+    private void clickImg() {
+        postImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long currentTomeMilles = SystemClock.uptimeMillis();
+                if (currentTomeMilles - lastClickTime < CLICK_INTERVAL_TIME) {
+                    Log.e("soulGoooo", "雙擊事件");
+                    likeEvent();
+                    return;
+                }
+                lastClickTime = currentTomeMilles;
+            }
+        });
     }
 
     private void getMessage() {
@@ -189,20 +210,24 @@ public class PostActivity extends AppCompatActivity {
         postLikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isLiked = !isLiked;
-                saveLikeStatus(newsId, isLiked);
-
-                if (isLiked) {
-                    postLikeBtn.setImageResource(R.drawable.active_like);
-                    action = "like";
-                } else {
-                    postLikeBtn.setImageResource(R.drawable.like_button);
-                    action = "dislike";
-                }
-
-                updatePostLike();
+                likeEvent();
             }
         });
+    }
+
+    private void likeEvent() {
+        isLiked = !isLiked;
+        saveLikeStatus(newsId, isLiked);
+
+        if (isLiked) {
+            postLikeBtn.setImageResource(R.drawable.active_like);
+            action = "like";
+        } else {
+            postLikeBtn.setImageResource(R.drawable.like_button);
+            action = "dislike";
+        }
+
+        updatePostLike();
     }
 
     private void saveLikeStatus(String newsId, boolean isLiked) {
