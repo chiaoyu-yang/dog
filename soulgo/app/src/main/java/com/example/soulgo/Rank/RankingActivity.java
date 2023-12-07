@@ -60,12 +60,25 @@ public class RankingActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
 
     }
 
 
     public void openactivity() {
         Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void openactivity2() {
+        Intent intent = new Intent(this, RankDirectionsActivity.class);
         startActivity(intent);
     }
 

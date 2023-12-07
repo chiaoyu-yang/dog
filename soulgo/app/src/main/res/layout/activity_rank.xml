@@ -17,6 +17,16 @@
         android:src="@drawable/back"
         android:padding="10dp"/>
 
+    <ImageButton
+        android:id="@+id/circle_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/background_color"
+        android:src="@drawable/circle_help"
+        android:padding="10dp"/>
+
     <TextView
         android:id="@+id/ranktitle"
         android:layout_width="wrap_content"

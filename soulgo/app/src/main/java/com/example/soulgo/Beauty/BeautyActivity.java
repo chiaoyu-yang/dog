@@ -24,6 +24,7 @@ import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
 import com.example.soulgo.Setting.Beep;
+import com.example.soulgo.Setting.SettingDireationsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,15 @@ public class BeautyActivity extends AppCompatActivity {
         vote = findViewById(R.id.vote);
         image = findViewById(R.id.image);
 
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
         to_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,17 +92,17 @@ public class BeautyActivity extends AppCompatActivity {
         });
 
         fetchTopBeautyData();
+    }
 
-
+    public void openactivity2() {
+        Intent intent = new Intent(this, BeautyDireationsActivity.class);
+        startActivity(intent);
     }
 
     private void openHome() {
     Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
-
-
-
 
     public void openVoteActivity() {
     Intent intent = new Intent(this, VoteActivity.class);

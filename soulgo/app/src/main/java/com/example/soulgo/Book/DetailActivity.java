@@ -7,8 +7,6 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -17,13 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
+import com.example.soulgo.Rank.RankDirectionsActivity;
 import com.example.soulgo.Setting.Beep;
 
 import java.util.HashMap;
@@ -56,11 +53,8 @@ public class DetailActivity extends AppCompatActivity {
     private ImageButton editButton, backBtn, warnBtn;
     private RequestQueue requestQueue;
     private ImageView dog_image;
-    private ScrollView detailContainer;
 
     private ViewGroup.MarginLayoutParams containerLayoutParam;
-
-    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +81,6 @@ public class DetailActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.back);
         lastName = findViewById(R.id.lastName);
         warnBtn = findViewById(R.id.warnBtn);
-        detailContainer = findViewById(R.id.detailContainer);
 
         Intent intent = getIntent();
         Bid = intent.getStringExtra("bookId");
@@ -107,52 +100,19 @@ public class DetailActivity extends AppCompatActivity {
             detailLayout.setVisibility(View.VISIBLE);
         }
 
-        // 初始化 GestureDetector
-        gestureDetector = new GestureDetector(this, new GestureListener());
-
-        detailContainer.setOnTouchListener(new View.OnTouchListener() {
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // 將觸摸事件傳遞給 GestureDetector
-                return gestureDetector.onTouchEvent(event);
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
     }
 
-    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            float distanceX = e2.getX() - e1.getX();
-            float distanceY = e2.getY() - e1.getY();
-            int bid = Integer.parseInt(Bid);
-
-            if (Math.abs(distanceX) > Math.abs(distanceY) &&
-                    Math.abs(distanceX) > SWIPE_THRESHOLD &&
-                    Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                if (distanceX > 0) {
-                    // 往右滑動
-                    // 在這裡處理往右滑動的操作
-                    if (bid > 1) {
-                        bid -= 1;
-                        Bid =  Integer.toString(bid);
-                        fetchDetail();
-                    }
-                } else {
-                    // 往左滑動
-                    // 在這裡處理往左滑動的操作
-                    if (bid < 121) {
-                        bid += 1;
-                        Bid =  Integer.toString(bid);
-                        fetchDetail();
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
+    public void openactivity2() {
+        Intent intent = new Intent(this, DetailDireationsActivity.class);
+        startActivity(intent);
     }
 
     private void warnAction() {

@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -25,7 +24,6 @@ import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,6 +47,10 @@ import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.MainActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Rank.RankDirectionsActivity;
+import com.example.soulgo.Setting.BackgroundMusicService;
+import com.example.soulgo.Setting.Beep;
+import com.example.soulgo.Setting.ReminderBroadcast;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -81,7 +83,6 @@ public class SettingActivity extends AppCompatActivity{
     };
 
     boolean permission_post_notification = false;
-    boolean isUploadExecuted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,15 @@ public class SettingActivity extends AppCompatActivity{
                 Toast.makeText(this, "已授予通知許可..", Toast.LENGTH_SHORT).show();
                 setReminder();
 
+            }
+        });
+
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
             }
         });
 
@@ -136,44 +146,10 @@ public class SettingActivity extends AppCompatActivity{
         ImageButton to_home = findViewById(R.id.back);
         ImageButton logout = findViewById(R.id.logout);
 
-
-
-
-        editNickname.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                Rect r = new Rect();
-                editNickname.getWindowVisibleDisplayFrame(r);
-
-                int screenHeight = editNickname.getRootView().getHeight();
-
-                int keypadHeight = screenHeight - r.bottom;
-
-                // 如果鍵盤高度小於一定閾值，即鍵盤被收起
-                if (keypadHeight < screenHeight * 0.15) {
-                    // 確保上一次的 uploadNickname() 已經執行過，避免重複執行
-                    if (!isUploadExecuted) {
-                        String oldNickname = editNickname.getText().toString();
-                        if (!oldNickname.equals(nickname)) {
-                            uploadNickname();
-                            isUploadExecuted = true; // 設置標誌為已執行
-                        }
-
-                    }
-                } else {
-                    // 鍵盤沒有被收起，重置標誌
-                    isUploadExecuted = false;
-                }
-
-                return true;
-            }
-        });
-
-
-
         to_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                uploadNickname();
                 openactivity();
                 Beep.playBeepSound(getApplicationContext());
             }
@@ -263,6 +239,11 @@ public class SettingActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    public void openactivity2() {
+        Intent intent = new Intent(this, SettingDireationsActivity.class);
+        startActivity(intent);
     }
 
     //~~~~~ step2
@@ -429,35 +410,31 @@ public class SettingActivity extends AppCompatActivity{
     }
 
     private void uploadNickname() {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         String newNickname = editNickname.getText().toString();
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nickname", newNickname);
+        editor.apply();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_setting_nickname,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("UploadResponse", response);
                         try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean error = jsonResponse.getBoolean("error");
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean error = jsonObject.getBoolean("error");
+                            String message = jsonObject.getString("message");
 
-                            if (!error) {
-                                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("nickname", newNickname);
-                                editor.apply();
-                                Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
-                                // 可以在这里进行其他处理，例如更新 UI
-                            } else {
-                                Toast.makeText(SettingActivity.this, "暱稱重覆", Toast.LENGTH_SHORT).show();
-                            }
+                            //Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
 
                             // 在這裡處理回調邏輯
                             // 例如，更新 UI 或顯示訊息給使用者
                         } catch (JSONException e) {
                             // JSON 解析錯誤
                             e.printStackTrace();
-                            Toast.makeText(SettingActivity.this, "暱稱重覆，請修改暱稱", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingActivity.this, "暱稱重覆", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

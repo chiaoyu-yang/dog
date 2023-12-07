@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Rank.RankDirectionsActivity;
 import com.example.soulgo.Setting.Beep;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,14 +65,26 @@ public class BookActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
 
         setupSearch();
-
 
     }
 
     public void openactivity() {
         Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void openactivity2() {
+        Intent intent = new Intent(this, BookDireationsActivity.class);
         startActivity(intent);
     }
 

@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;import com.example.soulgo.R;import com.example.soulgo.HomeActivity;
+import com.example.soulgo.Rank.RankDirectionsActivity;
 import com.example.soulgo.Setting.Beep;
 
 import java.util.HashMap;import java.util.Map;
@@ -93,8 +94,20 @@ public class QuizResults extends AppCompatActivity {
             }
         });
 
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
     }
 
-
+    public void openactivity2() {
+        Intent intent = new Intent(this, QuizResultDireation.class);
+        startActivity(intent);
+    }
 
 }
