@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -79,6 +81,7 @@ public class SettingActivity extends AppCompatActivity{
     };
 
     boolean permission_post_notification = false;
+    boolean isUploadExecuted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,13 +136,44 @@ public class SettingActivity extends AppCompatActivity{
         ImageButton to_home = findViewById(R.id.back);
         ImageButton logout = findViewById(R.id.logout);
 
+
+
+
+        editNickname.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                Rect r = new Rect();
+                editNickname.getWindowVisibleDisplayFrame(r);
+
+                int screenHeight = editNickname.getRootView().getHeight();
+
+                int keypadHeight = screenHeight - r.bottom;
+
+                // 如果鍵盤高度小於一定閾值，即鍵盤被收起
+                if (keypadHeight < screenHeight * 0.15) {
+                    // 確保上一次的 uploadNickname() 已經執行過，避免重複執行
+                    if (!isUploadExecuted) {
+                        String oldNickname = editNickname.getText().toString();
+                        if (!oldNickname.equals(nickname)) {
+                            uploadNickname();
+                            isUploadExecuted = true; // 設置標誌為已執行
+                        }
+
+                    }
+                } else {
+                    // 鍵盤沒有被收起，重置標誌
+                    isUploadExecuted = false;
+                }
+
+                return true;
+            }
+        });
+
+
+
         to_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String oldNickname = editNickname.getText().toString();
-                if (!oldNickname.equals(nickname)) {
-                    uploadNickname();
-                }
                 openactivity();
                 Beep.playBeepSound(getApplicationContext());
             }
@@ -397,10 +431,6 @@ public class SettingActivity extends AppCompatActivity{
     private void uploadNickname() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String newNickname = editNickname.getText().toString();
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("nickname", newNickname);
-        editor.apply();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_setting_nickname,
                 new Response.Listener<String>() {
@@ -412,8 +442,10 @@ public class SettingActivity extends AppCompatActivity{
                             boolean error = jsonResponse.getBoolean("error");
 
                             if (!error) {
-
-
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("nickname", newNickname);
+                                editor.apply();
                                 Toast.makeText(SettingActivity.this, "暱稱更新成功", Toast.LENGTH_SHORT).show();
                                 // 可以在这里进行其他处理，例如更新 UI
                             } else {
@@ -425,7 +457,7 @@ public class SettingActivity extends AppCompatActivity{
                         } catch (JSONException e) {
                             // JSON 解析錯誤
                             e.printStackTrace();
-                            Toast.makeText(SettingActivity.this, "暱稱重覆", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingActivity.this, "暱稱重覆，請修改暱稱", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
