@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission
         android:name="android.permission.READ_PHONE_STATE"
         tools:node="remove" />
@@ -24,10 +23,13 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.Soulgo"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
+        <activity
+            android:name=".Quiz.QuizResultDireation"
+            android:exported="false" />
         <activity
             android:name=".Quiz.QuizResults"
             android:exported="false" />
@@ -41,7 +43,7 @@
             android:name=".Rank.RankingActivity"
             android:exported="false" />
         <activity
-            android:name=".Book.BookActivity"
+            android:name=".Rank.RankDirectionsActivity"
             android:exported="false" />
         <activity
             android:name=".News.NewsActivity"
@@ -53,7 +55,16 @@
             android:name=".News.PublishActivity"
             android:exported="false" />
         <activity
+            android:name=".Book.BookActivity"
+            android:exported="false" />
+        <activity
             android:name=".Book.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Book.BookDireationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Book.DetailDireationsActivity"
             android:exported="false" />
         <activity
             android:name=".Beauty.VoteActivity"
@@ -65,13 +76,22 @@
             android:name=".Beauty.VotePublish"
             android:exported="false" />
         <activity
+            android:name=".Beauty.BeautyDireationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Beauty.VotePublishDireation"
+            android:exported="false" />
+        <activity
             android:name=".Setting.SettingActivity"
             android:exported="false" />
         <activity
+            android:name=".Setting.SettingDireationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Identify.ClassifierActivity"
+            android:exported="false"
             android:label="@string/activity_name_classification"
             android:screenOrientation="portrait"
-            android:exported="false"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -81,9 +101,7 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Identify.SimpleListActivity" />
-
+        <activity android:name=".Identify.SimpleListActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -94,8 +112,9 @@
             </intent-filter>
         </activity>
 
-
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <service android:name=".Setting.BackgroundMusicService" />
         <service android:name=".Setting.Beep" />
@@ -103,6 +122,7 @@
             android:name=".Setting.ReminderJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name=".Setting.ReminderBroadcast"/>
+        <receiver android:name=".Setting.ReminderBroadcast" />
     </application>
+
 </manifest>
