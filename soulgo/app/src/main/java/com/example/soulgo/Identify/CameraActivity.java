@@ -95,7 +95,7 @@ public abstract class CameraActivity extends FragmentActivity
     ToggleButton continuousInferenceButton;
     ImageView imageViewFromGallery, imageView2;
     ProgressBar progressBar;
-    TextView title;
+    TextView title, title2;
     private Handler handler;
     private HandlerThread handlerThread;
     private boolean isProcessingFrame = false;
@@ -192,6 +192,7 @@ public abstract class CameraActivity extends FragmentActivity
         mChart2 = findViewById(R.id.chart2);
         progressBar = findViewById(R.id.progressBar);
         title = findViewById(R.id.title);
+        title2 = findViewById(R.id.title2);
         //new line20230330
         progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightgreen)));
 
