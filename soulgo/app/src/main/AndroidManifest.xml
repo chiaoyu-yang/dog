@@ -27,6 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Soulgo"
         tools:targetApi="31">
+
         <activity
             android:name=".Quiz.QuizResultDireation"
             android:exported="false" />
@@ -53,6 +54,9 @@
             android:exported="false" />
         <activity
             android:name=".News.PublishActivity"
+            android:exported="false" />
+        <activity
+            android:name=".News.NewsPublishDireation"
             android:exported="false" />
         <activity
             android:name=".Book.BookActivity"
@@ -86,6 +90,12 @@
             android:exported="false" />
         <activity
             android:name=".Setting.SettingDireationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Identify.ScanResultDireation"
+            android:exported="false" />
+        <activity
+            android:name=".Identify.ScanDireationActivity"
             android:exported="false" />
         <activity
             android:name=".Identify.ClassifierActivity"

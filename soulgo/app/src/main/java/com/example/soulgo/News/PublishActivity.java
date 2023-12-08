@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.soulgo.Beauty.VotePublishDireation;
 import com.example.soulgo.Constants;
 import com.example.soulgo.R;
 import com.example.soulgo.HomeActivity;
@@ -130,10 +131,21 @@ public class PublishActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
     }
 
-
-
+    public void openactivity2() {
+        Intent intent = new Intent(this, NewsPublishDireation.class);
+        startActivity(intent);
+    }
 
     private void pickImage() {
         ImagePicker.with(this)

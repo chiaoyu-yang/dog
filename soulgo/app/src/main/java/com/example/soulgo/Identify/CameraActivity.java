@@ -49,6 +49,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.MainActivity;
+import com.example.soulgo.News.NewsPublishDireation;
 import com.example.soulgo.R;
 import com.example.soulgo.Setting.Beep;
 import com.example.soulgo.Setting.SettingActivity;
@@ -91,7 +92,7 @@ public abstract class CameraActivity extends FragmentActivity
     AtomicBoolean snapShot = new AtomicBoolean(false);
     boolean continuousInference = false;
     boolean imageSet = false;
-    ImageButton cameraButton, shareButton, closeButton,closeButton2, saveButton, pick_image2;
+    ImageButton cameraButton, shareButton, closeButton,closeButton2, saveButton, pick_image2,circle_help1,circle_help2;
     ToggleButton continuousInferenceButton;
     ImageView imageViewFromGallery, imageView2;
     ProgressBar progressBar;
@@ -162,6 +163,34 @@ public abstract class CameraActivity extends FragmentActivity
                 Beep.playBeepSound(getApplicationContext());
             }
         });
+
+        ImageButton button2 = findViewById(R.id.circle_help1);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
+        ImageButton button3 = findViewById(R.id.circle_help2);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity3();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+    }
+
+    public void openactivity2() {
+        Intent intent = new Intent(this, ScanDireationActivity.class);
+        startActivity(intent);
+    }
+
+    public void openactivity3() {
+        Intent intent = new Intent(this, ScanResultDireation.class);
+        startActivity(intent);
     }
 
     @Override
@@ -193,6 +222,8 @@ public abstract class CameraActivity extends FragmentActivity
         progressBar = findViewById(R.id.progressBar);
         title = findViewById(R.id.title);
         title2 = findViewById(R.id.title2);
+        circle_help1 = findViewById(R.id.circle_help1);
+        circle_help2 = findViewById(R.id.circle_help2);
         //new line20230330
         progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.lightgreen)));
 
@@ -743,6 +774,8 @@ public abstract class CameraActivity extends FragmentActivity
         resultsView.setEnabled(enabled);
         title.setVisibility(visibility);
         title.setEnabled(enabled);
+        circle_help2.setVisibility(visibility);
+        circle_help2.setEnabled(enabled);
     }
 
     void setButtonsVisibility2(final int visibility) {
