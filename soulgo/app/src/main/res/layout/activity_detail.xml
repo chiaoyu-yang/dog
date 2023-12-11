@@ -19,16 +19,6 @@
             android:layout_marginStart="@dimen/back_start"
             android:layout_marginTop="30dp"
             android:background="@drawable/back" />
-
-        <ImageButton
-            android:id="@+id/circle_help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/background_color"
-            android:src="@drawable/circle_help"
-            android:padding="10dp"/>
     </RelativeLayout>
 
     <ImageView
@@ -47,7 +37,7 @@
         android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/detail_background"
+            android:id="@+id/detailContainer"
             android:padding="32dp">
 
             <LinearLayout
@@ -84,7 +75,7 @@
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="最後編輯人: 王小明"
+                        android:text="最後編輯人: 還沒有人編輯"
                         android:textSize="12dp" />
 
 

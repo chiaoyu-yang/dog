@@ -236,7 +236,7 @@ public class PublishActivity extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(PublishActivity.this, "發生錯誤，請再試一次", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PublishActivity.this, "網路不穩，請再試一次", Toast.LENGTH_SHORT).show();
                             }
                         }
 

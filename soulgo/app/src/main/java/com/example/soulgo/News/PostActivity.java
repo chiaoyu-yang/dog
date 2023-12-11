@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PostActivity extends AppCompatActivity {
     private RecyclerView postRecview;
     private ImageButton backBtn, postLikeBtn, sendButton;
-    private String newsId, uid, nickname;
+    private String newsId, uid, nick;
     private TextView postTitle, postContent, postLike, userName;
     private ImageView postImage;
     private boolean isLiked;
@@ -65,7 +65,6 @@ public class PostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         newsId = intent.getStringExtra("newsId");
-        nickname = intent.getStringExtra("nickname");
 
         postTitle = findViewById(R.id.postTitle);
         postContent = findViewById(R.id.postContent);
@@ -76,10 +75,12 @@ public class PostActivity extends AppCompatActivity {
         messageInput = findViewById(R.id.messageInput);
         userName = findViewById(R.id.userName);
 
-        userName.setText(nickname);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefsFile", MODE_PRIVATE);
         uid = sharedPreferences.getString("uid", "");
+        nick = sharedPreferences.getString("nickname", "");
+        userName.setText(nick);
 
         isLiked = getLikeStatus(newsId);
         if (isLiked) {
