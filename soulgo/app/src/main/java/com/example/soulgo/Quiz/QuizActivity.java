@@ -9,11 +9,15 @@ import android.media.PlaybackParams;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -64,9 +68,21 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(0x80000000, 0x80000000);
         setContentView(R.layout.activity_quiz);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finishQuiz();
+            }
+        };
+
+        // 將監聽器加入返回鍵調度器
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
 
         counter = MediaPlayer.create(this, R.raw.counter);
         correct = MediaPlayer.create(this,R.raw.correct);
@@ -135,26 +151,28 @@ public class QuizActivity extends AppCompatActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 停止计时器
-                quizTimer.cancel();
-                counter.stop();
-
-                handler.removeCallbacksAndMessages(null); // 取消延迟任务
-
-                // 跳转到结果页面，传回答对和答错题数跳转到结果页面
-                Intent intent = new Intent(QuizActivity.this, QuizResults.class);
-                intent.putExtra("correct", getCorrectAnswers());
-                intent.putExtra("incorrect", getInCorrectAnswers());
-                intent.putExtra("nickname", nickName);
-                startActivity(intent);
-                finish(); // 结束当前的 QuizActivity
-                Beep.playBeepSound(getApplicationContext());
+                finishQuiz();
             }
         });
     }
 
 
+    private void finishQuiz() {
+        // 停止计时器
+        quizTimer.cancel();
+        counter.stop();
 
+        handler.removeCallbacksAndMessages(null); // 取消延迟任务
+
+        // 跳转到结果页面，传回答对和答错题数跳转到结果页面
+        Intent intent = new Intent(QuizActivity.this, QuizResults.class);
+        intent.putExtra("correct", getCorrectAnswers());
+        intent.putExtra("incorrect", getInCorrectAnswers());
+        intent.putExtra("nickname", nickName);
+        startActivity(intent);
+        finish(); // 结束当前的 QuizActivity
+        Beep.playBeepSound(getApplicationContext());
+    }
 
 
     private void sendRequest() {
