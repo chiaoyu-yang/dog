@@ -3,6 +3,7 @@ package com.example.soulgo.News;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ public class NewsPublishDireation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_publish_direation);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         ImageButton button = findViewById(R.id.back);
         button.setOnClickListener(new View.OnClickListener() {

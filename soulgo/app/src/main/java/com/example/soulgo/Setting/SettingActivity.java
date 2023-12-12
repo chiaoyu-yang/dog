@@ -400,8 +400,6 @@ public class SettingActivity extends AppCompatActivity{
     }
 
     private void uploadImage() {
-//        String newNickname = editNickname.getText().toString();
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(

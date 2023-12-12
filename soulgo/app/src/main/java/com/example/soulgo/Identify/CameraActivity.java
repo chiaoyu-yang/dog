@@ -308,6 +308,11 @@ public abstract class CameraActivity extends FragmentActivity
             readyForNextImage();
         });
 
+
+        pick_image2.setOnClickListener(v -> {
+            pickImage();
+        });
+
     }
 
     // 創建選單
@@ -967,9 +972,6 @@ public abstract class CameraActivity extends FragmentActivity
             fileUrl = MediaStore.Images.Media.insertImage(getContentResolver(), takeScreenshot(), fileName, currentRecognitions.toString());
             alreadyAdded = true;
         }
-
-        saveButton.setVisibility(View.GONE);
-        saveButton.setEnabled(false);
     }
 
     protected void setupShareButton() {
