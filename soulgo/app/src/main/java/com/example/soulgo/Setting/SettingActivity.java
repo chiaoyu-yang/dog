@@ -387,10 +387,11 @@ public class SettingActivity extends AppCompatActivity{
             selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byte[] imageBytes = byteArrayOutputStream.toByteArray();
             base64EncodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-            uploadImage();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        uploadImage();
 
     }
 
