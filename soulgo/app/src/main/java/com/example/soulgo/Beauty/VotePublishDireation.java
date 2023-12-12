@@ -40,7 +40,7 @@ public class VotePublishDireation extends AppCompatActivity {
     }
 
     public void openactivity() {
-        Intent intent = new Intent(this, BeautyActivity.class);
+        Intent intent = new Intent(this, VotePublish.class);
         startActivity(intent);
     }
 }

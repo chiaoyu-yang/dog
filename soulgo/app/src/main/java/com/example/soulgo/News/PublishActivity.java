@@ -236,7 +236,7 @@ public class PublishActivity extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(PublishActivity.this, "網路不穩，請再試一次", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PublishActivity.this, "發生錯誤，請再試一次", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -246,8 +246,9 @@ public class PublishActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             String message = error.getMessage();
                             if (error.networkResponse != null) {
-                                message = "Error code: " + error.networkResponse.statusCode;
+                                message = "錯誤代碼：" + error.networkResponse.statusCode;
                             }
+                            Log.e("UploadError", "上傳資料失敗：" + message); // 加入這行日誌以獲取額外的資訊
                             Toast.makeText(PublishActivity.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -270,6 +271,15 @@ public class PublishActivity extends AppCompatActivity {
     private void openHome() {
         Intent intent = new Intent(this, NewsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        super.onDestroy();
     }
 
 }
