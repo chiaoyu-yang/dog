@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.soulgo.Book.BookActivity;
 import com.example.soulgo.R;
 import com.example.soulgo.Setting.Beep;
 import com.example.soulgo.Setting.SettingActivity;
@@ -41,7 +42,7 @@ public class BeautyDireationsActivity extends AppCompatActivity {
     }
 
     public void openactivity() {
-        Intent intent = new Intent(this, VotePublish.class);
+        Intent intent = new Intent(this, BeautyActivity.class);
         startActivity(intent);
     }
 }

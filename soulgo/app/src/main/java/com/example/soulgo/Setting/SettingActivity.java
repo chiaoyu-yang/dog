@@ -50,6 +50,7 @@ import com.example.soulgo.Constants;
 import com.example.soulgo.HomeActivity;
 import com.example.soulgo.MainActivity;
 import com.example.soulgo.R;
+import com.example.soulgo.Rank.RankDirectionsActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -276,6 +277,20 @@ public class SettingActivity extends AppCompatActivity{
             }
         });
 
+        ImageButton button2 = findViewById(R.id.circle_help);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openactivity2();
+                Beep.playBeepSound(getApplicationContext());
+            }
+        });
+
+    }
+
+    public void openactivity2() {
+        Intent intent = new Intent(this, SettingDireationsActivity.class);
+        startActivity(intent);
     }
 
     //~~~~~ step2
