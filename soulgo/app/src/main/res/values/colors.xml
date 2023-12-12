@@ -16,7 +16,7 @@
     <color name="orange_deep_600">#00000010</color>
     <color name="lightgreen">#BFE1E4</color>
     <color name="darkgreen">#A4BFC1</color>
-    <color name="transparent">#1A000000</color>
+    <color name="transparent">#00000000</color>
 
 
 </resources>
