@@ -1,5 +1,7 @@
 package com.example.soulgo.Loading;
 
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.animation.Animation;
@@ -28,6 +30,7 @@ public class ProgressBarAnimation extends Animation {
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         super.applyTransformation(interpolatedTime, t);
+
         float value = from + (to - from) * interpolatedTime;
         progressBar.setProgress((int)value);
         textView.setText(String.valueOf((int)value) + " %");
@@ -38,3 +41,4 @@ public class ProgressBarAnimation extends Animation {
         }
     }
 }
+
