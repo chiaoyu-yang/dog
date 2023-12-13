@@ -17,4 +17,9 @@
         <item name="cornerSize">16dp</item> <!-- 这里的值可以根据需要调整 -->
     </style>
 
+    <style name = "AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

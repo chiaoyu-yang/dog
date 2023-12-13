@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.soulgo.Loading.LoadingActivity;
 import com.example.soulgo.Setting.BackgroundMusicService;
 import com.example.soulgo.Setting.Beep;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -83,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void signIn() {
 //        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
 //        startActivity(intent);
@@ -142,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToSecondActivity() {
         finish();
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoadingActivity.class);
         startActivity(intent);
     }
 }

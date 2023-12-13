@@ -92,6 +92,9 @@
             android:name=".Setting.SettingDireationsActivity"
             android:exported="false" />
         <activity
+            android:name=".Loading.LoadingActivity"
+            android:exported="false" />
+        <activity
             android:name=".Identify.ScanResultDireation"
             android:exported="false" />
         <activity

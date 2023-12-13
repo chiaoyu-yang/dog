@@ -24,9 +24,17 @@ import java.util.HashMap;import java.util.Map;
 import java.util.Objects;
 import android.view.View;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -249,7 +257,25 @@ public class PublishActivity extends AppCompatActivity {
                                 message = "錯誤代碼：" + error.networkResponse.statusCode;
                             }
                             Log.e("UploadError", "上傳資料失敗：" + message); // 加入這行日誌以獲取額外的資訊
-                            Toast.makeText(PublishActivity.this, "上傳失敗：" + message, Toast.LENGTH_SHORT).show();
+
+                            // 進一步詳細印出 Volley 錯誤信息
+                            if (error instanceof NetworkError) {
+                                Log.e("VolleyError", "NetworkError: " + error.getMessage());
+                            } else if (error instanceof ServerError) {
+                                Log.e("VolleyError", "ServerError: " + error.getMessage());
+                            } else if (error instanceof AuthFailureError) {
+                                Log.e("VolleyError", "AuthFailureError: " + error.getMessage());
+                            } else if (error instanceof ParseError) {
+                                Log.e("VolleyError", "ParseError: " + error.getMessage());
+                            } else if (error instanceof NoConnectionError) {
+                                Log.e("VolleyError", "NoConnectionError: " + error.getMessage());
+                            } else if (error instanceof TimeoutError) {
+                                Log.e("VolleyError", "TimeoutError: " + error.getMessage());
+                            } else {
+                                Log.e("VolleyError", "UnexpectedError: " + error.getMessage());
+                            }
+
+                            Toast.makeText(PublishActivity.this, "網路不穩，請再試一次：", Toast.LENGTH_SHORT).show();
                         }
                     }
             ) {
@@ -263,6 +289,13 @@ public class PublishActivity extends AppCompatActivity {
                     return params;
                 }
             };
+            // 設定超時時間為60秒
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    60000, // 設定超時時間為60秒
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+
             requestQueue.add(stringRequest);
         }
 
