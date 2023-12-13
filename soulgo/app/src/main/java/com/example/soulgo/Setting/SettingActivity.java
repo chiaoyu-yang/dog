@@ -206,14 +206,12 @@ public class SettingActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<Void> task) {
                         // 登出成功，執行登出後的操作，例如導航到登入畫面
                         navigateToMainActivity();
-                        Beep.playBeepSound(getApplicationContext());
                     }
 
                     private void navigateToMainActivity() {
                         Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish(); // 結束當前的活動
-                        Beep.playBeepSound(getApplicationContext());
                     }
 
                 });
@@ -221,20 +219,25 @@ public class SettingActivity extends AppCompatActivity{
         });
 
 
-        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE); // 初始化audioManager
+        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
         volumeSeekBar = findViewById(R.id.bg_seekbar);
         gameSeekBar = findViewById(R.id.game_seekbar);
 
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
-        int backgroundMusicVolume = preferences.getInt("background_music_volume", 0);
+
+        // 讀取保存的音量值
+        int backgroundMusicVolume = preferences.getInt("background_music_volume", 50);
         int gameVolume = preferences.getInt("sound_effect_volume", 50);
 
+        // 設置音量SeekBar的最大值
         volumeSeekBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-        volumeSeekBar.setProgress(backgroundMusicVolume);
 
+        // 設置游戏音效SeekBar的最大值
         gameSeekBar.setMax(100);
-        gameSeekBar.setProgress(gameVolume);
+
+        // 載入保存的音量設置
+        loadVolumeSettings();
 
         volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -250,7 +253,7 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
-                saveVolumeProgress(seekBar, "background_music_volume");
+                saveVolumeProgress(seekBar.getProgress(), "background_music_volume");
                 float volume = (float) seekBar.getProgress() / seekBar.getMax();
                 BackgroundMusicService.setVolume(volume);
             }
@@ -260,7 +263,9 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // 处理进度改变事件
+                saveVolumeProgress(progress, "sound_effect_volume");
                 float volume = (float) progress / seekBar.getMax();
+                Beep.setVolume(volume);
             }
 
             @Override
@@ -271,9 +276,6 @@ public class SettingActivity extends AppCompatActivity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 用户停止拖动SeekBar时触发的事件
-                saveVolumeProgress(seekBar, "sound_effect_volume");
-                float volume = (float) seekBar.getProgress() / seekBar.getMax();
-                Beep.setVolume(volume);
             }
         });
 
@@ -288,6 +290,43 @@ public class SettingActivity extends AppCompatActivity{
 
     }
 
+    private void loadVolumeSettings() {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+
+        // 检查是否是首次启动应用，如果是，则使用默认值，否则使用保存的值
+        boolean isFirstRun = preferences.getBoolean("is_first_run", true);
+
+        // 如果是首次启动应用，则使用默认值为50
+        int backgroundMusicVolume = isFirstRun ? 50 : preferences.getInt("background_music_volume", 50);
+        int gameVolume = isFirstRun ? 50 : preferences.getInt("sound_effect_volume", 50);
+
+        // 设置音量SeekBar的初始位置
+        volumeSeekBar.setProgress(backgroundMusicVolume);
+        gameSeekBar.setProgress(gameVolume);
+
+        // 更新相应的音量
+        float backgroundVolume = (float) backgroundMusicVolume / volumeSeekBar.getMax();
+        BackgroundMusicService.setVolume(backgroundVolume);
+
+        float gameEffectVolume = (float) gameVolume / gameSeekBar.getMax();
+        Beep.setVolume(gameEffectVolume);
+
+        // 如果是首次启动应用，将标志设置为false
+        if (isFirstRun) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("is_first_run", false);
+            editor.apply();
+        }
+    }
+
+
+
+    private void saveVolumeProgress(int progress, String key) {
+        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(key, progress);
+        editor.apply();
+    }
     public void openactivity2() {
         Intent intent = new Intent(this, SettingDireationsActivity.class);
         startActivity(intent);
