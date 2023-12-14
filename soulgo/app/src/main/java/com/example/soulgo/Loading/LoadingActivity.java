@@ -35,16 +35,28 @@ public class LoadingActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         textView = findViewById(R.id.text_view);
 
-        dog.animate().translationX(0).setDuration(8000).setStartDelay(0);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(i);
-            }
+        // 設定動畫的速度，這裡的 2.67 是 8 秒 / 3 秒
+        dog.setSpeed(1.0f); // 保持原本的速度
+
+        // 設定動畫重複播放的次數，這裡的 2 是為了讓動畫在兩次重複中共花費 8 秒
+        dog.setRepeatCount(2);
+
+        dog.addAnimatorUpdateListener(animation -> {
+            // 計算進度並更新 ProgressBar
+            float progress = (float) animation.getAnimatedValue();
+            int progressBarValue = (int) (progress * progressBar.getMax());
+            progressBar.setProgress(progressBarValue);
+        });
+
+        // 開始播放動畫
+        dog.playAnimation();
+
+
+        new Handler().postDelayed(() -> {
+            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(i);
         }, 8000);
-
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
