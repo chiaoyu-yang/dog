@@ -56,7 +56,7 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(i);
-        }, 8000);
+        } ,5500);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -70,7 +70,7 @@ public class LoadingActivity extends AppCompatActivity {
 
     public void progressAnimation() {
         ProgressBarAnimation animation = new ProgressBarAnimation(this, progressBar, textView, 0f, 100f);
-        animation.setDuration(8000);
+        animation.setDuration(5500);
         progressBar.setAnimation(animation);
     }
 }
