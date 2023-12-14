@@ -40,7 +40,7 @@ public class LoadingActivity extends AppCompatActivity {
         dog.setSpeed(1.0f); // 保持原本的速度
 
         // 設定動畫重複播放的次數，這裡的 2 是為了讓動畫在兩次重複中共花費 8 秒
-        dog.setRepeatCount(2);
+        dog.setRepeatCount(1);
 
         dog.addAnimatorUpdateListener(animation -> {
             // 計算進度並更新 ProgressBar

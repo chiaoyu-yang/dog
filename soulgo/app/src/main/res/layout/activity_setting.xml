@@ -63,7 +63,7 @@
         android:background="@android:color/transparent"
         android:drawableBottom="@drawable/line1"
         android:gravity="center"
-        android:hint="nickname"
+        android:hint="請輸入暱稱"
         android:maxEms="10"
         android:maxLines="1"/>
 

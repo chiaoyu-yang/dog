@@ -180,7 +180,7 @@ public class VotePublish extends AppCompatActivity {
         String title = uploadTitleEditText.getText().toString().trim();
 
         if (icOutlineAdd.getVisibility() == View.VISIBLE && uploadText.getVisibility() == View.VISIBLE) {
-            Toast.makeText(this, "请选取一张图片", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请選取一張圖片", Toast.LENGTH_SHORT).show();
         }  else if (title.isEmpty()) {
             Toast.makeText(this, "請填寫標題", Toast.LENGTH_SHORT).show();
         }  else {
@@ -208,7 +208,7 @@ public class VotePublish extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "上傳失敗，請再試一次", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(com.example.soulgo.Beauty.VotePublish.this, "網路不穩，請再試一次", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -272,14 +272,6 @@ public class VotePublish extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        super.onDestroy();
-    }
 
 }
 

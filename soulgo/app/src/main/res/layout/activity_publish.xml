@@ -34,7 +34,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="發布"
+            android:text="發佈"
             android:textColor="@color/text_color"
             android:textSize="@dimen/title_size" />
 

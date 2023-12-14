@@ -138,9 +138,6 @@ public class SettingActivity extends AppCompatActivity{
         ImageButton to_home = findViewById(R.id.back);
         ImageButton logout = findViewById(R.id.logout);
 
-
-
-
         editNickname.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -175,9 +172,6 @@ public class SettingActivity extends AppCompatActivity{
                 return true;
             }
         });
-
-
-
 
         to_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,12 +217,6 @@ public class SettingActivity extends AppCompatActivity{
 
         volumeSeekBar = findViewById(R.id.bg_seekbar);
         gameSeekBar = findViewById(R.id.game_seekbar);
-
-        SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
-
-        // 讀取保存的音量值
-        int backgroundMusicVolume = preferences.getInt("background_music_volume", 50);
-        int gameVolume = preferences.getInt("sound_effect_volume", 50);
 
         // 設置音量SeekBar的最大值
         volumeSeekBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
@@ -319,8 +307,6 @@ public class SettingActivity extends AppCompatActivity{
         }
     }
 
-
-
     private void saveVolumeProgress(int progress, String key) {
         SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -338,18 +324,14 @@ public class SettingActivity extends AppCompatActivity{
             permission_post_notification = true;
             setReminder();
         } else {
-            if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                Log.d("Permission", "第一次不允許權限");
-            } else {
-                Log.d("Permission", "第二次不允許權限");
-            }
+            // 請求權限
             requestPermissionLauncherNotification.launch(permissions[0]);
         }
     }
 
     //~~~~~ step3
     private ActivityResultLauncher<String> requestPermissionLauncherNotification =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted->{
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     permission_post_notification = true;
                     setReminder();
@@ -362,16 +344,16 @@ public class SettingActivity extends AppCompatActivity{
     //~~~~~ step4
     public void showPermissionDialog(String permission_desc) {
         new AlertDialog.Builder(SettingActivity.this)
-                .setTitle("許可提醒")
+                .setTitle("權限提醒")
                 .setMessage(permission_desc)
-                .setPositiveButton("Grant Permission", new DialogInterface.OnClickListener() {
+                .setPositiveButton("允許權限", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         requestPermissionLauncherNotification.launch(permissions[0]);
                         dialogInterface.dismiss();
                     }
                 })
-                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                .setNegativeButton("退出", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -392,8 +374,8 @@ public class SettingActivity extends AppCompatActivity{
         Calendar currentTime = Calendar.getInstance();
 
         Calendar alarmTime = Calendar.getInstance();
-        alarmTime.set(Calendar.HOUR_OF_DAY, 14);
-        alarmTime.set(Calendar.MINUTE, 0);
+        alarmTime.set(Calendar.HOUR_OF_DAY, 22);
+        alarmTime.set(Calendar.MINUTE, 15);
         alarmTime.set(Calendar.SECOND, 0);
 
         if (currentTime.after(alarmTime)) {
@@ -401,17 +383,6 @@ public class SettingActivity extends AppCompatActivity{
         }
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
-    }
-
-
-    private void saveVolumeProgress(SeekBar seekBar, String key) {
-        if (seekBar.getId() == R.id.bg_seekbar || seekBar.getId() == R.id.game_seekbar) {
-            int progress = seekBar.getProgress();
-            SharedPreferences preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putInt(key, progress);
-            editor.apply();
-        }
     }
 
     @Override

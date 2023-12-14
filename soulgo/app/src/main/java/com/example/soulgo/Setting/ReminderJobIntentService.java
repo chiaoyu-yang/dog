@@ -1,5 +1,6 @@
 package com.example.soulgo.Setting;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -22,6 +23,7 @@ public class ReminderJobIntentService extends JobIntentService {
         enqueueWork(context, ReminderJobIntentService.class, JOB_ID, work);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onHandleWork(Intent intent) {
         Log.d("ReminderJobIntentService", "Received work");
@@ -29,6 +31,7 @@ public class ReminderJobIntentService extends JobIntentService {
         createNotificationChannel();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "notifyLemubit")
+                .setSmallIcon(R.drawable.bell_ring)
                 .setContentTitle("汪汪 汪 汪汪汪汪 嗚 嗚嗚")
                 .setContentText("該上線囉 狗狗們需要你的陪伴 . . .")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
